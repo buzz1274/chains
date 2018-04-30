@@ -1,0 +1,51 @@
+{
+  "name": "chain.zz50.co.uk",
+  "version": "1.0.0",
+  "description": "Don't break the chain motivation tool",
+  "private": true,
+  "directories": {
+    "test": "tests"
+  },
+  "scripts": {
+    "dev": "webpack --config webpack.config.js",
+    "server": "webpack-dev-server",
+    "lint": "eslint --ext .jsx,.js resources/assets/js"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "babel-core": "^6.26.3",
+    "babel-eslint": "^8.2.3",
+    "babel-esnext": "^0.2.3",
+    "babel-loader": "^7.1.4",
+    "babel-preset-env": "^1.6.1",
+    "babel-preset-react": "^6.24.1",
+    "babel-preset-stage-2": "^6.24.1",
+    "clean-webpack-plugin": "^0.1.19",
+    "css-loader": "^0.28.11",
+    "eslint": "^4.19.1",
+    "eslint-config-google": "^0.9.1",
+    "eslint-plugin-react": "^7.7.0",
+    "history": "^4.7.2",
+    "html-webpack-plugin": "^3.2.0",
+    "immutability-helper": "^2.7.0",
+    "jest": "^22.4.3",
+    "mini-css-extract-plugin": "^0.4.0",
+    "open-iconic": "^1.1.1",
+    "optimize-css-assets-webpack-plugin": "^4.0.1",
+    "prop-types": "^15.6.1",
+    "react-redux": "^5.0.7",
+    "style-loader": "^0.21.0",
+    "uglifyjs-webpack-plugin": "^1.2.5",
+    "url-loader": "^1.0.1",
+    "webpack": "^4.6.0",
+    "webpack-cli": "^2.1.2",
+    "webpack-dev-server": "^3.1.4"
+  },
+  "dependencies": {
+    "bootstrap": "^4.1.1",
+    "react": "^16.3.2",
+    "react-dom": "^16.3.2",
+    "react-router-dom": "^4.2.2"
+  }
+}
