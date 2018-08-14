@@ -26,8 +26,15 @@ module.exports = {
                 test: /\.(js|jsx)$/,
                 exclude: /node_modules/,
                 use: {
-                    loader: 'babel-loader'
+                    loader: 'babel-loader',
+                    query: {
+                        presets:[ 'es2015', 'react', 'stage-0' ],
+                    }
                 }
+            },
+            {
+                test: /\.woff($|\?)|\.woff2($|\?)|\.ttf($|\?)|\.eot($|\?)|\.svg($|\?)|\.otf($|\?)/,
+                loader: 'url-loader'
             },
         ]
     },
@@ -37,7 +44,8 @@ module.exports = {
         compress: false,
         port: 8080,
         disableHostCheck: true,
-        host: '0.0.0.0'
+        host: '0.0.0.0',
+        historyApiFallback: true
     },
     plugins: [
         new MiniCssExtractPlugin({
@@ -54,40 +62,3 @@ module.exports = {
 
     ]
 };
-
-/*
-
-+    devServer: {
-+        contentBase: path.join(__dirname, 'public'),
-+        publicPath: ['/', '/dist/'],
-+        compress: true,
-+        port: 8080,
-+        disableHostCheck: true,
-+        host: '0.0.0.0'
-+    },
-
-
-module.exports = {
-    module: {
-        loaders: [
-            {
-                test: /\.html$/,
-                loader: 'html?-minimize'
-            },
-            {
-                test: /\.js$/,
-                exclude: /(node_modules|bower_components)/,
-                loader: 'babel',
-                query: {
-                    cacheDirectory: '/tmp/babel_cache/',
-                    presets: ['es2015']
-                }
-            },
-            {
-                test: /\.woff($|\?)|\.woff2($|\?)|\.ttf($|\?)|\.eot($|\?)|\.svg($|\?)/,
-                loader: 'url-loader'
-            },
-        ]
-    }
-};
-*/

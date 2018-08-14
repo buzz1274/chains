@@ -1,0 +1,12 @@
+span#error_message {
+    float:left;
+    display:inline;
+    font-size:1.5em;
+    padding:0 10px 0 0;
+    margin:0;
+}
+a#reset_error_link {
+    text-decoration: underline;
+    line-height:2.1em;
+    color: #000;
+}

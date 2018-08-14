@@ -1,0 +1,16 @@
+#index_content {
+    width:80%;
+    padding-top:50px;
+    margin:0 auto;
+}
+#index_content #links {
+    margin-top:35px;
+}
+#index_content #links a {
+    color:#000;
+    text-decoration: none;
+    font-weight:bold;
+}
+#index_content > div#links {
+    text-align:center;
+}
