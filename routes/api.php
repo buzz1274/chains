@@ -13,11 +13,12 @@ use Illuminate\Http\Request;
 |
 */
 
+Route::any('/chains', 'ChainController@index')->middleware('auth:api');
+Route::any('/login', 'ChainController@index')->name('login');
+
 Route::any('/', function (Request $request) {
     return response()->json(['error' => 'Page not found'], 404);
 });
-
-Route::any('/test', 'ArticleController@index');
 
 Route::middleware('auth:api')->get('api/', function (Request $request) {
     return $request->user();
