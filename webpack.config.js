@@ -3,7 +3,8 @@ const path = require('path'),
       MiniCssExtractPlugin = require('mini-css-extract-plugin'),
       CleanWebpackPlugin = require('clean-webpack-plugin'),
       OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin'),
-      HtmlWebpackPlugin = require('html-webpack-plugin');
+      HtmlWebpackPlugin = require('html-webpack-plugin'),
+      webpack = require('webpack');
 
 module.exports = {
     mode: 'development',
@@ -42,10 +43,11 @@ module.exports = {
         contentBase: path.join(__dirname, 'public'),
         publicPath: '/',
         compress: false,
-        port: 8080,
+        port: 38080,
         disableHostCheck: true,
         host: '0.0.0.0',
-        historyApiFallback: true
+        historyApiFallback: true,
+        hot: true
     },
     plugins: [
         new MiniCssExtractPlugin({
@@ -58,7 +60,7 @@ module.exports = {
             filename: 'index.html',
             inject: true,
             template: './resources/assets/js/index.ejs'
-        })
-
+        }),
+        new webpack.HotModuleReplacementPlugin()
     ]
 };
