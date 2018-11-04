@@ -1,4 +1,5 @@
 import React from 'react';
+import { hot } from 'react-hot-loader'
 import update from 'immutability-helper';
 import {Router as Router, Switch} from 'react-router-dom';
 import { createBrowserHistory } from 'history';
@@ -16,7 +17,7 @@ import ResetPassword from './templates/pages/reset_password.jsx';
 import Footer from './templates/components/footer.jsx';
 
 
-export default class App extends React.Component {
+class App extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -95,3 +96,5 @@ export default class App extends React.Component {
         );
     }
 }
+
+export default hot(module)(App);
