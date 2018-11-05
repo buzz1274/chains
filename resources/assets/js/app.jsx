@@ -1,5 +1,5 @@
 import React from 'react';
-import { hot } from 'react-hot-loader'
+import { hot } from 'react-hot-loader';
 import update from 'immutability-helper';
 import {Router as Router, Switch} from 'react-router-dom';
 import { createBrowserHistory } from 'history';

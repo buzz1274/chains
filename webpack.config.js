@@ -4,21 +4,37 @@ const path = require('path'),
       CleanWebpackPlugin = require('clean-webpack-plugin'),
       OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin'),
       HtmlWebpackPlugin = require('html-webpack-plugin'),
+      devMode = process.env.NODE_ENV !== 'production',
       webpack = require('webpack');
 
 module.exports = {
-    mode: 'development',
+    mode: devMode ? 'development' : 'production',
     entry: './resources/assets/js/main.js',
     output: {
         path: path.resolve(__dirname, './public/'),
         publicPath: '/',
         filename: 'main-[hash:6].js'
     },
+    plugins: [
+        new MiniCssExtractPlugin({
+            filename: devMode ? 'main.css' : 'main-[hash:6].js'
+        }),
+        new CleanWebpackPlugin(['public/*.js', 'public/index.html', 'public/*.css']),
+        new UglifyJSPlugin(),
+        new OptimizeCSSAssetsPlugin({}),
+        new HtmlWebpackPlugin({
+            filename: 'index.html',
+            inject: true,
+            template: './resources/assets/js/index.ejs'
+        }),
+        new webpack.HotModuleReplacementPlugin()
+    ],
     module: {
         rules: [
             {
                 test: /\.css$/,
                 use: [
+                    'css-hot-loader',
                     MiniCssExtractPlugin.loader,
                     'css-loader'
                 ]
@@ -50,19 +66,5 @@ module.exports = {
         host: '0.0.0.0',
         historyApiFallback: true,
         hot: true
-    },
-    plugins: [
-        new MiniCssExtractPlugin({
-            filename: 'main-[hash:6].css'
-        }),
-        new CleanWebpackPlugin(['public/*.js', 'public/index.html', 'public/*.css']),
-        new UglifyJSPlugin(),
-        new OptimizeCSSAssetsPlugin({}),
-        new HtmlWebpackPlugin({
-            filename: 'index.html',
-            inject: true,
-            template: './resources/assets/js/index.ejs'
-        }),
-        new webpack.HotModuleReplacementPlugin()
-    ]
+    }
 };

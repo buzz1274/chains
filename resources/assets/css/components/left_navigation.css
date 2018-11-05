@@ -1,13 +1,26 @@
 div#left_navigation {
     width:380px;
 }
+table.chains tr.table_nav {
+    background-color:#000000;
+    color:#FFF;
+    height:20px;
+}
+
+
+
 div.table_title {
     width:50%;
     min-height:15px;
+    line-height:30px;
     margin:auto;
     text-align:center;
     font-weight:bold;
+    display:inline;
 }
+
+
+
 div.table_title a {
     color:#FFF;
     text-decoration:none;
@@ -19,10 +32,7 @@ table.runs td.blanked {
 }
 table.runs tr.table_nav i {
     color:#FFF;
-}
-table.runs tr.table_nav {
-    background-color:#000;
-    color:#FFF;
+    line-height:20px;
 }
 table.runs tr.table_nav td {
     vertical-align: middle;
