@@ -56,7 +56,7 @@ export default class Header extends React.Component {
                 </div>
                 <div id='header_content'>
                     <h1>
-                        <Link to='/'>Chain</Link>
+                        <Link to='/'>Chains</Link>
                     </h1>
                 </div>
             </header>
