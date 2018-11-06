@@ -14,12 +14,8 @@ class ChainTest extends TestCase
      */
     public function callingChainWithNoArgumentsReturnsAllActiveChains()
     {
-        $user = factory(\App\User::class)->create();
 
-        $response = $this->actingAs($user)
-                        ->withSession(['foo' => 'bar'])
-                        ->get('/chains');
-
+        $response = $this->get('/chains');
         $response->assertStatus(200);
         $response->assertExactJson(array('derp' => 'herp'));
     }

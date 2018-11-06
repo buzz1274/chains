@@ -10,8 +10,6 @@ class ChainController extends Controller
     public function index()
     {
 
-        error_log("HERP DERP");
-
         return json_encode(array("derp" => 'herp'));
     }
 }
