@@ -29,7 +29,7 @@ class CreateChainTable extends Migration
             $table->timestamps();
         });
     }
-    
+
     /**
      * Reverse the migrations.
      *
