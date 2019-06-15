@@ -8,6 +8,7 @@
   },
   "scripts": {
     "dev": "webpack --config webpack.config.js",
+    "live": "webpack --config webpack.config.js",
     "server": "webpack-dev-server",
     "lint": "eslint --ext .jsx,.js resources/assets/js"
   },

@@ -2,6 +2,7 @@ todo
 .todo.swp
 /node_modules
 /public/dist/
+/public/main.css
 /public/main-*
 /public/index.html
 /public/hot
