@@ -27,7 +27,6 @@ class CreateChainTable extends Migration
             $table->boolean('active')->default(true);
             $table->unsignedInteger('current_streak')->default(0);
             $table->unsignedInteger('max_streak')->default(0);
-            $table->timestamps()->useCurrent();
         });
     }
 
