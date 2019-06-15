@@ -18,6 +18,30 @@ class CreateChainFrequencyTable extends Migration
             $table->string('frequency', 7)->unique();
             $table->timestamps();
         });
+
+        $chains = [
+            [
+                'frequency' => 'daily',
+            ],
+            [
+                'frequency' => 'weekly',
+            ],
+            [
+                'frequency' => 'weekday',
+            ],
+            [
+                'frequency' => 'monthly',
+            ],
+        ];
+
+        foreach($chains as $chain) {
+            $chain = array_merge($chain, [
+                'created_at' => 'NOW()',
+                'updated_at' => 'NOW()',
+            ]);
+
+            \DB::table('chain_frequency')->insert($chain);
+        }
     }
 
     /**
