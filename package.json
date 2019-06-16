@@ -8,6 +8,7 @@
   },
   "scripts": {
     "dev": "webpack --config webpack.config.js",
+    "live": "webpack --config webpack.config.js",
     "server": "webpack-dev-server",
     "lint": "eslint --ext .jsx,.js resources/assets/js"
   },
@@ -22,6 +23,7 @@
     "babel-preset-react": "^6.24.1",
     "babel-preset-stage-2": "^6.24.1",
     "clean-webpack-plugin": "^0.1.19",
+    "css-hot-loader": "^1.4.2",
     "css-loader": "^0.28.11",
     "eslint": "^4.19.1",
     "eslint-config-google": "^0.9.1",
@@ -34,6 +36,7 @@
     "open-iconic": "^1.1.1",
     "optimize-css-assets-webpack-plugin": "^4.0.1",
     "prop-types": "^15.6.1",
+    "react-hot-loader": "^4.3.12",
     "react-redux": "^5.0.7",
     "style-loader": "^0.21.0",
     "uglifyjs-webpack-plugin": "^1.2.5",

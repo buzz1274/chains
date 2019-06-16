@@ -1,0 +1,96 @@
+div#left_navigation {
+    width:380px;
+}
+table.chains tr.table_nav {
+    background-color:#000000;
+    color:#FFF;
+    height:20px;
+}
+
+
+
+div.table_title {
+    width:50%;
+    min-height:15px;
+    line-height:30px;
+    margin:auto;
+    text-align:center;
+    font-weight:bold;
+    display:inline;
+}
+
+
+
+div.table_title a {
+    color:#FFF;
+    text-decoration:none;
+    margin-left:5px;
+}
+table.runs td.blanked {
+    background-color:#000;
+    border:1px solid #000;
+}
+table.runs tr.table_nav i {
+    color:#FFF;
+    line-height:20px;
+}
+table.runs tr.table_nav td {
+    vertical-align: middle;
+    font-weight: bold;
+}
+table.runs td > a {
+    color:#000000;
+    text-decoration: underline;
+}
+table.runs td {
+    line-height:13px;
+}
+table.runs td:not(:last-child) {
+    border-right:1px solid #ddd;
+}
+table.runs tbody tr {
+    cursor:pointer;
+}
+table.runs tbody tr > td.run {
+    text-align:right;
+}
+table.runs tbody tr > td.success {
+    color:#32CD32;
+    font-weight:bold;
+}
+table.runs tbody tr > td.danger {
+    color:#FF0000;
+    font-weight:bold;
+}
+tbody tr:hover td[rowspan] {
+    background-color: #FFFFFF;
+}
+table.runs td.date_width {
+    width:30%;
+}
+table.runs td.width_20 {
+    width:20%;
+}
+table.runs td.width_28 {
+    width:28%;
+}
+table.runs td.width_12 {
+    width:12%;
+    text-align:center;
+}
+table.runs td.stats_title {
+    width:25%;
+    font-weight:bold;
+}
+table.runs th {
+    vertical-align:middle;
+    border:1px solid #FFF;
+}
+table.runs th.title {
+    text-align:center;
+    vertical-align: middle;
+}
+tr.table_nav {
+    background-color:#000;
+    color:#FFF;
+}

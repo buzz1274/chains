@@ -1,0 +1,47 @@
+header {
+    background:#000;
+    height:55px;
+    border-bottom:1px solid #000;
+    color:#FFF;
+}
+
+header a {
+    color:#FFF;
+    text-decoration:none;
+}
+
+header a:hover {
+    color:#FFF;
+    text-decoration:none;
+}
+
+#header_content {
+    padding:15px 0 0 10px;
+}
+
+#header_content h1 {
+    color:#FFF;
+    font-weight:bold;
+    margin:0;
+    padding:0;
+    font-size:1.7em;
+}
+
+div#welcome {
+    float:right;
+    padding:5px 10px 0 0;
+    font-weight:bold;
+    font-size:0.9em;
+}
+div#welcome h4 {
+    margin:0;
+    padding:0;
+}
+div#welcome a#welcome_link {
+    color:#FFF;
+    padding-left:3px;
+    text-decoration:none;
+}
+div#welcome a:hover {
+    cursor:pointer;
+}
