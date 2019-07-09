@@ -1,23 +1,31 @@
 div#left_navigation {
-    width:380px;
+    width:340px;
 }
 table.chains tr.table_nav {
     background-color:#000000;
     color:#FFF;
     height:20px;
 }
-
-
-
 div.table_title {
     width:50%;
-    min-height:15px;
-    line-height:30px;
+    min-height:28px;
+    line-height:28px;
     margin:auto;
+    padding-left:15px;
     text-align:center;
     font-weight:bold;
     display:inline;
 }
+i. {
+    padding-top:10px;
+}
+
+
+
+
+
+
+
 
 
 

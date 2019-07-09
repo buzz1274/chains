@@ -5,7 +5,8 @@ import '../../../css/pages/summary.css';
 
 export default class Summary extends React.Component {
     static propTypes = {
-        auth: PropTypes.object.isRequired
+        auth: PropTypes.object.isRequired,
+        chains: PropTypes.object.isRequired
     }
 
     constructor(props) {
@@ -17,7 +18,9 @@ export default class Summary extends React.Component {
 
     render() {
         return (
-            <MainInterface>SUMMARY</MainInterface>
+            <MainInterface chains={this.props.chains}>
+                SUMMARY
+            </MainInterface>
         );
     }
 

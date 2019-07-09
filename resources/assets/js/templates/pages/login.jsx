@@ -6,6 +6,7 @@ import '../../../css/pages/login.css';
 export default class Login extends React.Component {
     static propTypes = {
         auth: PropTypes.object.isRequired,
+        chains: PropTypes.object.isRequired,
         updateState: PropTypes.func.isRequired,
         history: PropTypes.object.isRequired
     }
@@ -19,6 +20,7 @@ export default class Login extends React.Component {
     login(e) {
         e.preventDefault();
 
+        this.props.chains.get();
         this.props.updateState({auth: this.props.auth.login(false, false)});
         this.props.history.push('/');
     }

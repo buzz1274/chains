@@ -5,7 +5,8 @@ import PropTypes from 'prop-types';
 
 export default class MainInterface extends React.Component {
     static propTypes = {
-        children: PropTypes.string.isRequired
+        children: PropTypes.string.isRequired,
+        chains: PropTypes.object.isRequired
     }
 
     render() {
@@ -14,7 +15,7 @@ export default class MainInterface extends React.Component {
                 <div id='main_interface'>
                     {this.props.children}
                 </div>
-                <LeftNavigation />
+                <LeftNavigation chains={this.props.chains} />
             </React.Fragment>
         );
     }

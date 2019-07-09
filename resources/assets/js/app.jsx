@@ -5,6 +5,7 @@ import {Router as Router, Switch} from 'react-router-dom';
 import { createBrowserHistory } from 'history';
 import {PrivateRoute, PublicOnlyRoute, PropsRoute} from './helper/route.jsx';
 import Auth from './helper/auth.jsx';
+import Chains from './helper/chains.jsx';
 import Overlay from './templates/components/overlay.jsx';
 import Header from './templates/components/header.jsx';
 import ErrorBoundary from './templates/components/error_boundary.jsx';
@@ -20,14 +21,17 @@ import Footer from './templates/components/footer.jsx';
 class App extends React.Component {
     constructor(props) {
         super(props);
+
+        this.updateState = this.updateState.bind(this);
+        this.history = createBrowserHistory();
+
         this.state = {
             auth: new Auth(),
+            chains: new Chains(this.updateState),
             forceUpdate: false,
             displayUpdate: false
         };
 
-        this.updateState = this.updateState.bind(this);
-        this.history = createBrowserHistory();
     }
 
     updateState(updatedState) {
@@ -50,6 +54,7 @@ class App extends React.Component {
                                 <PublicOnlyRoute exact path='/login'
                                     component={Login}
                                     auth={this.state.auth}
+                                    chains={this.state.chains}
                                     updateState={this.updateState} />
                                 <PublicOnlyRoute exact path='/register'
                                     component={Register}
@@ -62,6 +67,7 @@ class App extends React.Component {
                                     auth={this.state.auth} />
                                 <PrivateRoute exact path='/summary'
                                     component={Summary}
+                                    chains={this.state.chains}
                                     auth={this.state.auth} />
                                 <PrivateRoute exact path='/uncompleted-chains'
                                     component={Index}
