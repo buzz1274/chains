@@ -1,7 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Link, Redirect } from 'react-router-dom';
+import Chains from '../../helper/chains';
+import Auth from "../../helper/auth";
 import '../../../css/components/header.css';
+
 
 export default class Header extends React.Component {
     static propTypes = {
@@ -19,7 +22,10 @@ export default class Header extends React.Component {
     logout(e) {
         e.preventDefault();
 
-        this.props.updateState({auth: this.props.auth.logout(false, false)});
+        this.props.updateState({
+            auth: new Auth(),
+            chains: new Chains(this.props.updateState),
+        });
 
         return (<Redirect
             to={{
