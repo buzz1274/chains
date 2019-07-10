@@ -1,17 +1,20 @@
 import axios from 'axios';
-import React from "react";
 
 export default class Axios {
 
     instance = false;
+    updateState = false;
 
-    constructor() {
+    constructor(updateState) {
         this.instance = axios.create({
             baseURL: this.url(),
             timeout: 5000,
             headers: {}
         });
 
+        this.updateState = updateState;
+
+        this.addRequestInterceptor();
         this.addResponseInterceptor();
 
         return this.instance;
@@ -23,10 +26,30 @@ export default class Axios {
                window.location.hostname + '/api/';
     }
 
+    addRequestInterceptor() {
+        let that = this;
+
+        this.instance.interceptors.request.use(function(config) {
+            that.updateState({displayOverlay: true});
+
+            return config;
+        }, function() {
+            that.updateState({displayOverlay: false});
+
+            window.location.href = '/error';
+        });
+    }
+
     addResponseInterceptor() {
-        this.instance.interceptors.response.use(function (response) {
+        let that = this;
+
+        this.instance.interceptors.response.use(function(response) {
+            that.updateState({displayOverlay: false});
+
             return response;
-        }, function (error) {
+        }, function () {
+            that.updateState({displayOverlay: false});
+
             window.location.href = '/error';
         });
     }

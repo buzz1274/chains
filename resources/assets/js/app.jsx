@@ -29,7 +29,7 @@ class App extends React.Component {
             auth: new Auth(),
             chains: new Chains(this.updateState),
             forceUpdate: false,
-            displayUpdate: false
+            displayOverlay: false
         };
 
     }
@@ -42,7 +42,7 @@ class App extends React.Component {
         return(
             <Router history={this.history}>
                 <React.Fragment>
-                    <Overlay displayUpdate={this.state.displayUpdate} />
+                    <Overlay displayOverlay={this.state.displayOverlay} />
                     <Header auth={this.state.auth}
                             updateState={this.updateState} />
                     <div id='main'>

@@ -5,7 +5,7 @@ export default class Chains {
 
     constructor(updateState) {
         this.chainsUpdated = this.chainsUpdated.bind(this);
-        this.axios = new Axios();
+        this.axios = new Axios(updateState);
         this.updateState = updateState;
         this.chains = [];
     }
