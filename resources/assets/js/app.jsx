@@ -3,9 +3,9 @@ import { hot } from 'react-hot-loader';
 import update from 'immutability-helper';
 import {Router as Router, Switch} from 'react-router-dom';
 import { createBrowserHistory } from 'history';
-import {PrivateRoute, PublicOnlyRoute, PropsRoute} from './helper/route.jsx';
-import Auth from './helper/auth.jsx';
-import Chains from './helper/chains.jsx';
+import {PrivateRoute, PublicOnlyRoute, PropsRoute} from './helper/route.js';
+import Auth from './helper/auth.js';
+import Chains from './helper/chains.js';
 import Overlay from './templates/components/overlay.jsx';
 import Header from './templates/components/header.jsx';
 import ErrorBoundary from './templates/components/error_boundary.jsx';
@@ -44,9 +44,9 @@ class App extends React.Component {
                 <React.Fragment>
                     <Overlay displayUpdate={this.state.displayUpdate} />
                     <Header auth={this.state.auth}
-                        updateState={this.updateState} />
+                            updateState={this.updateState} />
                     <div id='main'>
-                        <ErrorBoundary history={this.history}>
+                        <ErrorBoundary history={this.history} >
                             <Switch>
                                 <PublicOnlyRoute exact path='/'
                                     component={Index}
@@ -90,6 +90,10 @@ class App extends React.Component {
                                 <PrivateRoute path='/user/edit/:user_id'
                                     component={Index}
                                     auth={this.state.auth} />
+                                <PropsRoute
+                                    path='/error'
+                                    component={ErrorBoundary}
+                                    errorCode={'500'} />
                                 <PropsRoute
                                     component={ErrorBoundary}
                                     errorCode={'404'} />

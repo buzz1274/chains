@@ -3,36 +3,38 @@ import '../../../css/components/error_boundary.css';
 import PropTypes from 'prop-types';
 
 export default class ErrorBoundary extends React.Component {
+    /*
     static propTypes = {
         errorCode: PropTypes.object.optional,
         history: PropTypes.object.required,
         children: PropTypes.object.optional
+    }
+    */
+
+    state = {
+        hasError: false,
+        errorCode: false,
+        errorMessage: false
     }
 
     constructor(props) {
         super(props);
 
         if(props.errorCode == '404') {
-            this.state = {
-                hasError: true,
-                errorMessage: 'Page not found',
-                errorCode: 404
-            };
+            this.setErrorState(404, 'Page not found');
+        } else if (props.errorCode == '500') {
+            this.setErrorState(500, 'An error has occurred');
         } else {
-            this.state = {
-                hasError: false,
-                errorMessage: false,
-                errorCode: false
-            };
+            this.setErrorState(false, false);
         }
     }
 
     setErrorState(errorCode, errorMessage) {
-        this.setState({
+        this.state = {
             hasError: Boolean(errorCode),
             errorCode: errorCode,
             errorMessage: errorMessage
-        });
+        };
     }
 
     componentDidCatch() {
@@ -54,9 +56,11 @@ export default class ErrorBoundary extends React.Component {
                     <span id='error_message'>{this.state.errorMessage}</span>
                 </React.Fragment>
             );
+        } else if(this.props.children) {
+            return this.props.children;
         }
 
-        return this.props.children;
+        return null;
 
     }
 
