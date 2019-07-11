@@ -17,4 +17,11 @@ export default class Chain {
         });
     }
 
+    delete() {
+        this.chain = 'DELETED THIS CHAIN';
+        this.chainsUpdated;
+
+        console.log("CALLING DELETE IN CHAIN CLASS");
+    }
+
 }

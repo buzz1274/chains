@@ -15,7 +15,8 @@ export default class MainInterface extends React.Component {
                 <div id='main_interface'>
                     {this.props.children}
                 </div>
-                <LeftNavigation chains={this.props.chains} />
+                <LeftNavigation updateState={this.props.updateState}
+                                chains={this.props.chains} />
             </React.Fragment>
         );
     }

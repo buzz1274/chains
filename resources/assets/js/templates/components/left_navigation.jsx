@@ -1,6 +1,6 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import '../../../css/components/left_navigation.css';
-import PropTypes from "prop-types";
 
 export default class LeftNavigation extends React.Component {
     static propTypes = {
@@ -9,12 +9,6 @@ export default class LeftNavigation extends React.Component {
 
     constructor(props) {
         super(props);
-    }
-
-    delete(e) {
-        console.log("DELETE");
-        console.log(e);
-        this.props.chains.get();
     }
 
     edit(e) {
@@ -36,14 +30,14 @@ export default class LeftNavigation extends React.Component {
                     <a className="black" title="Edit Chain">
                         <i className="oi oi-wrench"
                             onClick={(e) => {
-                            this.edit(e);
+                                this.edit(e);
                         }} >
                         </i>
                     </a>
                     <a className="black" title="Delete Chain">
                         <i className="oi oi-trash"
-                            onClick={(e) => {
-                            this.delete(e);
+                            onClick={() => {
+                                this.props.chains.delete(chain.id, false);
                         }} >
                         </i>
                     </a>

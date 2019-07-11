@@ -6,6 +6,7 @@ import { createBrowserHistory } from 'history';
 import {PrivateRoute, PublicOnlyRoute, PropsRoute} from './helper/route.js';
 import Auth from './helper/auth.js';
 import Chains from './helper/chains.js';
+import CustomModal from './templates/components/custom_modal.jsx';
 import Overlay from './templates/components/overlay.jsx';
 import Header from './templates/components/header.jsx';
 import ErrorBoundary from './templates/components/error_boundary.jsx';
@@ -29,9 +30,12 @@ class App extends React.Component {
             auth: new Auth(),
             chains: new Chains(this.updateState),
             forceUpdate: false,
-            displayOverlay: false
+            displayOverlay: false,
+            modalOptions: {
+                type: false,
+                action: false
+            }
         };
-
     }
 
     updateState(updatedState) {
@@ -43,6 +47,8 @@ class App extends React.Component {
             <Router history={this.history}>
                 <React.Fragment>
                     <Overlay displayOverlay={this.state.displayOverlay} />
+                    <CustomModal modalOptions={this.state.modalOptions}
+                                 updateState={this.updateState} />
                     <Header auth={this.state.auth}
                             updateState={this.updateState} />
                     <div id='main'>
@@ -67,6 +73,7 @@ class App extends React.Component {
                                     auth={this.state.auth} />
                                 <PrivateRoute exact path='/summary'
                                     component={Summary}
+                                    updateState={this.updateState}
                                     chains={this.state.chains}
                                     auth={this.state.auth} />
                                 <PrivateRoute exact path='/uncompleted-chains'
