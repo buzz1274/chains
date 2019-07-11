@@ -22,6 +22,8 @@ export default class Chain {
         this.chainsUpdated;
 
         console.log("CALLING DELETE IN CHAIN CLASS");
+
+        return true;
     }
 
 }

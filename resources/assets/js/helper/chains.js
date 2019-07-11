@@ -16,10 +16,11 @@ export default class Chains {
         this.updateState({chains: this});
     }
 
-    modalUpdated(type, action) {
+    modalUpdated(modal_class, modal_type, modal_action = false) {
         this.updateState({modalOptions:
-                {type: type,
-                 action: action}})
+                {modal_class: modal_class,
+                 modal_type: modal_type,
+                 modal_action: modal_action}})
     }
 
     get() {
@@ -39,10 +40,22 @@ export default class Chains {
     delete(chain_id, confirmed) {
         if(!confirmed) {
             this.modalUpdated(
+                'confirmation',
                 'delete_chain',
-                () => this.delete(chain_id, true));
+                () => this.delete(chain_id, true)
+            );
         } else {
-            this.chains[chain_id].delete();
+            if(this.chains[chain_id].delete()) {
+                this.modalUpdated(
+                    'alert_success',
+                    'delete_chain_success'
+                );
+            } else {
+                this.modalUpdated(
+                    'alert_danger',
+                    'delete_chain_failure'
+                );
+            }
         }
 
         this.get();

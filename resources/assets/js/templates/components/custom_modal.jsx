@@ -1,6 +1,7 @@
 import React from 'react';
-import { Modal } from 'react-bootstrap';
+import { Modal, Alert } from 'react-bootstrap';
 import PropTypes from "prop-types";
+import '../../../css/components/custom_modal.css';
 
 
 export default class CustomModal extends React.Component {
@@ -9,20 +10,80 @@ export default class CustomModal extends React.Component {
         updateState: PropTypes.func.isRequired
     }
 
+    static titleText = {
+        delete_chain: 'Delete Chain'
+    }
+
+    static bodyText = {
+        delete_chain: 'Warning!!!! This action is permanent and cannot be reversed',
+        delete_chain_success: 'Chain successfully deleted',
+        delete_chain_failure: 'An error occurred deleting the chain'
+    }
+
+    static buttonText = {
+        delete_chain: 'Delete'
+    }
+
     constructor(props) {
         super(props);
     }
 
-    setTitle() {
-        if(this.props.modalOptions.type == 'delete_chain') {
-            return 'Delete Chain';
-        }
+    confirmationModal() {
+        return (
+            <Modal className="modal_custom"
+                show={Boolean(this.props.modalOptions.modal_type)}
+                onHide={() => {
+                    this.closeModal();
+                }}
+                size="lg"
+                aria-labelledby="contained-modal-title-vcenter"
+            >
+                <Modal.Header closeButton>
+                    <Modal.Title id="contained-modal-title-vcenter">
+                        { CustomModal.titleText[this.props.modalOptions.modal_type] }
+                    </Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                    <p>
+                        { CustomModal.bodyText[this.props.modalOptions.modal_type] }
+                    </p>
+                </Modal.Body>
+                <Modal.Footer>
+                    <button type='button' className='btn btn-light'
+                            onClick={() => {
+                                this.closeModal();
+                            }}>
+                        Cancel
+                    </button>
+                    <button type='button' className='btn btn-primary'
+                            onClick={() => {
+                                this.doAction();
+                            }}>
+                        {this.props.modalOptions.modal_type in CustomModal.buttonText ? (
+                                CustomModal.buttonText[this.props.modalOptions.modal_type]
+                            ) : (
+                                "Save"
+                            )
+                        }
+                    </button>
+                </Modal.Footer>
+            </Modal>
+        )
     }
 
-    setBody() {
-        if(this.props.modalOptions.type == 'delete_chain') {
-            return 'delete herp derp';
-        }
+    alertModal(variant) {
+        return (
+            <Modal className="modal_custom"
+                show={ Boolean(this.props.modalOptions.modal_type) }
+                onHide={() => { this.closeModal(); }}
+                size="lg"
+                aria-labelledby="contained-modal-title-vcenter"
+            >
+                <Alert className="alert_custom" variant={ variant } >
+                    { CustomModal.bodyText[this.props.modalOptions.modal_type] }
+                </Alert>
+            </Modal>
+        )
     }
 
     closeModal() {
@@ -31,49 +92,25 @@ export default class CustomModal extends React.Component {
 
     doAction() {
         this.closeModal();
-        this.props.modalOptions.action();
-    }
-
-    setButtonTitle() {
-        if(this.props.modalOptions.type == 'delete_chain') {
-            return 'Delete';
-        }
+        this.props.modalOptions.modal_action();
     }
 
     render() {
+        let modal;
+
+        if(this.props.modalOptions.modal_class) {
+            if (this.props.modalOptions.modal_class.match(/alert/g)) {
+                let variant = this.props.modalOptions.modal_class.split('_');
+                modal = this.alertModal(variant[1]);
+            } else if (this.props.modalOptions.modal_class == 'confirmation') {
+                modal = this.confirmationModal();
+            }
+        }
+
         return (
-                <Modal
-                    show={ Boolean(this.props.modalOptions.type) }
-                    onHide={() => { this.closeModal(); }}
-                    size="lg"
-                    aria-labelledby="contained-modal-title-vcenter"
-                    centered
-                >
-                    <Modal.Header closeButton>
-                        <Modal.Title id="contained-modal-title-vcenter">
-                            { this.setTitle() }
-                        </Modal.Title>
-                    </Modal.Header>
-                    <Modal.Body>
-                        <p>
-                            { this.setBody() }
-                        </p>
-                    </Modal.Body>
-                    <Modal.Footer>
-                        <button type='button' className='btn btn-light'
-                                onClick = {() => {
-                                    this.closeModal();
-                                }} >
-                            Cancel
-                        </button>
-                        <button type='button' className='btn btn-primary'
-                                onClick = {() => {
-                                    this.doAction();
-                                }} >
-                            { this.setButtonTitle() }
-                        </button>
-                    </Modal.Footer>
-                </Modal>
+            <React.Fragment>
+                {modal}
+            </React.Fragment>
         );
     }
 }

@@ -32,8 +32,9 @@ class App extends React.Component {
             forceUpdate: false,
             displayOverlay: false,
             modalOptions: {
-                type: false,
-                action: false
+                modal_class: false,
+                modal_type: false,
+                modal_action: false
             }
         };
     }
