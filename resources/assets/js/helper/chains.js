@@ -3,9 +3,14 @@ import Chain from './chain';
 
 export default class Chains {
 
+    axios = false;
+    updateState = false;
+    chains = [];
+    totalChains = 0;
+
     constructor(updateState) {
         this.chainsUpdated = this.chainsUpdated.bind(this);
-        this.delete = this.delete.bind(this);
+        this.modalUpdated = this.modalUpdated.bind(this);
 
         this.axios = new Axios(updateState);
         this.updateState = updateState;
@@ -13,6 +18,7 @@ export default class Chains {
     }
 
     chainsUpdated() {
+        this.count();
         this.updateState({chains: this});
     }
 
@@ -23,12 +29,23 @@ export default class Chains {
                  modal_action: modal_action}})
     }
 
+    count() {
+        let that = this;
+        that.totalChains = 0;
+
+        this.chains.map((chain) => {
+            if(chain.active) {
+                that.totalChains++;
+            }
+        })
+    }
+
     get() {
         let that = this;
 
         this.axios.get('/chains').then(function(response) {
-            response.data.forEach(function(data, index) {
-                let chain = new Chain(that.chainsUpdated);
+            response.data.forEach(function(data) {
+                let chain = new Chain(that);
 
                 chain.hydrate(data);
                 that.chains[data.id] = chain;
@@ -36,30 +53,4 @@ export default class Chains {
             that.chainsUpdated();
         });
     }
-
-    delete(chain_id, confirmed) {
-        if(!confirmed) {
-            this.modalUpdated(
-                'confirmation',
-                'delete_chain',
-                () => this.delete(chain_id, true)
-            );
-        } else {
-            if(this.chains[chain_id].delete()) {
-                this.modalUpdated(
-                    'alert_success',
-                    'delete_chain_success'
-                );
-            } else {
-                this.modalUpdated(
-                    'alert_danger',
-                    'delete_chain_failure'
-                );
-            }
-        }
-
-        this.get();
-
-    }
-
 }

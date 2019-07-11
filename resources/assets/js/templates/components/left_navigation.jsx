@@ -23,27 +23,32 @@ export default class LeftNavigation extends React.Component {
 
     displayChainRow(chain, index) {
         return (
-            <tr key={index}>
-                <td>{chain.chain}</td>
-                <td>0</td>
-                <td className="text-center">
-                    <a className="black" title="Edit Chain">
-                        <i className="oi oi-wrench"
-                            onClick={(e) => {
-                                this.edit(e);
-                        }} >
-                        </i>
-                    </a>
-                    <a className="black" title="Delete Chain">
-                        <i className="oi oi-trash"
-                            onClick={() => {
-                                this.props.chains.delete(chain.id, false);
-                        }} >
-                        </i>
-                    </a>
-                </td>
-            </tr>
-
+            <React.Fragment key={index}>
+                {chain.active ? (
+                    <tr>
+                        <td>{chain.chain}</td>
+                        <td>0</td>
+                        <td className="text-center">
+                            <a className="black" title="Edit Chain">
+                                <i className="oi oi-wrench"
+                                    onClick={(e) => {
+                                        this.edit(e);
+                                }} >
+                                </i>
+                            </a>
+                            <a className="black" title="Delete Chain">
+                                <i className="oi oi-trash"
+                                    onClick={() => {
+                                        chain.delete(false);
+                                }} >
+                                </i>
+                            </a>
+                        </td>
+                    </tr>
+                ) : (
+                    null
+                )}
+            </React.Fragment>
         );
     }
 
@@ -70,9 +75,19 @@ export default class LeftNavigation extends React.Component {
                             <td>Streak(days)</td>
                             <td>-</td>
                         </tr>
-                        {this.props.chains.chains.map((chain, index) => {
-                            return this.displayChainRow(chain, index);
-                        })}
+                        {this.props.chains.totalChains ? (
+                            this.props.chains.chains.map((chain, index) => {
+                                return this.displayChainRow(chain, index);
+                            })
+                        ) : (
+                            <tr>
+                                <td colSpan="3">
+                                    <p className="text-center text-danger">
+                                        You have no Chains. Add some.
+                                    </p>
+                                </td>
+                            </tr>
+                        )}
                     </tbody>
                 </table>
             </div>

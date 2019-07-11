@@ -13,7 +13,7 @@ class Chain extends Model
     {
         $query =
             self::select(array('chain.id', 'parent_id', 'chain',
-                               'start_date', 'frequency'))->
+                               'start_date', 'frequency', 'active'))->
                     where('user_id', $userID)->
                     where('active', true)->
                     join(

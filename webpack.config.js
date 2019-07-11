@@ -9,7 +9,7 @@ const path = require('path'),
 
 module.exports = {
     mode: devMode ? 'development' : 'production',
-    entry: './resources/assets/js/main.js',
+    entry: ['babel-polyfill', './resources/assets/js/main.js'],
     output: {
         path: path.resolve(__dirname, './public/'),
         publicPath: '/',

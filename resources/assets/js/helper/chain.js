@@ -1,29 +1,52 @@
-import Axios from './axios';
-
 export default class Chain {
 
-    chainsUpdated = false;
+    id = false;
+    active = false;
+    chain = false;
 
-    constructor(chainsUpdated) {
-        this.chainsUpdated = chainsUpdated;
-        this.axios = new Axios();
+    chains = false;
+
+    constructor(chains) {
+        this.chains = chains;
+        this.delete = this.delete.bind(this);
     }
 
-    hydrate(chain, partial) {
+    hydrate(chain) {
         let that = this;
 
-        Object.keys(chain).forEach(function(key, index) {
+        Object.keys(chain).forEach(function(key) {
             that[key] = chain[key];
         });
     }
 
-    delete() {
-        this.chain = 'DELETED THIS CHAIN';
-        this.chainsUpdated;
+    delete (confirmed) {
+        if(!confirmed) {
+            this.chains.modalUpdated(
+                'confirmation',
+                'delete_chain',
+                () => this.delete(true)
+            );
+        } else {
+            let that = this;
 
-        console.log("CALLING DELETE IN CHAIN CLASS");
+            that.active = false;
+            that.chains.chainsUpdated();
 
-        return true;
+            this.chains.axios.post('/chain/' + this.id + '/delete').then(function() {
+                that.chains.modalUpdated(
+                    'alert_success',
+                    'delete_chain_success'
+                );
+
+                that.active = false;
+                that.chains.chainsUpdated();
+
+            }).catch(function() {
+                that.chains.modalUpdated(
+                    'alert_danger',
+                    'delete_chain_failure'
+                );
+            });
+        }
     }
-
 }

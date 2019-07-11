@@ -33,10 +33,13 @@ export default class Axios {
             that.updateState({displayOverlay: true});
 
             return config;
-        }, function() {
+        }, function(error) {
             that.updateState({displayOverlay: false});
 
-            window.location.href = '/error';
+            console.log("REQUEST ERROR");
+            console.log(error);
+
+            return Promise.reject(error);
         });
     }
 
@@ -47,10 +50,10 @@ export default class Axios {
             that.updateState({displayOverlay: false});
 
             return response;
-        }, function () {
+        }, function (error) {
             that.updateState({displayOverlay: false});
 
-            window.location.href = '/error';
+            throw Promise.reject(error);
         });
     }
 
