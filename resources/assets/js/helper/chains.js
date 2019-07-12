@@ -6,10 +6,12 @@ export default class Chains {
 
     axios = false;
     chains = [];
+    outstanding = [];
 
     constructor() {
         this.axios = new Axios();
         this.chains = [];
+        this.outstanding = [];
 
         this.chainsUpdated = () => {Store.updateState({chains: this})};
         this.chainsUpdated.bind(this);

@@ -5,3 +5,14 @@ div#main_interface {
     margin: 0 0 10px 5px;
     position: relative;
 }
+div#main-interface-title-bar {
+    width:100%;
+    line-height:28px;
+    background-color:#000;
+    color:#FFF;
+    padding-left:5px;
+    margin-bottom:5px;
+}
+div#main-interface-body {
+    padding-left:4px;
+}

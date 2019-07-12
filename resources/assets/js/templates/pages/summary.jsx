@@ -16,8 +16,12 @@ export default class Summary extends React.Component {
 
     render() {
         return (
-            <MainInterface {...this.props} >
-                SUMMARY
+            <MainInterface {...this.props} page_title='Summary'>
+                {this.props.chains.outstanding.length > 0 ? (
+                    null
+                ) : (
+                    <p>You have no outstanding chains to confirm.</p>
+                )}
             </MainInterface>
         );
     }
