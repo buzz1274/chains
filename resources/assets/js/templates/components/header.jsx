@@ -1,37 +1,25 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Link, Redirect } from 'react-router-dom';
-import Chains from '../../helper/chains';
-import Auth from "../../helper/auth";
+import { Link } from 'react-router-dom';
 import '../../../css/components/header.css';
 
 
 export default class Header extends React.Component {
     static propTypes = {
         auth: PropTypes.object.isRequired,
-        updateState: PropTypes.func.isRequired
+        destroyState: PropTypes.func.isRequired,
+        history: PropTypes.object.isRequired
     }
 
     constructor(props) {
         super(props);
-
-        this.logout = this.logout.bind(this);
-
     }
 
     logout(e) {
         e.preventDefault();
 
-        this.props.updateState({
-            auth: new Auth(),
-            chains: new Chains(this.props.updateState),
-        });
-
-        return (<Redirect
-            to={{
-                pathname: '/login'
-            }}
-        />);
+        this.props.destroyState();
+        this.props.history.push('/login');
     }
 
     render() {

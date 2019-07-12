@@ -1,8 +1,11 @@
+import State from './state';
+
 export default class Chain {
 
     id = false;
     active = false;
     chain = false;
+    frequency = false;
 
     chains = false;
 
@@ -19,9 +22,13 @@ export default class Chain {
         });
     }
 
-    delete (confirmed) {
+    add() {
+
+    }
+
+    delete(confirmed) {
         if(!confirmed) {
-            this.chains.modalUpdated(
+            State.updateModal(
                 'confirmation',
                 'delete_chain',
                 () => this.delete(true)
@@ -29,11 +36,8 @@ export default class Chain {
         } else {
             let that = this;
 
-            that.active = false;
-            that.chains.chainsUpdated();
-
             this.chains.axios.post('/chain/' + this.id + '/delete').then(function() {
-                that.chains.modalUpdated(
+                State.updateModal(
                     'alert_success',
                     'delete_chain_success'
                 );
@@ -42,7 +46,7 @@ export default class Chain {
                 that.chains.chainsUpdated();
 
             }).catch(function() {
-                that.chains.modalUpdated(
+                State.updateModal(
                     'alert_danger',
                     'delete_chain_failure'
                 );

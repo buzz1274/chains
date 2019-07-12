@@ -1,18 +1,16 @@
 import axios from 'axios';
+import State from './state';
 
 export default class Axios {
 
     instance = false;
-    updateState = false;
 
-    constructor(updateState) {
+    constructor() {
         this.instance = axios.create({
             baseURL: this.url(),
             timeout: 5000,
             headers: {}
         });
-
-        this.updateState = updateState;
 
         this.addRequestInterceptor();
         this.addResponseInterceptor();
@@ -27,31 +25,24 @@ export default class Axios {
     }
 
     addRequestInterceptor() {
-        let that = this;
-
         this.instance.interceptors.request.use(function(config) {
-            that.updateState({displayOverlay: true});
+            State.updateState({displayOverlay: true});
 
             return config;
         }, function(error) {
-            that.updateState({displayOverlay: false});
-
-            console.log("REQUEST ERROR");
-            console.log(error);
+            State.updateState({displayOverlay: false});
 
             return Promise.reject(error);
         });
     }
 
     addResponseInterceptor() {
-        let that = this;
-
         this.instance.interceptors.response.use(function(response) {
-            that.updateState({displayOverlay: false});
+            State.updateState({displayOverlay: false});
 
             return response;
         }, function (error) {
-            that.updateState({displayOverlay: false});
+            State.updateState({displayOverlay: false});
 
             throw Promise.reject(error);
         });
