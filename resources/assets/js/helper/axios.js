@@ -1,5 +1,5 @@
 import axios from 'axios';
-import State from './state';
+import State from './store';
 
 export default class Axios {
 

@@ -1,4 +1,4 @@
-import State from './state';
+import State from './store';
 
 export default class Chain {
 

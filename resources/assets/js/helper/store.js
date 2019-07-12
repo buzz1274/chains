@@ -12,12 +12,7 @@ class Store extends React.Component {
     constructor(props) {
         super(props);
 
-        console.log("IN STORE CONSTRUCTOR");
-        console.log(Store.instance);
-        console.log(props);
-
         if(typeof Store.instance === 'object') {
-            console.log("RETURNING CURRENT OBJECT");
             return Store.instance;
         }
 

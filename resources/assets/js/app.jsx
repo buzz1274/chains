@@ -15,16 +15,15 @@ import Register from './templates/pages/register.jsx';
 import UserProfile from './templates/pages/user_profile.jsx';
 import ResetPassword from './templates/pages/reset_password.jsx';
 import Footer from './templates/components/footer.jsx';
-
-import State from './helper/state.js';
+import Store from './helper/store.js';
 
 
 class App extends React.Component {
     constructor(props) {
         super(props);
 
-        State.instantiateState(this.updateState.bind(this));
-        this.state = State.state;
+        Store.instantiateState(this.updateState.bind(this));
+        this.state = Store.state;
 
     }
 

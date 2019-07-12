@@ -1,6 +1,6 @@
 import Axios from './axios';
 import Chain from './chain';
-import State from './state';
+import Store from './store';
 
 export default class Chains {
 
@@ -24,6 +24,8 @@ export default class Chains {
         })
     }
 
+    //add chains watcher in here somewhere//
+
     get() {
         let that = this;
 
@@ -41,7 +43,7 @@ export default class Chains {
                 }
 
             });
-            State.updateState({chains: that});
+            Store.updateState({chains: that});
         });
     }
 }
