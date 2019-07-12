@@ -1,48 +1,37 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import {Link} from "react-router-dom";
 import '../../../css/components/left_navigation.css';
 
 export default class LeftNavigation extends React.Component {
     static propTypes = {
         chains: PropTypes.object.isRequired,
-    }
-
-    constructor(props) {
-        super(props);
-    }
-
-    edit(e) {
-        console.log("EDIT");
-        console.log(e);
-    }
-
-    add(e) {
-        console.log("ADD");
-        console.log(e);
+        history: PropTypes.object.isRequired
     }
 
     displayChainRow(chain, index) {
         return (
             <React.Fragment key={index}>
                 {chain.active ? (
-                    <tr>
-                        <td>{chain.chain}</td>
-                        <td>0</td>
+                    <tr className="left-nav-chain-row">
+                        <td onClick={() => {
+                            this.props.history.push('/chain/' + chain.id);
+                        }}>
+                            {chain.chain}
+                        </td>
+                        <td>{chain.frequency}</td>
+                        <td className="left-nav-chain-streak">0</td>
                         <td className="text-center">
-                            <a className="black" title="Edit Chain">
-                                <i className="oi oi-wrench"
-                                    onClick={(e) => {
-                                        this.edit(e);
-                                }} >
-                                </i>
-                            </a>
-                            <a className="black" title="Delete Chain">
-                                <i className="oi oi-trash"
-                                    onClick={() => {
-                                        chain.delete(false);
-                                }} >
-                                </i>
-                            </a>
+                            <i className="oi oi-wrench left-nav-action-icon"
+                               title='Edit Chain'
+                               onClick={() => {
+                                   this.props.history.push('/chain/' + chain.id + '/edit');
+                            }} />
+                            <i className="oi oi-trash left-nav-action-icon"
+                               title='Delete Chain'
+                               onClick={() => {
+                                    chain.delete(false);
+                            }} />
                         </td>
                     </tr>
                 ) : (
@@ -57,24 +46,24 @@ export default class LeftNavigation extends React.Component {
             <div id='left_navigation'>
                 <table className='table table-sm table-hover chains'>
                     <thead>
-                    <tr className='table_nav'>
-                        <td colSpan='3'>
-                            <i title='Add Chain'
-                               className='oi oi-plus float-right'
-                                onClick={(e) => {
-                                    this.add(e);
-                                }} >
-                            </i>
-                            <div className='table_title'>Chains</div>
-                        </td>
-                    </tr>
+                        <tr className='table_nav'>
+                            <td colSpan='4'>
+                                <Link id='left-nav-add-chain-link' to='/chain/add' >
+                                    <i title='Add Chain'
+                                       className='oi oi-plus float-right'>
+                                    </i>
+                                </Link>
+                                <div className='table_title'>Chains</div>
+                            </td>
+                        </tr>
+                        <tr className="left-nav-table-title">
+                            <td>Title</td>
+                            <td>Frequency</td>
+                            <td>Streak</td>
+                            <td className="text-center left-nav-action-links">-</td>
+                        </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td>Title</td>
-                            <td>Streak(days)</td>
-                            <td>-</td>
-                        </tr>
                         {this.props.chains.totalChains ? (
                             this.props.chains.chains.map((chain, index) => {
                                 return this.displayChainRow(chain, index);

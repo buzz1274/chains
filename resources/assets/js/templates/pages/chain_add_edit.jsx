@@ -1,9 +1,8 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import React from "react";
+import PropTypes from "prop-types";
 import MainInterface from '../components/main_interface.jsx';
-import '../../../css/pages/summary.css';
 
-export default class Summary extends React.Component {
+export default class ChainAddEdit extends React.Component {
     static propTypes = {
         auth: PropTypes.object.isRequired,
         chains: PropTypes.object.isRequired,
@@ -12,14 +11,18 @@ export default class Summary extends React.Component {
 
     constructor(props) {
         super(props);
+
+        this.state = {auth: props.auth};
+
     }
 
     render() {
         return (
-            <MainInterface {...this.props} >
-                SUMMARY
+            <MainInterface
+                updateState={this.props.updateState}
+                chains={this.props.chains} >
+                ADD EDIT CHAIN
             </MainInterface>
         );
     }
-
 }

@@ -9,9 +9,33 @@ div.table_title {
     width:50%;
     font-weight: bold;
 }
-oi {
-    padding-top:10px;
+td.left-nav-action-links {
+    width:15%;
 }
+a#left-nav-add-chain-link {
+    color:white;
+    font-size:0.85em;
+    vertical-align: middle;
+}
+a#left-nav-add-chain-link:hover {
+    cursor:pointer;
+}
+a#left-nav-add-chain-link > i {
+    padding-top:3px;
+}
+tr.left-nav-table-title > td {
+    font-weight: bold;
+}
+td.left-nav-chain-streak {
+    text-align:right;
+}
+.left-nav-action-icon {
+    margin-left:2px;
+}
+.left-nav-action-icon:hover {
+    cursor:pointer;
+}
+
 
 
 

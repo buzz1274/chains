@@ -10,6 +10,7 @@ import CustomModal from './templates/components/custom_modal.jsx';
 import Overlay from './templates/components/overlay.jsx';
 import Header from './templates/components/header.jsx';
 import ErrorBoundary from './templates/components/error_boundary.jsx';
+import ChainAddEdit from './templates/pages/chain_add_edit.jsx';
 import Index from './templates/pages/index.jsx';
 import Summary from './templates/pages/summary.jsx';
 import Login from './templates/pages/login.jsx';
@@ -24,11 +25,12 @@ class App extends React.Component {
         super(props);
 
         this.updateState = this.updateState.bind(this);
-        this.history = createBrowserHistory();
 
         this.state = {
             auth: new Auth(),
             chains: new Chains(this.updateState),
+            history: createBrowserHistory(),
+            updateState: this.updateState,
             forceUpdate: false,
             displayOverlay: false,
             modalOptions: {
@@ -45,7 +47,7 @@ class App extends React.Component {
 
     render() {
         return(
-            <Router history={this.history}>
+            <Router {...this.state} >
                 <React.Fragment>
                     <Overlay displayOverlay={this.state.displayOverlay} />
                     <CustomModal modalOptions={this.state.modalOptions}
@@ -53,7 +55,7 @@ class App extends React.Component {
                     <Header auth={this.state.auth}
                             updateState={this.updateState} />
                     <div id='main'>
-                        <ErrorBoundary history={this.history} >
+                        <ErrorBoundary history={this.state.history} >
                             <Switch>
                                 <PublicOnlyRoute exact path='/'
                                     component={Index}
@@ -71,21 +73,21 @@ class App extends React.Component {
                                     auth={this.state.auth} />
                                 <PrivateRoute exact path='/logout'
                                     component={Login}
-                                    auth={this.state.auth} />
+                                    {...this.state} />
                                 <PrivateRoute exact path='/summary'
                                     component={Summary}
-                                    updateState={this.updateState}
-                                    chains={this.state.chains}
-                                    auth={this.state.auth} />
+                                    {...this.state} />
                                 <PrivateRoute exact path='/uncompleted-chains'
                                     component={Index}
                                     auth={this.state.auth} />
                                 <PrivateRoute path='/chain/:chain_id'
                                     component={Index}
                                     auth={this.state.auth} />
-                                <PrivateRoute path='/chain/add'
-                                    component={Index}
-                                    auth={this.auth} />
+                                <PrivateRoute exact path='/chain_add'
+                                    component={ChainAddEdit}
+                                    updateState={this.updateState}
+                                    chains={this.state.chains}
+                                    auth={this.state.auth} />
                                 <PrivateRoute path='/chain/edit/:chain_id'
                                     component={Index}
                                     auth={this.state.auth} />
