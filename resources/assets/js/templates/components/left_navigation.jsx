@@ -19,7 +19,6 @@ export default class LeftNavigation extends React.Component {
                         }}>
                             {chain.chain}
                         </td>
-                        <td>{chain.frequency}</td>
                         <td className="left-nav-chain-streak">0</td>
                         <td className="text-center">
                             <i className="oi oi-wrench left-nav-action-icon"
@@ -47,7 +46,7 @@ export default class LeftNavigation extends React.Component {
                 <table className='table table-sm table-hover chains'>
                     <thead>
                         <tr className='table_nav'>
-                            <td colSpan='4'>
+                            <td colSpan='3'>
                                 <Link id='left-nav-add-chain-link' to='/chain/add' >
                                     <i title='Add Chain'
                                        className='oi oi-plus float-right'>
@@ -58,7 +57,6 @@ export default class LeftNavigation extends React.Component {
                         </tr>
                         <tr className="left-nav-table-title">
                             <td>Title</td>
-                            <td>Frequency</td>
                             <td>Streak</td>
                             <td className="text-center left-nav-action-links">-</td>
                         </tr>
