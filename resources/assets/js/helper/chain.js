@@ -1,3 +1,4 @@
+import Axios from './axios';
 import State from './store';
 
 export default class Chain {
@@ -7,11 +8,13 @@ export default class Chain {
     chain = false;
     frequency = false;
 
-    chains = false;
+    axios = false;
+    chainsUpdated = false;
 
-    constructor(chains) {
-        this.chains = chains;
+    constructor(chainsUpdated) {
         this.delete = this.delete.bind(this);
+        this.chainsUpdated = chainsUpdated;
+        this.axios = new Axios();
     }
 
     hydrate(chain) {
@@ -20,10 +23,6 @@ export default class Chain {
         Object.keys(chain).forEach(function(key) {
             that[key] = chain[key];
         });
-    }
-
-    add() {
-
     }
 
     delete(confirmed) {
@@ -36,15 +35,14 @@ export default class Chain {
         } else {
             let that = this;
 
-            this.chains.axios.post('/chain/' + this.id + '/delete').then(function() {
+            that.active = false;
+            that.chainsUpdated();
+
+            this.axios.post('/chain/' + this.id + '/delete').then(function() {
                 State.updateModal(
                     'alert_success',
                     'delete_chain_success'
                 );
-
-                that.active = false;
-                that.chains.chainsUpdated();
-
             }).catch(function() {
                 State.updateModal(
                     'alert_danger',

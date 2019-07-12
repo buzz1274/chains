@@ -9,11 +9,11 @@ export default class LeftNavigation extends React.Component {
         history: PropTypes.object.isRequired
     }
 
-    displayChainRow(chain, index) {
+    displayChainRow(chain) {
         return (
-            <React.Fragment key={index}>
+            <React.Fragment key={chain.id}>
                 {chain.active ? (
-                    <tr className="left-nav-chain-row">
+                    <tr key={chain.id} className="left-nav-chain-row">
                         <td onClick={() => {
                             this.props.history.push('/chain/' + chain.id);
                         }}>
@@ -64,19 +64,20 @@ export default class LeftNavigation extends React.Component {
                         </tr>
                     </thead>
                     <tbody>
-                        {this.props.chains.totalChains ? (
-                            this.props.chains.chains.map((chain, index) => {
-                                return this.displayChainRow(chain, index);
-                            })
-                        ) : (
-                            <tr>
-                                <td colSpan="3">
-                                    <p className="text-center text-danger">
-                                        You have no Chains. Add some.
-                                    </p>
-                                </td>
-                            </tr>
-                        )}
+                    {this.props.chains.count() > 0 ? (
+                        this.props.chains.chains.map((chain) => {
+                            return this.displayChainRow(chain);
+                        })
+                    ) : (
+                        <tr>
+                            <td colSpan="3">
+                                <p className="text-center text-danger">
+                                    You have no Chains. Add some.
+                                </p>
+                            </td>
+                        </tr>
+                        )
+                    }
                     </tbody>
                 </table>
             </div>

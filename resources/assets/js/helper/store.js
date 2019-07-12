@@ -30,7 +30,7 @@ class Store extends React.Component {
         }
 
         this.state.auth = new Auth();
-        this.state.chains = new Chains(this.updateState);
+        this.state.chains = new Chains();
         this.state.displayOverlay = false;
         this.state.updateState = this.updateState;
         this.state.modalOptions = {

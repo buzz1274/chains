@@ -6,44 +6,40 @@ export default class Chains {
 
     axios = false;
     chains = [];
-    totalChains = 0;
 
     constructor() {
         this.axios = new Axios();
         this.chains = [];
+
+        this.chainsUpdated = () => {Store.updateState({chains: this})};
+        this.chainsUpdated.bind(this);
     }
 
     count() {
-        let that = this;
-        that.totalChains = 0;
+        let count = 0;
 
-        this.chains.map((chain) => {
-            if(chain.active) {
-                that.totalChains++;
-            }
-        })
+        this.chains.forEach(function(chain) {
+           if(chain.active) {
+               count++;
+           }
+        });
+
+        return count;
+
     }
-
-    //add chains watcher in here somewhere//
 
     get() {
         let that = this;
 
         this.axios.get('/chains').then(function(response) {
-            that.totalChains = 0;
-
             response.data.forEach(function(data) {
-                let chain = new Chain(that);
+                let chain = new Chain(that.chainsUpdated);
 
                 chain.hydrate(data);
                 that.chains[data.id] = chain;
 
-                if(chain.active) {
-                    that.totalChains++;
-                }
-
             });
-            Store.updateState({chains: that});
+            that.chainsUpdated();
         });
     }
 }

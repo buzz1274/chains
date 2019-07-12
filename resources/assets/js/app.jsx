@@ -24,7 +24,6 @@ class App extends React.Component {
 
         Store.instantiateState(this.updateState.bind(this));
         this.state = Store.state;
-
     }
 
     updateState(updatedState) {
