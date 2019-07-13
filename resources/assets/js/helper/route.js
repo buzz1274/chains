@@ -36,7 +36,7 @@ const PublicOnlyRoute = function({ component, ...rest }) {
             } else {
                 return (<Redirect
                     to={{
-                        pathname: '/summary',
+                        pathname: '/outstanding',
                         state: { from: routeProps.location }
                     }}
                 />);

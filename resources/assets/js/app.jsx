@@ -9,7 +9,7 @@ import Header from './templates/components/header.jsx';
 import ErrorBoundary from './templates/components/error_boundary.jsx';
 import ChainAddEdit from './templates/pages/chain_add_edit.jsx';
 import Index from './templates/pages/index.jsx';
-import Summary from './templates/pages/summary.jsx';
+import Outstanding from './templates/pages/outstanding.jsx';
 import Login from './templates/pages/login.jsx';
 import Register from './templates/pages/register.jsx';
 import UserProfile from './templates/pages/user_profile.jsx';
@@ -55,8 +55,8 @@ class App extends React.Component {
                                 <PrivateRoute exact path='/logout'
                                     component={Login}
                                     {...this.state} />
-                                <PrivateRoute exact path='/summary'
-                                    component={Summary}
+                                <PrivateRoute exact path='/outstanding'
+                                    component={Outstanding}
                                     {...this.state} />
                                 <PrivateRoute exact path='/uncompleted-chains'
                                     component={Index}

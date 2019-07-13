@@ -1,9 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import MainInterface from '../components/main_interface.jsx';
-import '../../../css/pages/summary.css';
+import '../../../css/pages/outstanding.css';
 
-export default class Summary extends React.Component {
+export default class Outstanding extends React.Component {
     static propTypes = {
         auth: PropTypes.object.isRequired,
         chains: PropTypes.object.isRequired,
@@ -16,7 +16,7 @@ export default class Summary extends React.Component {
 
     render() {
         return (
-            <MainInterface {...this.props} page_title='Summary'>
+            <MainInterface {...this.props} page_title='Outstanding'>
                 {this.props.chains.outstanding.length > 0 ? (
                     null
                 ) : (
