@@ -22,3 +22,7 @@ Artisan::command('custom:cq', function () {
     passthru('npm run lint');
     passthru('./vendor/bin/phpunit');
 })->describe('Check php & javascript coding standards');
+
+Artisan::command('custom:cq', function () {
+    passthru('./vendor/bin/phpcs');
+})->describe('Update chain completion table with outstanding chains');

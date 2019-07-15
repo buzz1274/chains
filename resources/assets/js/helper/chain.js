@@ -7,6 +7,7 @@ export default class Chain {
     active = false;
     chain = false;
     frequency = false;
+    last_completed = false;
 
     axios = false;
     chainsUpdated = false;

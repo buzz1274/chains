@@ -2,7 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import MainInterface from '../components/main_interface.jsx';
 import '../../../css/pages/outstanding.css';
-import {Link} from "react-router-dom";
 
 export default class Outstanding extends React.Component {
     static propTypes = {
