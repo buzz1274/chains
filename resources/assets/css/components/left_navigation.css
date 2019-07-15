@@ -21,7 +21,7 @@ a#left-nav-add-chain-link:hover {
     cursor:pointer;
 }
 a#left-nav-add-chain-link > i {
-    padding-top:3px;
+    padding:3px 15px 0 0;
 }
 tr.left-nav-table-title > td {
     font-weight: bold;

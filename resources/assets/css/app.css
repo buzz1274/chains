@@ -1,0 +1,17 @@
+body {
+  background:#f2f2e9;
+  font-family: "Trebuchet MS";
+  font-size:13px;
+}
+#app {
+  border:1px solid #000;
+  width:1100px;
+  background:#FFF;
+  padding:0;
+  margin:20px auto 20px auto;
+}
+#main {
+  clear:both;
+  min-height:500px;
+  padding:10px;
+}

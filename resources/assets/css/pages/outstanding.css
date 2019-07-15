@@ -1,0 +1,18 @@
+div.outstanding-outstanding {
+    border:1px solid #636b6f;
+    background-color:#DDDDDD;
+    height:50px;
+    margin:5px 0 5px 0;
+}
+div.outstanding-outstanding-content {
+    padding:0 5px 0 5px;
+}
+div.outstanding-outstanding-content-chain {
+    padding-top:10px;
+}
+div.outstanding-outstanding-buttons > button {
+    margin:0 10px 5px 0;
+}
+i.outstanding-outstanding-buttons-icon {
+    margin:0 0 0 10px;
+}

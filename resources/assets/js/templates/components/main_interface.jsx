@@ -5,7 +5,7 @@ import '../../../css/components/main_interface.css';
 
 export default class MainInterface extends React.Component {
     static propTypes = {
-        children: PropTypes.string.isRequired,
+        children: PropTypes.any.isRequired,
         chains: PropTypes.object.isRequired,
         page_title: PropTypes.string.isRequired
     }

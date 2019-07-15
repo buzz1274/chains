@@ -1,0 +1,31 @@
+.btn {
+    margin-right:5px;
+    font-size:1em;
+}
+div.form {
+    width:50%;
+    margin:25px auto;
+}
+
+div.form fieldset {
+    padding:15px;
+    border:1px solid #DDD;
+}
+div.form legend {
+    width:inherit;
+    padding:0px 10px;
+    border-bottom:none;
+    font-size:1.15em;
+}
+div.form div.buttons {
+    float:right;
+}
+div.form div.buttons a {
+    text-decoration:none;
+}
+div.form form {
+    padding:0px 50px 35px 50px;
+}
+div.form div.error {
+    color:#FF0000;
+}

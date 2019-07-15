@@ -30,6 +30,18 @@ export default class Chains {
 
     }
 
+    getOutstanding() {
+        let that = this;
+
+        this.axios.get('/chains/outstanding').then(function(response) {
+            response.data.forEach(function(outstanding) {
+                that.outstanding[outstanding.id] = outstanding;
+            });
+            that.chainsUpdated();
+        });
+
+    }
+
     get() {
         let that = this;
 
