@@ -20,17 +20,29 @@ export default class Outstanding extends React.Component {
 
     displayOutstanding(outstanding) {
         return (
-            <div className='container d-flex outstanding-outstanding' key={outstanding.id}>
+            <div className='container d-flex outstanding-outstanding' key={outstanding.chain_completion_id}>
                 <div className='outstanding-outstanding-content row col-12 align-self-center'>
-                    <div className='row col-6 outstanding-outstanding-content-chain'>
-                        {outstanding.outstanding}
+                    <div className='row col-9 outstanding-outstanding-content-chain'>
+                        {outstanding.chain} on {outstanding.chain_completion_date}
                     </div>
-                    <div className='outstanding-outstanding-buttons row col-6 justify-content-end'>
-                        <button type='button' className='btn btn-success'>
+                    <div className='outstanding-outstanding-buttons row col-4 justify-content-end'>
+                        <button type='button' className='btn btn-success'
+                                onClick={(e) => {
+                                    this.props.chains.outstandingComplete(
+                                        outstanding.chain_completion_id,
+                                        'complete'
+                                    );
+                                }} >
                             Yes
                             <i className='oi oi-circle-check outstanding-outstanding-buttons-icon' />
                         </button>
-                        <button type='button' className='btn btn-danger'>
+                        <button type='button' className='btn btn-danger'
+                                onClick={(e) => {
+                                    this.props.chains.outstandingComplete(
+                                        outstanding.chain_completion_id,
+                                        'failed'
+                                    );
+                                }} >
                             No
                             <i className='oi oi-circle-x outstanding-outstanding-buttons-icon' />
                         </button>
@@ -41,11 +53,18 @@ export default class Outstanding extends React.Component {
     }
 
     render() {
+        let last_displayed = false;
         return (
             <MainInterface page_title='Outstanding' {...this.props} >
-                {this.props.chains.outstanding.length > 0 ? (
+                {this.props.chains.count('outstanding') > 0 ? (
                     this.props.chains.outstanding.map((outstanding) => {
-                        return this.displayOutstanding(outstanding);
+                        if(outstanding.completed == null &&
+                           (!last_displayed || last_displayed != outstanding.id)) {
+
+                            last_displayed = outstanding.id;
+
+                            return this.displayOutstanding(outstanding);
+                        }
                     })
                 ) : (
                     <p>You have no outstanding chains to confirm.</p>

@@ -19,7 +19,7 @@ export default class LeftNavigation extends React.Component {
                         }}>
                             {chain.chain}
                         </td>
-                        <td className="left-nav-chain-streak">0</td>
+                        <td className="left-nav-chain-streak">{chain.current_streak}</td>
                         <td className="text-center">
                             <i className="oi oi-wrench left-nav-action-icon"
                                title='Edit Chain'

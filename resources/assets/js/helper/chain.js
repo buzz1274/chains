@@ -8,6 +8,8 @@ export default class Chain {
     chain = false;
     frequency = false;
     last_completed = false;
+    current_streak = 0;
+    outstanding = [];
 
     axios = false;
     chainsUpdated = false;

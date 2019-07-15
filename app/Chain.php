@@ -44,4 +44,30 @@ class Chain extends Model
 
         return $query->get();
     }
+
+    public static function outstanding($userID)
+    {
+        $query =
+            self::select(array(\DB::raw('chain_completion.id AS chain_completion_id'),
+                               'chain.id', 'chain', 'frequency',
+                               'chain_completion.chain_completion_date'))->
+                    where('chain.user_id', $userID)->
+                    whereNull('chain_completion.completed')->
+                    join(
+                        'chain_completion',
+                        'chain_completion.chain_id',
+                        '=',
+                        'chain.id'
+                    )->
+                    join(
+                        'chain_frequency',
+                        'chain_frequency.id',
+                        '=',
+                        'chain.frequency_id'
+                    );
+
+        return $query->get();
+    }
+
+
 }
