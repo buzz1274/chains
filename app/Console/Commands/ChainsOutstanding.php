@@ -22,11 +22,18 @@ class ChainsOutstanding extends Command
     protected $description = 'Command description';
 
     /**
-     * Todays date
+     * Today's date
      *
      * @var string
      */
     private $today = false;
+
+    /**
+     * array of overdue chains to insert
+     *
+     * @var array
+     */
+    private $insert = [];
 
     /**
      * Create a new command instance.
@@ -48,43 +55,83 @@ class ChainsOutstanding extends Command
     public function handle()
     {
         foreach (Chain::chains()->toArray() as $chain) {
-            switch ($chain['frequency']) {
-                case 'daily':
-                    $this->daily($chain);
-                    break;
+            if ($this->outstandingOverdue($chain)) {
+                $start_date = $this->determineStartDate($chain);
+                $this->insert = [];
+
+                while (strtotime($start_date) <= strtotime($this->today)) {
+                    if ($this->shouldInsertDailyOverdue($chain, $start_date) ||
+                        $this->shouldInsertWeeklyOverdue($chain, $start_date) ||
+                        $this->shouldInsertMonthlyOverdue($chain, $start_date)) {
+                        $this->insert[] = [
+                            'chain_id' => $chain['id'],
+                            'chain_completion_date' => $start_date,
+                            'completed' => null,
+                        ];
+                    }
+                    $start_date = $this->incrementStartDate($start_date);
+                }
+                $this->insertOverdue();
             }
         }
     }
 
-    private function daily($chain)
+    private function outstandingOverdue($chain)
     {
-        if (($chain['last_outstanding'] == null && $chain['last_completed'] == null) ||
-            ($chain['last_outstanding'] < $this->today && $chain['last_completed'] < $this->today)) {
+        return ($chain['last_outstanding'] == null &&
+                $chain['last_completed'] == null) ||
+                ($chain['last_outstanding'] < $this->today &&
+                 $chain['last_completed'] < $this->today);
+    }
 
-            if ($chain['last_completed'] == null && $chain['last_outstanding'] == null) {
-                $start_date = $chain['start_date'];
-            } elseif ($chain['last_completed'] > $chain['last_outstanding']) {
-                $start_date = $chain['last_completed'];
-            } else {
-                $start_date = $chain['last_outstanding'];
-            }
-
-            while (strtotime($start_date) <= strtotime($this->today)) {
-                $start_date = date("Y-m-d", strtotime("+1 day", strtotime($start_date)));
-
-                $insert[] = [
-                    'chain_id' => $chain['id'],
-                    'chain_completion_date' => $start_date,
-                    'completed' => null,
-                ];
-            }
-
-            if (isset($insert)) {
-                \DB::table('chain_completion')->insert($insert);
-            }
-
+    private function determineStartDate($chain)
+    {
+        if ($chain['last_completed'] == null &&
+            $chain['last_outstanding'] == null) {
+            return $chain['start_date'];
+        } elseif ($chain['last_completed'] > $chain['last_outstanding']) {
+            return $chain['last_completed'];
         }
 
+        return $chain['last_outstanding'];
     }
+
+    private function incrementStartDate($start_date)
+    {
+        return date("Y-m-d", strtotime("+1 day", strtotime($start_date)));
+    }
+
+    private function shouldInsertDailyOverdue($chain, $start_date)
+    {
+        return ($chain['frequency'] == 'daily' ||
+                ($chain['frequency'] == 'weekday') &&
+                 !in_array(
+                     date('l', strtotime($start_date)),
+                     ['Saturday', 'Sunday']
+                 ));
+    }
+
+    private function shouldInsertWeeklyOverdue($chain, $start_date)
+    {
+        return ($chain['frequency'] == 'weekly' &&
+            date('l', strtotime($start_date)) == 'Sunday');
+    }
+
+    private function shouldInsertMonthlyOverdue($chain, $start_date)
+    {
+        return ($chain['frequency'] == 'monthly' &&
+                date('t', strtotime($start_date)) ==
+                date('d', strtotime($start_date)));
+    }
+
+    private function insertOverdue()
+    {
+        if ($this->insert) {
+            var_dump($this->insert);
+
+            \DB::table('chain_completion')->insert($this->insert);
+        }
+    }
+
 
 }

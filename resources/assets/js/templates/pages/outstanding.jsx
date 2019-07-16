@@ -35,11 +35,12 @@ export default class Outstanding extends React.Component {
             if(this.today == outstanding.chain_completion_date) {
                 output += ' this week';
             } else {
-                output += ' week ending on ' + moment(outstanding.chain_completion_date).format('Do, MMMM Y');
+                output += ' for the week ending on ' +
+                    moment(outstanding.chain_completion_date).format('Do, MMMM Y');
             }
-        } else if(outstanding.frequency == 'weekly') {
+        } else if(outstanding.frequency == 'monthly') {
             if (this.today == outstanding.chain_completion_date) {
-                output += ' this week';
+                output += ' this month';
             } else {
                 output += ' in ' + moment(outstanding.chain_completion_date).format('MMMM Y');
             }
