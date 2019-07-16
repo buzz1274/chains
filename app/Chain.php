@@ -9,15 +9,20 @@ class Chain extends Model
 
     protected $table = 'chain';
 
-    public static function chains($userID)
+    public static function chains($userID = false)
     {
 
         $query =
             self::select(array('chain.id', 'parent_id', 'chain',
                                'start_date', 'frequency', 'active',
+                               'current_streak', 'max_streak',
                                 \DB::raw('MAX(cc_last_completed.chain_completion_date) AS last_completed'),
                                 \DB::raw('MAX(cc_last_outstanding.chain_completion_date) AS last_outstanding')))->
-                    where('user_id', $userID)->
+                    where(function ($query) use ($userID) {
+                        if ($userID) {
+                            $query->where('user_id', '=', $userID);
+                        }
+                    })->
                     where('active', true)->
                     join(
                         'chain_frequency',
@@ -64,7 +69,8 @@ class Chain extends Model
                         'chain_frequency.id',
                         '=',
                         'chain.frequency_id'
-                    );
+                    )->
+                    orderBy('chain.id', 'chain_completion.chain_completion_date');
 
         return $query->get();
     }

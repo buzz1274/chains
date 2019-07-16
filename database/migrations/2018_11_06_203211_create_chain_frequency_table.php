@@ -16,7 +16,8 @@ class CreateChainFrequencyTable extends Migration
         Schema::create('chain_frequency', function (Blueprint $table) {
             $table->increments('id');
             $table->string('frequency', 7)->unique();
-            $table->timestamps();
+            $table->timestamp('created_at')->useCurrent();
+            $table->timestamp('updated_at')->useCurrent();
         });
 
         $chains = [
@@ -34,14 +35,7 @@ class CreateChainFrequencyTable extends Migration
             ],
         ];
 
-        foreach($chains as $chain) {
-            $chain = array_merge($chain, [
-                'created_at' => 'NOW()',
-                'updated_at' => 'NOW()',
-            ]);
-
-            \DB::table('chain_frequency')->insert($chain);
-        }
+        \DB::table('chain_frequency')->insert($chains);
     }
 
     /**

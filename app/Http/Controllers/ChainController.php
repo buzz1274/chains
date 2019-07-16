@@ -7,7 +7,7 @@ use App\Chain;
 
 class ChainController extends Controller
 {
-    const USER_ID = 2;
+    const USER_ID = 1;
 
     public function chains()
     {

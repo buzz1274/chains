@@ -9,6 +9,7 @@ export default class Chain {
     frequency = false;
     last_completed = false;
     current_streak = 0;
+    max_streak = 0;
     outstanding = [];
 
     axios = false;

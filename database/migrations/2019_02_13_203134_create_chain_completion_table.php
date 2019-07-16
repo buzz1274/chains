@@ -18,8 +18,9 @@ class CreateChainCompletionTable extends Migration
             $table->unsignedInteger('chain_id')->unsigned();
             $table->foreign('chain_id')->references('id')->on('chain');
             $table->date('chain_completion_date');
-            $table->boolean('completed')->default(false);
-            $table->timestamps();
+            $table->boolean('completed')->nullable(true)->default(null);
+            $table->timestamp('created_at')->useCurrent();
+            $table->timestamp('updated_at')->useCurrent();
         });
     }
 
