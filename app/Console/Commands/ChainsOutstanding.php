@@ -127,8 +127,6 @@ class ChainsOutstanding extends Command
     private function insertOverdue()
     {
         if ($this->insert) {
-            var_dump($this->insert);
-
             \DB::table('chain_completion')->insert($this->insert);
         }
     }
