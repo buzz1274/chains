@@ -50,21 +50,29 @@ export default class Chains {
     }
 
     outstandingComplete(id, status) {
-        if(status == 'complete') {
-            this.outstanding[id].completed = true;
-            this.chains[this.outstanding[id].id].current_streak++;
+        let that = this;
+
+        this.axios.post('/chains/outstanding/' + id + '/' + status).then(function() {
+            that.outstanding[id].completed = true;
+
+            if(status == 'yes') {
+                that.chains[that.outstanding[id].id].current_streak++;
+            } else {
+                that.chains[that.outstanding[id].id].current_streak = 0;
+            }
+
+            that.chainsUpdated();
 
             State.updateModal(
                 'alert_success',
-                'delete_chain_success'
+                'outstanding_chain_confirmed_success'
             );
-
-        } else {
-            this.outstanding[id].completed = false;
-            this.chains[this.outstanding[id].id].current_streak = 0;
-        }
-
-        //this.chainsUpdated();
+        }).catch(function(e) {
+            State.updateModal(
+                'alert_danger',
+                'outstanding_chain_confirmed_failure'
+            );
+        });
     }
 
     get() {

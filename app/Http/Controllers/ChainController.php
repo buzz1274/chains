@@ -13,9 +13,4 @@ class ChainController extends Controller
     {
         return Chain::chains(self::USER_ID)->toJson();
     }
-
-    public function outstanding()
-    {
-        return Chain::outstanding(self::USER_ID)->toJson();
-    }
 }

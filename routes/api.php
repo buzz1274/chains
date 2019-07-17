@@ -18,7 +18,8 @@ Route::any('/', function (Request $request) {
 });
 
 Route::get('/chains', 'ChainController@chains');
-Route::get('/chains/outstanding', 'ChainController@outstanding');
+Route::get('/chains/outstanding', 'OutstandingController@index');
+Route::any('/chains/outstanding/{id}/{action}', 'OutstandingController@complete');
 
 Route::middleware('auth:api')->get('api/', function (Request $request) {
     return $request->user();

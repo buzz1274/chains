@@ -19,15 +19,20 @@ import Store from './helper/store.js';
 
 
 class App extends React.Component {
+    state = {}
+
     constructor(props) {
         super(props);
-
-        Store.instantiateState(this.updateState.bind(this));
         this.state = Store.state;
     }
 
     updateState(updatedState) {
         this.setState(update(this.state, {$merge: updatedState}));
+    }
+
+    componentWillMount() {
+        Store.instantiateState(this.updateState.bind(this));
+        this.updateState(Store.state);
     }
 
     render() {

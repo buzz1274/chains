@@ -46,7 +46,6 @@ class Store extends React.Component {
     }
 
     updateModal(modal_class, modal_type, modal_action = false) {
-        console.log("HERE");
         this.state.updateState(
             {modalOptions:
                 {modal_class: modal_class,

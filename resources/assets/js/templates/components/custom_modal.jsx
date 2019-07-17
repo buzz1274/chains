@@ -17,7 +17,9 @@ export default class CustomModal extends React.Component {
     static bodyText = {
         delete_chain: 'Warning!!!! This action is permanent and cannot be reversed',
         delete_chain_success: 'Chain successfully deleted',
-        delete_chain_failure: 'An error occurred deleting the chain'
+        delete_chain_failure: 'An error occurred deleting the chain',
+        outstanding_chain_confirmed_success: 'Outstanding chain successfully confirmed',
+        outstanding_chain_confirmed_failure: 'An error occurred when confirming outstanding chain'
     }
 
     static buttonText = {

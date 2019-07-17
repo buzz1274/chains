@@ -61,7 +61,7 @@ export default class Outstanding extends React.Component {
                                 onClick={(e) => {
                                     this.props.chains.outstandingComplete(
                                         outstanding.chain_completion_id,
-                                        'complete'
+                                        'yes'
                                     );
                                 }} >
                             Yes
@@ -71,7 +71,7 @@ export default class Outstanding extends React.Component {
                                 onClick={(e) => {
                                     this.props.chains.outstandingComplete(
                                         outstanding.chain_completion_id,
-                                        'failed'
+                                        'no'
                                     );
                                 }} >
                             No
