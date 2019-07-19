@@ -30,7 +30,7 @@ class App extends React.Component {
         this.setState(update(this.state, {$merge: updatedState}));
     }
 
-    UNSAFE_componentWillMount() {
+    componentWillMount() {
         Store.instantiateState(this.updateState.bind(this));
         this.updateState(Store.state);
     }

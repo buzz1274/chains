@@ -5,7 +5,9 @@ import State from './store';
 export default class Chains {
 
     axios = false;
+
     chains = [];
+
     outstanding = [];
 
     constructor() {
@@ -13,7 +15,10 @@ export default class Chains {
         this.chains = [];
         this.outstanding = [];
 
-        this.chainsUpdated = () => {State.updateState({chains: this})};
+        this.chainsUpdated = () => {
+            State.updateState({chains: this});
+        };
+
         this.chainsUpdated.bind(this);
     }
 
@@ -52,7 +57,9 @@ export default class Chains {
     outstandingComplete(id, status) {
         let that = this;
 
-        this.axios.post('/chains/outstanding/' + id + '/' + status).then(function() {
+        this.axios.post('/chains/outstanding/' + id +
+            '/' + status).then(function() {
+
             that.outstanding[id].completed = true;
 
             if(status == 'yes') {
@@ -75,7 +82,7 @@ export default class Chains {
                 'alert_success',
                 'outstanding_chain_confirmed_success'
             );
-        }).catch(function(e) {
+        }).catch(function() {
             State.updateModal(
                 'alert_danger',
                 'outstanding_chain_confirmed_failure'

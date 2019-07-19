@@ -4,15 +4,23 @@ import State from './store';
 export default class Chain {
 
     id = false;
+
     active = false;
+
     chain = false;
+
     frequency = false;
+
     last_completed = false;
+
     current_streak = 0;
+
     max_streak = 0;
+
     outstanding = [];
 
     axios = false;
+
     chainsUpdated = false;
 
     constructor(chainsUpdated) {
