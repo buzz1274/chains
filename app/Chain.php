@@ -74,6 +74,4 @@ class Chain extends Model
 
         return $query->get();
     }
-
-
 }

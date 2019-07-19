@@ -130,6 +130,4 @@ class ChainsOutstanding extends Command
             \DB::table('chain_completion')->insert($this->insert);
         }
     }
-
-
 }

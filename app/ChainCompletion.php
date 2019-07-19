@@ -56,7 +56,6 @@ class ChainCompletion extends Model
             if ($chain->current_streak > $chain->max_streak) {
                 $chain->max_streak = $chain->current_streak;
             }
-
         } elseif ($action == 'no') {
             $completedChain->completed = false;
             $chain->current_streak = 0;
@@ -65,6 +64,4 @@ class ChainCompletion extends Model
         $completedChain->save();
         $chain->save();
     }
-
 }
-
