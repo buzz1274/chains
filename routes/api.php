@@ -20,7 +20,7 @@ Route::any('/', function (Request $request) {
 Route::get('/chains', 'ChainController@chains');
 Route::get('/chains/outstanding', 'ChainController@outstandingChains');
 
-Route::any(
+Route::post(
     '/chains/outstanding/{id}/{action}',
     'ChainController@outstandingChainComplete'
 )->where(['action' => 'yes|no']);
