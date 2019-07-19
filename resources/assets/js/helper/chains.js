@@ -54,9 +54,17 @@ export default class Chains {
 
         this.axios.post('/chains/outstanding/' + id + '/' + status).then(function() {
             that.outstanding[id].completed = true;
-
+            
             if(status == 'yes') {
                 that.chains[that.outstanding[id].id].current_streak++;
+
+                if(that.chains[that.outstanding[id].id].current_streak >=
+                   that.chains[that.outstanding[id].id].max_streak) {
+
+                    that.chains[that.outstanding[id].id].max_streak =
+                        that.chains[that.outstanding[id].id].current_streak;
+                }
+
             } else {
                 that.chains[that.outstanding[id].id].current_streak = 0;
             }
