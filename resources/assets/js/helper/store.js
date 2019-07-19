@@ -16,9 +16,11 @@ class Store extends React.Component {
             return Store.instance;
         }
 
-        this.state = {history: createBrowserHistory(),
-                      destroyState: this.destroyState.bind(this),
-                      updateModal: this.updateModal.bind(this)};
+        this.state = {
+            history: createBrowserHistory(),
+            destroyState: this.destroyState.bind(this),
+            updateModal: this.updateModal.bind(this)
+        };
 
         Store.instance = this;
 

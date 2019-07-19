@@ -17,6 +17,8 @@ Route::any('/', function (Request $request) {
     return response()->json(['error' => 'Page not found'], 404);
 });
 
+Route::post('/user/register', 'UserController@register');
+
 Route::get('/chains', 'ChainController@chains');
 Route::get('/chains/outstanding', 'ChainController@outstandingChains');
 
