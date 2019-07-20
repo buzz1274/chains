@@ -9,7 +9,7 @@ export default class Axios {
         this.instance = axios.create({
             baseURL: this.url(),
             timeout: 5000,
-            headers: {}
+            headers: {'Access-Control-Allow-Origin': '*'}
         });
 
         this.addRequestInterceptor();

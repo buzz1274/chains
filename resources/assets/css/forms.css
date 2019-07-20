@@ -26,6 +26,11 @@ div.form div.buttons a {
 div.form form {
     padding:0px 50px 35px 50px;
 }
-div.form div.error {
+div.form-error {
+    color:#FF0000;
+}
+input.form-error {
+    border:1px solid #FF0000;
+    background-color: lavenderblush;
     color:#FF0000;
 }
