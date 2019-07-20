@@ -28,7 +28,7 @@ class ChainController extends Controller
 
         if (ChainCompletion::doOlderOutstandingChainsExist($id)) {
             return response()->json(
-                ['error', 'Older outstanding chain exists. Confirm that first'],
+                ['error', 'Older outstanding chain exists. Confirm those first'],
                 403
             );
         }

@@ -1,12 +1,13 @@
-import React from "react";
-import Auth from "./auth";
-import Chains from "./chains";
-import {createBrowserHistory} from "history";
+import React from 'react';
+import Auth from './auth';
+import Chains from './chains';
+import {createBrowserHistory} from 'history';
 
 class Store extends React.Component {
     static instance = false;
 
     state = false;
+
     updateState = false;
 
     constructor(props) {
@@ -39,7 +40,7 @@ class Store extends React.Component {
             modal_class: false,
             modal_type: false,
             modal_action: false
-        }
+        };
     }
 
     destroyState() {
@@ -50,9 +51,10 @@ class Store extends React.Component {
     updateModal(modal_class, modal_type, modal_action = false) {
         this.state.updateState(
             {modalOptions:
-                {modal_class: modal_class,
-                 modal_type: modal_type,
-                 modal_action: modal_action
+                {
+                    modal_class: modal_class,
+                    modal_type: modal_type,
+                    modal_action: modal_action
                 }
             });
     }

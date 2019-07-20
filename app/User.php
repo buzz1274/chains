@@ -26,4 +26,16 @@ class User extends Authenticatable
     protected $hidden = [
         'password', 'remember_token',
     ];
+
+    public static function emailAlreadyInUse($email)
+    {
+        return (bool)self::select(['id'])->
+                        where('email', '=', $email)->
+                        count();
+    }
+
+    public static function passwordMatchesPolicy($password)
+    {
+        //
+    }
 }

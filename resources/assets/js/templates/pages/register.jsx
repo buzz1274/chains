@@ -1,11 +1,15 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import Axios from '../../helper/axios';
 import '../../../css/pages/register.css';
 
 export default class Register extends React.Component {
+    axios = false;
+
     constructor(props) {
         super(props);
 
+        this.axios = new Axios();
         this.state = {
             name: '',
             email: '',
@@ -18,6 +22,25 @@ export default class Register extends React.Component {
                 repeatPassword: ''
             }
         }
+    }
+
+    register() {
+        let that = this;
+
+        this.axios.post('user/register', {
+            name: this.state.name,
+            email: this.state.email,
+            password: this.state.password,
+            repeatPassword: this.state.repeatPassword
+        }).then(function() {
+            that.props.history.push('/login');
+        }).catch(function(error) {
+            if(error.status == 400) {
+                that.setState({errors: error.data});
+            } else {
+                that.props.history.push('/error');
+            }
+        });
     }
 
     styleFormError(field) {
@@ -109,7 +132,7 @@ export default class Register extends React.Component {
                         </Link>
                         <button type='button' className='btn btn-primary'
                                 onClick={() => {
-                                    this.props.auth.register(this.state);
+                                    this.register();
                                 }} >
                             Register
                         </button>

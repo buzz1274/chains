@@ -44,7 +44,7 @@ export default class Axios {
         }, function (error) {
             State.updateState({displayOverlay: false});
 
-            throw Promise.reject(error);
+            return Promise.reject(error.response);
         });
     }
 
