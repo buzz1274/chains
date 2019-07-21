@@ -59,6 +59,9 @@ class ChainsOutstanding extends Command
                 $start_date = $this->determineStartDate($chain);
                 $this->insert = [];
 
+                print_r($chain);
+                echo($start_date);
+
                 while (strtotime($start_date) <= strtotime($this->today)) {
                     if ($this->shouldInsertDailyOverdue($chain, $start_date) ||
                         $this->shouldInsertWeeklyOverdue($chain, $start_date) ||
@@ -90,10 +93,10 @@ class ChainsOutstanding extends Command
             $chain['last_outstanding'] == null) {
             return $chain['start_date'];
         } elseif ($chain['last_completed'] > $chain['last_outstanding']) {
-            return $chain['last_completed'];
+            return $this->incrementStartDate($chain['last_completed']);
         }
 
-        return $chain['last_outstanding'];
+        return $this->incrementStartDate($chain['last_outstanding']);
     }
 
     private function incrementStartDate($start_date)

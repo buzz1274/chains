@@ -33,6 +33,7 @@ export default class Register extends React.Component {
             password: this.state.password,
             repeatPassword: this.state.repeatPassword
         }).then(function() {
+            
             that.props.history.push('/login');
         }).catch(function(error) {
             if(error.status == 400) {

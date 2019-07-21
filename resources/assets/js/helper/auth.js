@@ -3,6 +3,8 @@ import Axios from './axios';
 export default class Auth {
     axios = false;
 
+    registrationSuccesful = false;
+
     constructor() {
         this.axios = new Axios();
 
