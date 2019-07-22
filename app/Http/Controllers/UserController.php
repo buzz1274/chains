@@ -17,36 +17,38 @@ class UserController extends Controller
             }
         }
 
+        if (!isset($errors['email']) &&
+            User::emailAlreadyInUse($request->input('email'))) {
+            $errors['email'] = 'Email address already in use';
+        }
+
+        if (!isset($errors['password']) && !isset($errors['repeatPassword'])) {
+            if ($request->input('password') !=
+                $request->input('repeatPassword')) {
+                $errors['password'] = 'Passwords do not match';
+                $errors['repeatPassword'] = $errors['password'];
+            }
+
+            if (!isset($errors['password']) &&
+                !User::passwordMatchesPolicy($request->input('password'))) {
+                $errors['password'] =
+                    'Please enter a password of at least 7 characters with at '.
+                    'least 1 number, 1 uppercase character and '.
+                    '1 punctuation character';
+                $errors['repeatPassword'] = $errors['password'];
+            }
+        }
+
         if ($errors) {
             return response()->json($errors, 400);
         }
 
-        if ($request->input('password') !=
-            $request->input('repeatPassword')) {
-            return response()->json(
-                ['password' => 'Passwords do not match',
-                 'repeatPassword' => 'Passwords do not match'],
-                400
-            );
-        }
-
-        if (User::emailAlreadyInUse($request->input('email'))) {
-            return response()->json(
-                ['email' => 'Email address already in use'],
-                400
-            );
-        }
-
-        if (!User::passwordMatchesPolicy($request->input('password'))) {
-            //
-        }
-
+        User::add(
+            $request->input('name'),
+            $request->input('email'),
+            $request->input('password')
+        );
 
         return response()->json(['Registration successful'], 201);
-
-        //validate that password matches policy
-
-        //write user details to db
-        //send registration email
     }
 }

@@ -4,6 +4,7 @@ namespace App;
 
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Support\Facades\Hash;
 
 class User extends Authenticatable
 {
@@ -27,6 +28,19 @@ class User extends Authenticatable
         'password', 'remember_token',
     ];
 
+    public static function add($name, $email, $password)
+    {
+        self::insert(
+            [
+                'name' => $name,
+                'email' => $email,
+                'password' => Hash::make($password)
+            ]
+        );
+
+        //send registration email//
+    }
+
     public static function emailAlreadyInUse($email)
     {
         return (bool)self::select(['id'])->
@@ -36,6 +50,26 @@ class User extends Authenticatable
 
     public static function passwordMatchesPolicy($password)
     {
-        //
+        if (strlen($password) < 7) {
+            return false;
+        }
+
+        if (!preg_match('/[0-9]/', $password)) {
+            return false;
+        }
+
+        if (!preg_match('/[a-z]/', $password)) {
+            return false;
+        }
+
+        if (!preg_match('/[A-Z]/', $password)) {
+            return false;
+        }
+
+        if (!preg_match('/\W/', $password)) {
+            return false;
+        }
+
+        return true;
     }
 }
