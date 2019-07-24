@@ -21,7 +21,7 @@ class UserController extends Controller
      */
     public function register(Request $request)
     {
-        $result = $this->user->add(
+        $result = $this->user->register(
             [
                 'name' => $request->input('name'),
                 'email' => $request->input('email'),
@@ -36,35 +36,5 @@ class UserController extends Controller
         }
 
         return response()->json(['Registration failed'], 500);
-
-        /*
-        foreach (['name', 'email', 'password', 'repeatPassword'] as $field) {
-            if (empty($request->input($field))) {
-                $errors[$field] = 'Please enter a value';
-            }
-        }
-
-        if (!isset($errors['email']) &&
-            User::emailAlreadyInUse($request->input('email'))) {
-            $errors['email'] = 'Email address already in use';
-        }
-
-        if (!isset($errors['password']) && !isset($errors['repeatPassword'])) {
-            if ($request->input('password') !=
-                $request->input('repeatPassword')) {
-                $errors['password'] = 'Passwords do not match';
-                $errors['repeatPassword'] = $errors['password'];
-            }
-
-            if (!isset($errors['password']) &&
-                !User::passwordMatchesPolicy($request->input('password'))) {
-                $errors['password'] =
-                    'Please enter a password of at least 7 characters with at '.
-                    'least 1 number, 1 uppercase character and '.
-                    '1 punctuation character';
-                $errors['repeatPassword'] = $errors['password'];
-            }
-        }
-        */
     }
 }

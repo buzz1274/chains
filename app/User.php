@@ -11,12 +11,22 @@ class User extends Authenticatable
 {
     use Notifiable;
 
-    /**
-     * instance of email class
-     *
-     * @var object
-     */
-    private $email = false;
+    const REGISTRATION_ERROR_MISSING_FIELD =
+        'Please enter a value';
+
+    const REGISTRATION_ERROR_EMAIL_IN_USE =
+        'Email address already in use';
+
+    const REGISTRATION_ERROR_PASSWORDS_DO_NOT_MATCH =
+        'Passwords do not match';
+
+    const PASSWORD_DOES_NOT_MEET_GUIDELINES =
+        'Please enter a password of at least 7 characters with at '.
+        'least 1 number, 1 uppercase character and '.
+        '1 punctuation character';
+
+    const REQUIRED_FIELDS_FOR_REGISTRATION =
+        ['name', 'email', 'password', 'repeatPassword'];
 
     /**
      * The attributes that are mass assignable.
@@ -37,21 +47,13 @@ class User extends Authenticatable
     ];
 
     /**
-     * User constructor.
-     */
-    public function __construct()
-    {
-        $this->email = new Email();
-    }
-
-    /**
      * @param $registrationDetails
      *              - name      string
      *              - email     string
      *              - password  string
-     * @return bool|mixed
+     * @return array|bool
      */
-    public function add($registrationDetails)
+    public function register($registrationDetails)
     {
         try {
             $errors = $this->validRegistrationDetails($registrationDetails);
@@ -68,7 +70,10 @@ class User extends Authenticatable
                 ]
             );
 
-            $this->sendRegistrationEmail($registrationDetails['email'], []);
+            $this->sendRegistrationEmail(
+                $registrationDetails['email'],
+                []
+            );
 
             return true;
         } catch (Exception $e) {
@@ -76,39 +81,46 @@ class User extends Authenticatable
         }
     }
 
+    /**
+     * @param $registrationDetails
+     *              - name      string
+     *              - email     string
+     *              - password  string
+     * @return array|bool
+     */
     private function validRegistrationDetails($registrationDetails)
     {
         $errors = [];
 
-        foreach (['name', 'email', 'password', 'repeatPassword'] as $field) {
+        foreach (self::REQUIRED_FIELDS_FOR_REGISTRATION as $field) {
             if (empty($registrationDetails[$field])) {
-                $errors[$field] = 'Please enter a value';
+                $errors[$field] = self::REGISTRATION_ERROR_MISSING_FIELD;
             }
         }
 
         if (!isset($errors['email']) &&
             $this->emailAlreadyInUse($registrationDetails['email'])) {
-            $errors['email'] = 'Email address already in use';
+            $errors['email'] = self::REGISTRATION_ERROR_EMAIL_IN_USE;
         }
 
         if (!isset($errors['password']) && !isset($errors['repeatPassword'])) {
             if ($registrationDetails['password'] !=
                 $registrationDetails['repeatPassword']) {
-                $errors['password'] = 'Passwords do not match';
-                $errors['repeatPassword'] = $errors['password'];
-            }
-
-            if (!isset($errors['password']) &&
-                !$this->passwordMatchesPolicy(
-                    $registrationDetails['password']
-                )) {
                 $errors['password'] =
-                    'Please enter a password of at least 7 characters with at '.
-                    'least 1 number, 1 uppercase character and '.
-                    '1 punctuation character';
-                $errors['repeatPassword'] = $errors['password'];
+                    self::REGISTRATION_ERROR_PASSWORDS_DO_NOT_MATCH;
+                $errors['repeatPassword'] =
+                    self::REGISTRATION_ERROR_PASSWORDS_DO_NOT_MATCH;
             }
         }
+
+        if (!isset($errors['password']) &&
+            !$this->passwordMatchesPolicy($registrationDetails['password'])) {
+            $errors['password'] =
+                self::PASSWORD_DOES_NOT_MEET_GUIDELINES;
+            $errors['repeatPassword'] =
+                self::PASSWORD_DOES_NOT_MEET_GUIDELINES;
+        }
+
 
         if (!empty($errors)) {
             return $errors;
@@ -117,9 +129,16 @@ class User extends Authenticatable
         return true;
     }
 
+    /**
+     * @param $email    string
+     * @param $vars     array
+     * @return void
+     */
     private function sendRegistrationEmail($email, $vars)
     {
-        $this->email->send(
+        $emailer = new Email();
+
+        $emailer->send(
             $email,
             'chains.zz50.co.uk Registration',
             'registration_email',
@@ -133,14 +152,14 @@ class User extends Authenticatable
 
 
 
-    public function emailAlreadyInUse($email)
+    private function emailAlreadyInUse($email)
     {
         return (bool)self::select(['id'])->
                         where('email', '=', $email)->
                         count();
     }
 
-    public function passwordMatchesPolicy($password)
+    private function passwordMatchesPolicy($password)
     {
         if (strlen($password) < 7) {
             return false;
