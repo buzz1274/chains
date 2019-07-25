@@ -47,6 +47,8 @@ class User extends Authenticatable
     ];
 
     /**
+     * register a new user
+     *
      * @param $registrationDetails
      *              - name      string
      *              - email     string
@@ -66,7 +68,8 @@ class User extends Authenticatable
                 [
                     'name' => $registrationDetails['name'],
                     'email' => $registrationDetails['email'],
-                    'password' => Hash::make($registrationDetails['password'])
+                    'password' =>
+                        $this->hashPassword($registrationDetails['password'])
                 ]
             );
 
@@ -82,6 +85,19 @@ class User extends Authenticatable
     }
 
     /**
+     * hash plain text password
+     *
+     * @param $password
+     * @return string
+     */
+    private function hashPassword($password)
+    {
+        return Hash::make($password);
+    }
+
+    /**
+     * validate registration details
+     *
      * @param $registrationDetails
      *              - name      string
      *              - email     string
@@ -121,7 +137,6 @@ class User extends Authenticatable
                 self::PASSWORD_DOES_NOT_MEET_GUIDELINES;
         }
 
-
         if (!empty($errors)) {
             return $errors;
         }
@@ -146,20 +161,26 @@ class User extends Authenticatable
         );
     }
 
-
-
-
-
-
-
-    private function emailAlreadyInUse($email)
+    /**
+     * determine if an email address is already in use
+     *
+     * @param $email
+     * @return bool
+     */
+    protected function emailAlreadyInUse($email)
     {
         return (bool)self::select(['id'])->
                         where('email', '=', $email)->
                         count();
     }
 
-    private function passwordMatchesPolicy($password)
+    /**
+     * check password matches policy
+     *
+     * @param $password
+     * @return bool
+     */
+    protected function passwordMatchesPolicy($password)
     {
         if (strlen($password) < 7) {
             return false;
