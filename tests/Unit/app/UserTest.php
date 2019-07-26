@@ -120,4 +120,126 @@ class UserTest extends TestCase
         );
     }
 
+    /**
+     * @test
+     */
+    public function ifNoRegistrationValidationErrorsRecordIsInsertedAndEmailIsSent()
+    {
+        $user = Mockery::mock(User::class)
+            ->makePartial()
+            ->shouldAllowMockingProtectedMethods()
+            ->allows(
+                [
+                    'emailAlreadyInUse' => false,
+                    'passwordMatchesPolicy' => true,
+                ]
+            );
+
+        $user->expects()
+            ->hashPassword('pass')
+            ->andReturn('derp');
+
+        $user->expects()
+            ->insert(
+                [
+                    'name' => 'herp derp',
+                    'email' => 'herp@derp.com',
+                    'password' => 'derp'
+                ]
+            );
+
+        $user->expects()
+            ->sendRegistrationEmail('herp@derp.com', []);
+
+        $user->register(
+            [
+                'name' => 'herp derp',
+                'email' => 'herp@derp.com',
+                'password' => 'pass',
+                'repeatPassword' => 'pass',
+            ]
+        );
+    }
+
+    /**
+     * @test
+     */
+    public function ifPasswordIsLessThan7CharsPasswordMatchesPolicyReturnsFalse()
+    {
+        $user = Mockery::mock(User::class)
+            ->makePartial()
+            ->shouldAllowMockingProtectedMethods();
+
+        $this->assertTrue(
+            $user->passwordMatchesPolicy('123456') === false
+        );
+    }
+
+    /**
+     * @test
+     */
+    public function ifPasswordDoesNotContainAnIntegerPasswordMatchesPolicyReturnsFalse()
+    {
+        $user = Mockery::mock(User::class)
+            ->makePartial()
+            ->shouldAllowMockingProtectedMethods();
+
+        $this->assertTrue(
+            $user->passwordMatchesPolicy('aaaaaaaa') === false
+        );
+    }
+
+    /**
+     * @test
+     */
+    public function ifPasswordDoesNotContainALowercaseCharPasswordMatchesPolicyReturnsFalse()
+    {
+        $user = Mockery::mock(User::class)
+            ->makePartial()
+            ->shouldAllowMockingProtectedMethods();
+
+        $this->assertTrue(
+            $user->passwordMatchesPolicy('AAAAAAA1') === false
+        );
+    }
+
+    /**
+     * @test
+     */
+    public function ifPasswordDoesNotContainAUppercaseCharPasswordMatchesPolicyReturnsFalse()
+    {
+        $user = Mockery::mock(User::class)
+            ->makePartial()
+            ->shouldAllowMockingProtectedMethods();
+
+        $this->assertTrue(
+            $user->passwordMatchesPolicy('bbbbbbb1') === false
+        );
+    }
+
+    /**
+     * @test
+     */
+    public function ifPasswordDoesNotContainPunctuationPasswordMatchesPolicyReturnsFalse()
+    {
+        $user = Mockery::mock(User::class)
+            ->makePartial()
+            ->shouldAllowMockingProtectedMethods();
+
+        $this->assertTrue(
+            $user->passwordMatchesPolicy('Abbbbbbb1') === false
+        );
+    }
+
+    /**
+     * @test
+     */
+    public function ifPasswordMatchesPolicyTrueIsReturned()
+    {
+        $user = Mockery::mock(User::class)
+            ->makePartial()
+            ->shouldAllowMockingProtectedMethods();
+
+        $this->assertTrue($user->passwordMatchesPolicy('Abbbbbbb1;'));
+    }
 }

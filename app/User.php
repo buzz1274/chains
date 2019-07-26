@@ -90,7 +90,7 @@ class User extends Authenticatable
      * @param $password
      * @return string
      */
-    private function hashPassword($password)
+    protected function hashPassword($password)
     {
         return Hash::make($password);
     }
@@ -149,7 +149,7 @@ class User extends Authenticatable
      * @param $vars     array
      * @return void
      */
-    private function sendRegistrationEmail($email, $vars)
+    protected function sendRegistrationEmail($email, $vars)
     {
         $emailer = new Email();
 
