@@ -151,7 +151,7 @@ class UserTest extends TestCase
         $user->expects()
             ->sendRegistrationEmail('herp@derp.com', []);
 
-        $user->register(
+        $result = $user->register(
             [
                 'name' => 'herp derp',
                 'email' => 'herp@derp.com',
@@ -159,6 +159,8 @@ class UserTest extends TestCase
                 'repeatPassword' => 'pass',
             ]
         );
+
+        $this->assertTrue($result);
     }
 
     /**
