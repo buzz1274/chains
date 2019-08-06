@@ -84,15 +84,13 @@ export default class Outstanding extends React.Component {
     }
 
     render() {
-        let last_displayed = false;
+        let displayed = [];
         return (
             <MainInterface page_title='Outstanding' {...this.props} >
                 {this.props.chains.count('outstanding') > 0 ? (
                     this.props.chains.outstanding.map((outstanding) => {
-                        if(outstanding.completed == null &&
-                           (!last_displayed || last_displayed != outstanding.id)) {
-
-                            last_displayed = outstanding.id;
+                        if(!displayed.includes(outstanding.id)) {
+                            displayed.push(outstanding.id);
 
                             return this.displayOutstanding(outstanding);
                         }
