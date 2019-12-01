@@ -94,11 +94,13 @@ export default class Chains {
         let that = this;
 
         this.axios.get('/chains').then(function(response) {
+            let count = 0;
             response.data.forEach(function(data) {
                 let chain = new Chain(that.chainsUpdated);
 
                 chain.hydrate(data);
-                that.chains[data.id] = chain;
+                that.chains[count] = chain;
+                count++;
 
             });
             that.chainsUpdated();

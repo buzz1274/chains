@@ -22,15 +22,15 @@ class AddSortOrderToFrequency extends Migration
             update(['ordering' => 1]);
 
         \DB::table('chain_frequency')->
-            where('frequency', 'weekly')->
+            where('frequency', 'mon_thurs')->
             update(['ordering' => 2]);
 
         \DB::table('chain_frequency')->
-            where('frequency', 'mon_thurs')->
+            where('frequency', 'weekday')->
             update(['ordering' => 3]);
 
         \DB::table('chain_frequency')->
-            where('frequency', 'weekday')->
+            where('frequency', 'weekly')->
             update(['ordering' => 4]);
 
         \DB::table('chain_frequency')->
@@ -45,6 +45,8 @@ class AddSortOrderToFrequency extends Migration
      */
     public function down()
     {
-        //
+        Schema::table('chain_frequency', function (Blueprint $table) {
+            $table->dropColumn(['ordering']);
+        });
     }
 }
