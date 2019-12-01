@@ -49,7 +49,8 @@ class Chain extends Model
                         'ordering'
                     )->
                     orderBy(
-                        'ordering'
+                        'ordering',
+                        'asc'
                     );
 
         return $query->get();
