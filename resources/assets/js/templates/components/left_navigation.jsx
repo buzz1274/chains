@@ -17,6 +17,9 @@ export default class LeftNavigation extends React.Component {
                         <td onClick={() => {
                             this.props.history.push('/chain/' + chain.id);
                         }}>
+                            <span className="float-right">
+                                {chain.display_name}
+                            </span>
                             {chain.chain}
                         </td>
                         <td className="left-nav-chain-streak">
@@ -58,7 +61,12 @@ export default class LeftNavigation extends React.Component {
                             </td>
                         </tr>
                         <tr className="left-nav-table-title">
-                            <td>Title</td>
+                            <td>
+                                <span className="float-right">
+                                    Frequency
+                                </span>
+                                Title
+                            </td>
                             <td>Streak</td>
                             <td className="text-center left-nav-action-links">-</td>
                         </tr>

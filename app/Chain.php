@@ -15,7 +15,7 @@ class Chain extends Model
         $query =
             self::select(array('chain.id', 'parent_id', 'chain',
                                'start_date', 'frequency', 'active',
-                               'current_streak', 'max_streak',
+                               'current_streak', 'max_streak', 'display_name',
                                 \DB::raw('MAX(cc_last_completed.chain_completion_date) AS last_completed'),
                                 \DB::raw('MAX(cc_last_outstanding.chain_completion_date) AS last_outstanding')))->
                     where(function ($query) use ($userID) {
@@ -44,7 +44,8 @@ class Chain extends Model
                         'chain',
                         'start_date',
                         'frequency',
-                        'active'
+                        'active',
+                        'display_name'
                     );
 
         return $query->get();

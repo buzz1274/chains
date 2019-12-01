@@ -59,9 +59,6 @@ class ChainsOutstanding extends Command
                 $start_date = $this->determineStartDate($chain);
                 $this->insert = [];
 
-                print_r($chain);
-                echo($start_date);
-
                 while (strtotime($start_date) <= strtotime($this->today)) {
                     if ($this->shouldInsertDailyOverdue($chain, $start_date) ||
                         $this->shouldInsertWeeklyOverdue($chain, $start_date) ||
@@ -106,12 +103,24 @@ class ChainsOutstanding extends Command
 
     private function shouldInsertDailyOverdue($chain, $start_date)
     {
-        return ($chain['frequency'] == 'daily' ||
-                ($chain['frequency'] == 'weekday') &&
-                 !in_array(
-                     date('l', strtotime($start_date)),
-                     ['Saturday', 'Sunday']
-                 ));
+        $weekend = ['Saturday', 'Sunday'];
+        $endOfWeek = array_merge($weekend, ['Friday']);
+
+        if ($chain['frequency'] == 'daily') {
+            return true;
+        }
+
+        if ($chain['frequency'] == 'weekday' &&
+            !in_array(date('l', strtotime($start_date)), $weekend)) {
+            return true;
+        }
+
+        if ($chain['frequency'] == 'mon_thurs' &&
+            !in_array(date('l', strtotime($start_date)), $endOfWeek)) {
+            return true;
+        }
+
+        return false;
     }
 
     private function shouldInsertWeeklyOverdue($chain, $start_date)
