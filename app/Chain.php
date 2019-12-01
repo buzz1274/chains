@@ -45,7 +45,11 @@ class Chain extends Model
                         'start_date',
                         'frequency',
                         'active',
-                        'display_name'
+                        'display_name',
+                        'ordering'
+                    )->
+                    orderBy(
+                        'ordering'
                     );
 
         return $query->get();
