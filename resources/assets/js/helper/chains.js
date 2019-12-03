@@ -62,18 +62,28 @@ export default class Chains {
 
             that.outstanding[id].completed = true;
 
-            if(status == 'yes') {
-                that.chains[that.outstanding[id].id].current_streak++;
+            let key = null;
 
-                if(that.chains[that.outstanding[id].id].current_streak >=
-                   that.chains[that.outstanding[id].id].max_streak) {
-
-                    that.chains[that.outstanding[id].id].max_streak =
-                        that.chains[that.outstanding[id].id].current_streak;
+            for(const [idx, chain] of Object.entries(that.chains)) {
+                if (chain.id === that.outstanding[id].id) {
+                    key = idx;
                 }
+            }
 
-            } else {
-                that.chains[that.outstanding[id].id].current_streak = 0;
+            if(key !== null) {
+                if(status === 'yes') {
+                    that.chains[key].current_streak++;
+
+                    if (that.chains[key].current_streak >=
+                        that.chains[key].max_streak) {
+
+                        that.chains[key].max_streak =
+                            that.chains[key].current_streak;
+                    }
+
+                } else {
+                    that.chains[key].current_streak = 0;
+                }
             }
 
             that.chainsUpdated();
