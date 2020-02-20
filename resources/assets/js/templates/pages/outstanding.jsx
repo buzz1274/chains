@@ -25,13 +25,7 @@ export default class Outstanding extends React.Component {
     formatOutstandingChain(outstanding) {
         let output = outstanding.chain;
 
-        if(outstanding.frequency == 'daily' || outstanding.frequency == 'weekday') {
-            if(this.today == outstanding.chain_completion_date) {
-                output += ' today';
-            } else {
-                output += ' on ' + moment(outstanding.chain_completion_date).format('Do, MMMM Y');
-            }
-        } else if(outstanding.frequency == 'weekly') {
+        if(outstanding.frequency == 'weekly') {
             if(this.today == outstanding.chain_completion_date) {
                 output += ' this week';
             } else {
@@ -43,6 +37,12 @@ export default class Outstanding extends React.Component {
                 output += ' this month';
             } else {
                 output += ' in ' + moment(outstanding.chain_completion_date).format('MMMM Y');
+            }
+        } else {
+            if(this.today == outstanding.chain_completion_date) {
+                output += ' today';
+            } else {
+                output += ' on ' + moment(outstanding.chain_completion_date).format('Do, MMMM Y');
             }
         }
 
