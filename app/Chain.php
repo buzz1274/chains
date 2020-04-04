@@ -11,12 +11,12 @@ class Chain extends Model
 
     public static function chains($userID = false)
     {
-
         $query =
             self::select(array('chain.id', 'parent_id', 'chain',
                                'start_date', 'frequency', 'active',
                                'current_streak', 'max_streak', 'display_name',
                                 \DB::raw('MAX(cc_last_completed.chain_completion_date) AS last_completed'),
+                                \DB::raw('current_streak * points_for_completion AS points'),
                                 \DB::raw('MAX(cc_last_outstanding.chain_completion_date) AS last_outstanding')))->
                     where(function ($query) use ($userID) {
                         if ($userID) {
@@ -46,7 +46,8 @@ class Chain extends Model
                         'frequency',
                         'active',
                         'display_name',
-                        'ordering'
+                        'ordering',
+                        'points_for_completion'
                     )->
                     orderBy(
                         'ordering',
@@ -79,5 +80,20 @@ class Chain extends Model
                     orderBy('chain.id', 'chain_completion.chain_completion_date');
 
         return $query->get();
+    }
+
+    /**
+     * @param int $userID
+     * @return int
+     */
+    public static function points(int $userID): int
+    {
+        $points = 0;
+
+        foreach(self::chains($userID) as $chain) {
+            $points += $chain->points;
+        }
+
+        return $points;
     }
 }

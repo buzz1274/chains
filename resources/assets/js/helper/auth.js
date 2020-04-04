@@ -1,4 +1,5 @@
 import Axios from './axios';
+import State from "./store";
 
 export default class Auth {
     axios = false;
@@ -11,6 +12,7 @@ export default class Auth {
         this.name = false;
         this.userID = false;
         this.authenticated = false;
+        this.current_points = null;
     }
 
     isAuthenticated() {
@@ -31,7 +33,6 @@ export default class Auth {
         this.authenticated = false;
 
         return this;
-
     }
 
 }

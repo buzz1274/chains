@@ -1,25 +1,29 @@
 import Axios from './axios';
 import Chain from './chain';
 import State from './store';
+import Points from './points';
 
 export default class Chains {
 
     axios = false;
-
     chains = [];
-
     outstanding = [];
+    auth = null;
+    points = false;
 
     constructor() {
         this.axios = new Axios();
         this.chains = [];
         this.outstanding = [];
+        this.points = new Points();
+    }
 
-        this.chainsUpdated = () => {
-            State.updateState({chains: this});
-        };
+    chainsUpdated() {
+        this.points.get();
 
-        this.chainsUpdated.bind(this);
+        State.updateState({
+            chains: this,
+        });
     }
 
     count(type = 'chains') {

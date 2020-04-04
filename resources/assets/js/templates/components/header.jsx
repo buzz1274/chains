@@ -27,7 +27,7 @@ export default class Header extends React.Component {
             <header>
                 <div id='welcome'>
                     {this.props.auth.isAuthenticated() ? (
-                        <p>
+                        <span>
                             Welcome back, {this.props.auth.name}
                             &nbsp;
                             <Link id='welcome_link'
@@ -43,7 +43,10 @@ export default class Header extends React.Component {
                                 }} >
                                 Logout
                             </Link>
-                        </p>
+                            <p id="header__points">
+                                Points: {this.props.current_points}
+                            </p>
+                        </span>
                     ) : (
                         <Link id='welcome_link' to='/login'>Login</Link>
                     )}

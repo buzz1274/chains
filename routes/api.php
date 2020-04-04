@@ -18,8 +18,10 @@ Route::any('/', function (Request $request) {
 });
 
 Route::post('/user/register', 'UserController@register');
+Route::post('/user/login', 'UserController@login');
 
 Route::get('/chains', 'ChainController@chains');
+Route::get('/chains/points', 'ChainController@points');
 Route::get('/chains/outstanding', 'ChainController@outstandingChains');
 
 Route::post(

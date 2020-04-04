@@ -40,8 +40,11 @@ div#welcome h4 {
 div#welcome a#welcome_link {
     color:#FFF;
     padding-left:3px;
-    text-decoration:none;
+    text-decoration:underline;
 }
 div#welcome a:hover {
     cursor:pointer;
+}
+p#header__points {
+    padding-top:10px;
 }
