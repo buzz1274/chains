@@ -9,14 +9,10 @@ export default class Points {
     }
 
     get() {
-        let that = this;
-
         this.axios.get('/chains/points').then(function(response) {
-            that.points =  response.data.points;
-        });
-
-        State.updateState({
-            current_points: this.points,
+            State.updateState({
+                current_points: response.data.points,
+            });
         });
     }
 
