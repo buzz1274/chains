@@ -16,7 +16,7 @@ export default class LeftNavigation extends React.Component {
                     <tr key={chain.id} className="left-nav-chain-row">
                         <td onClick={() => {
                             this.props.history.push('/chain/' + chain.id);
-                        }}>
+                        }} >
                             <span className="float-right">
                                 {chain.display_name}
                             </span>

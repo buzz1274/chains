@@ -8,6 +8,7 @@ import Overlay from './templates/components/overlay.jsx';
 import Header from './templates/components/header.jsx';
 import ErrorBoundary from './templates/components/error_boundary.jsx';
 import ChainAddEdit from './templates/pages/chain_add_edit.jsx';
+import Chain from './templates/pages/chain.jsx';
 import Index from './templates/pages/index.jsx';
 import Outstanding from './templates/pages/outstanding.jsx';
 import Login from './templates/pages/login.jsx';
@@ -67,13 +68,13 @@ class App extends React.Component {
                                     component={Index}
                                     {...this.state} />
                                 <PrivateRoute path='/chain/:chain_id'
-                                    component={Index}
+                                    component={Chain}
                                     {...this.state} />
                                 <PrivateRoute exact path='/chain/add'
                                     component={ChainAddEdit}
                                     {...this.state} />
                                 <PrivateRoute path='/chain/edit/:chain_id'
-                                    component={Index}
+                                    component={ChainAddEdit}
                                     {...this.state} />
                                 <PrivateRoute path='/user/:user_id'
                                     component={UserProfile}

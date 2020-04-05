@@ -12,6 +12,9 @@ div.table_title {
 td.left-nav-action-links {
     width:15%;
 }
+.left-nav-chain-row:hover {
+    cursor:pointer;
+}
 a#left-nav-add-chain-link {
     color:white;
     font-size:0.85em;

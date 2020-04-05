@@ -55,7 +55,15 @@ export default class Chains {
             });
             that.chainsUpdated();
         });
+    }
 
+    extractChain(id) {
+        for(const [idx, chain] of Object.entries(this.chains)) {
+            if (chain.id == id) {
+                return chain;
+            }
+        }
+        return null;
     }
 
     outstandingComplete(id, status) {

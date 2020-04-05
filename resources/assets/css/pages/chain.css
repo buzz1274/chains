@@ -1,0 +1,8 @@
+#list-chain-detail-view {
+    list-style-type: none;
+}
+
+#list-chain-detail-view > span.chain-detail-view-title {
+    width:30%;
+    font-weight: bold;
+}
