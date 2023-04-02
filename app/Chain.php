@@ -89,7 +89,7 @@ class Chain extends Model
     {
         $points = 0;
 
-        foreach(self::chains($userID) as $chain) {
+        foreach (self::chains($userID) as $chain) {
             $points += $chain->points;
         }
 

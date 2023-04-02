@@ -29,7 +29,7 @@ class ChainController extends Controller
 
     public function outstandingChainComplete($id, $action)
     {
-        if (!ChainCompletion::chainBelongsToUserAndIsOutstanding(     self::USER_ID, $id)) {
+        if (!ChainCompletion::chainBelongsToUserAndIsOutstanding(self::USER_ID, $id)) {
             return response()->json(
                 ['error', 'Outstanding chain Not Found'],
                 404
