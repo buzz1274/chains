@@ -1,0 +1,11 @@
+[project]
+name = "chains-zz50-co-uk"
+version = "0.1.0"
+description = "chains motivation tool"
+readme = "README.md"
+requires-python = ">=3.13"
+dependencies = [
+    "alembic>=1.18.4",
+    "fastapi>=0.136.1",
+    "uvicorn>=0.47.0",
+]

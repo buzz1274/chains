@@ -1,0 +1,17 @@
+#!/usr/bin/env bash
+
+sleep 10
+
+ENVIRONMENT=$1
+
+docker exec postgres bash -c 'psql -v ON_ERROR_STOP=1 --username "postgres" <<-EOSQL
+    CREATE DATABASE "$CHAINS_DB_NAME";
+    CREATE USER "$CHAINS_DB_USERNAME";
+    ALTER DATABASE "$CHAINS_DB_NAME" OWNER TO "$CHAINS_DB_USERNAME";
+    GRANT ALL PRIVILEGES ON DATABASE "$CHAINS_DB_NAME" to "$CHAINS_DB_USERNAME";
+    ALTER USER "$CHAINS_DB_USERNAME" WITH PASSWORD '\''$CHAINS_DB_PASSWORD'\'';
+EOSQL'
+
+if [ "$ENVIRONMENT" == "DEVELOPMENT" ] ; then
+    pre-commit install
+fi
