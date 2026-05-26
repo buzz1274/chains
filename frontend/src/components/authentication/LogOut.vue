@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { useToast } from 'primevue/usetoast'
+import { LogOut as LogOutIcon } from '@lucide/vue'
 
-import BaseButton from '@/components/base/BaseButton.vue'
 import { useAuth } from '@/composables/authentication/UseAuth'
 
 const { logout } = useAuth()
@@ -19,5 +19,7 @@ const processLogout = () => {
 </script>
 
 <template>
-  <BaseButton label="Sign Out" @click="processLogout" />
+  <button class="cursor-pointer" @click="processLogout">
+    <LogOutIcon class="w-5 h-5" />
+  </button>
 </template>
