@@ -3,6 +3,7 @@ import {
   defineConfigWithVueTs,
   vueTsConfigs
 } from '@vue/eslint-config-typescript'
+import unicorn from 'eslint-plugin-unicorn'
 import pluginVue from 'eslint-plugin-vue'
 import skipFormatting from '@vue/eslint-config-prettier/skip-formatting'
 import importPlugin from 'eslint-plugin-import'
@@ -39,9 +40,20 @@ export default defineConfigWithVueTs(
 
   {
     plugins: {
-      import: importPlugin,
+      import: importPlugin, unicorn
     },
     rules: {
+      'unicorn/filename-case': [
+        'error',
+        {
+          case: 'pascalCase',
+          ignore: [
+            '^env\\.d\\.ts$',
+            '^eslint\\.config\\.js$',
+            '^vite\\.config\\.ts$',
+          ],
+        },
+      ],
       '@typescript-eslint/naming-convention': [
         'error',
         {

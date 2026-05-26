@@ -1,10 +1,10 @@
 <script setup lang="ts">
 import BaseLeftNavigation from '@/components/base/BaseLeftNavigation.vue'
-import BaseButton from '@/components/base/BaseButton.vue'
 import GreenFire from '@/assets/images/green_fire.png'
 import GreenGraphArrow from '@/assets/images/green_graph_arrow.png'
 import YellowCup from '@/assets/images/yellow_cup.png'
 import BlueTarget from '@/assets/images/blue_target.png'
+import GoogleAuthenticationButton from '@/components/authentication/GoogleAuthenticationButton.vue'
 
 const infoCallout: {
   title: string
@@ -37,7 +37,7 @@ const infoCallout: {
 <template>
   <BaseLeftNavigation>
     <template #lhs_content>
-      <div class="pt-5" />
+      <div class="pt-23" />
       <div
         v-for="(value, key) in infoCallout"
         :key="key"
@@ -54,8 +54,8 @@ const infoCallout: {
           </span>
         </div>
       </div>
-      <div class="flex justify-center pt-10">
-        <BaseButton label="Sign In" />
+      <div class="flex justify-center pt-5">
+        <GoogleAuthenticationButton label="Sign In" />
       </div>
     </template>
   </BaseLeftNavigation>

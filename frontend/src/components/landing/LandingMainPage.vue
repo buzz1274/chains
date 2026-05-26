@@ -1,9 +1,7 @@
 <script setup lang="ts">
-import { Plus } from '@lucide/vue'
-
 import BaseMainPage from '@/components/base/BaseMainPage.vue'
 import GreenRoadToFlag from '@/assets/images/green_road_to_flag.png'
-import BaseButton from '@/components/base/BaseButton.vue'
+import GoogleAuthenticationButton from '@/components/authentication/GoogleAuthenticationButton.vue'
 
 const infoHowItWorks: {
   title: string
@@ -35,11 +33,7 @@ const infoHowItWorks: {
           Create a new chain and start building consistency
         </p>
 
-        <BaseButton label="Create Your First Chain" class="mt-6">
-          <template #icon-left>
-            <Plus class="w-4 h-4 flex-shrink-0" />
-          </template>
-        </BaseButton>
+        <GoogleAuthenticationButton label="Create Your First Chain" />
 
         <div class="flex items-center justify-center w-4/5 mx-auto my-8">
           <div class="flex-1 h-px bg-gray-300"></div>
@@ -53,7 +47,10 @@ const infoHowItWorks: {
           <div v-for="(value, key) in infoHowItWorks" :key="key">
             <div class="flex items-center gap-3">
               <div
-                class="w-15 h-15 rounded-full bg-green-600 text-white flex items-center justify-center font-semibold"
+                :class="[
+                  'w-15 h-15 rounded-full bg-green-600 text-white',
+                  'flex items-center justify-center font-semibold',
+                ]"
               >
                 {{ key + 1 }}
               </div>
@@ -77,7 +74,10 @@ const infoHowItWorks: {
         </div>
 
         <div
-          class="w-3/5 mx-auto bg-green-50 border-l-4 border-green-500 rounded-md p-4 my-6 mt-15"
+          :class="[
+            'w-3/5 mx-auto bg-green-50 border-l-4 border-green-500',
+            'rounded-md p-4 my-6 mt-15',
+          ]"
         >
           <p class="text-black italic text-sm leading-relaxed">
             <span class="text-lg leading-none">“</span>

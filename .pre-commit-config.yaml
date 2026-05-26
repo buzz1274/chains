@@ -45,7 +45,7 @@ repos:
         args:
           [
             "exec",
-            "treadmilltracker-backend", "bash", "-c", '"./bin/ty.sh"'
+            "chains-backend", "bash", "-c", '"./bin/ty.sh"'
           ]
   - repo: local
     hooks:
@@ -56,5 +56,5 @@ repos:
         args:
           [
             "exec",
-            "treadmilltracker-frontend", "sh", "-c", '"./bin/eslint.sh"'
+            "chains-frontend", "sh", "-c", '"./bin/eslint.sh"'
           ]

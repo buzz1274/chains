@@ -1,3 +1,3 @@
 #!/usr/bin/env sh
 
-echo 0
+npx -c 'npm run lint'
