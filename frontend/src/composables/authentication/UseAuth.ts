@@ -2,6 +2,8 @@ import { StatusCodes } from 'http-status-codes'
 
 import { httpClient, HttpError } from '@/lib/HttpClient'
 import { useUserStore } from '@/stores/UserStore'
+import { useChainsStore } from '@/stores/ChainsStore'
+import { chainService } from '@/services/ChainService'
 import type { IAccessTokenResponse, IUserDataResponse } from '@/types/ApiTypes'
 import { UserModel } from '@/models/UserModel.ts'
 
@@ -12,7 +14,11 @@ export function useAuth() {
   const getProfileFailure =
     'An error occurred while retrieving user profile. Please try again later.'
 
-  const store = useUserStore()
+  const getChainsFailure =
+    'An error occurred while retrieving user chains. Please try again later.'
+
+  const UserStore = useUserStore()
+  const ChainsStore = useChainsStore()
 
   async function login(code: string, provider: string): Promise<void> {
     try {
@@ -24,9 +30,10 @@ export function useAuth() {
         },
       )
 
-      store.setToken(loginResponse.token)
+      UserStore.setToken(loginResponse.token)
     } catch (error: unknown) {
-      store.reset()
+      UserStore.reset()
+      ChainsStore.reset()
       throw HttpError.fromError(error, StatusCodes.FORBIDDEN, loginFailure)
     }
 
@@ -34,15 +41,26 @@ export function useAuth() {
       const userResponse =
         await httpClient.get<IUserDataResponse>('api/users/me')
 
-      store.setUser(UserModel.fromAPI(userResponse))
+      UserStore.setUser(UserModel.fromAPI(userResponse))
     } catch (error: unknown) {
-      store.reset()
+      UserStore.reset()
+      ChainsStore.reset()
       throw HttpError.fromError(error, StatusCodes.FORBIDDEN, getProfileFailure)
+    }
+
+    try {
+      ChainsStore.setChains(await chainService.get())
+    } catch (error: unknown) {
+      console.error(error)
+      UserStore.reset()
+      ChainsStore.reset()
+      throw HttpError.fromError(error, StatusCodes.FORBIDDEN, getChainsFailure)
     }
   }
 
   function logout() {
-    store.reset()
+    UserStore.reset()
+    ChainsStore.reset()
   }
 
   return {
