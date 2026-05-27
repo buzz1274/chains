@@ -3,8 +3,8 @@ import { useToast } from 'primevue/usetoast'
 import { LogOut as LogOutIcon } from '@lucide/vue'
 import { Menu, MenuButton, MenuItems, MenuItem } from '@headlessui/vue'
 
-import { useAuth } from '@/composables/authentication/useAuth'
-import { useUserStore } from '@/stores/userStore'
+import { useAuth } from '@/composables/authentication/useAuth.ts'
+import { useUserStore } from '@/stores/UserStore.ts'
 
 const userStore = useUserStore()
 const { logout } = useAuth()
@@ -23,7 +23,7 @@ const processLogout = () => {
 
 <template>
   <div class="flex justify-end">
-    <span class="mt-2 mr-5 text-sm font-semibold text-gray-700">
+    <span class="mr-3 text-sm font-semibold text-gray-700">
       Welcome Back, {{ userStore.user?.name }}
     </span>
     <Menu as="div" class="relative inline-block text-left">

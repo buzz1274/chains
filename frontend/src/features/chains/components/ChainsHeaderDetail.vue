@@ -1,8 +1,7 @@
 <script setup lang="ts">
-import { Pencil as PencilIcon } from '@lucide/vue'
 import { getStreakStyles } from '@/lib/design/StreakStyle.ts'
-import router from '@/router/router.ts'
 import { useChainsStore } from '@/stores/ChainsStore.ts'
+import HeaderTitle from '@/shared/ui/base/HeaderTitle.vue'
 
 const chainsStore = useChainsStore()
 
@@ -10,16 +9,12 @@ const chainsStore = useChainsStore()
 
 <template>
   <div v-if="chainsStore.activeChain" class="flex items-center gap-3">
-    <PencilIcon
-      class="w-5 h-5 hover:cursor-pointer"
-      @click="router.push('/chains/edit/' + chainsStore.activeChain.id)"
-    />
-    <h1 class="text-2xl font-extrabold text-gray-900 tracking-tight">
+    <HeaderTitle>
       {{ chainsStore.activeChain?.name }}
-    </h1>
+    </HeaderTitle>
     <span
       :class="[
-        'w-2.5 h-2.5 rounded-full inline-block',
+        'w-2.5 h-2.5 rounded-full inline-block mt-1',
         getStreakStyles(chainsStore.activeChain).bg,
       ]"
     />

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import Profile from '@/components/authentication/Profile.vue'
+import ProfileButton from '@/features/users/components/ProfileButton.vue'
 import ChainsHeaderDetail from '@/features/chains/components/ChainsHeaderDetail.vue'
 import HeaderTitle from '@/shared/ui/base/HeaderTitle.vue'
 withDefaults(defineProps<{
@@ -21,6 +21,6 @@ withDefaults(defineProps<{
         {{ title }}
       </HeaderTitle>
     </div>
-    <Profile />
+    <ProfileButton />
   </div>
 </template>
