@@ -1,13 +1,22 @@
 <script setup lang="ts">
+import { Pencil as PencilIcon } from '@lucide/vue'
+
 import LogOut from '@/components/authentication/LogOut.vue'
-import { useChainsStore } from '@/stores/ChainsStore'
+import { useChainsStore } from '@/stores/chainsStore'
+import { useUserStore } from '@/stores/userStore'
 import { getStreakStyles } from '@/lib/design/StreakStyle'
 
 const chainsStore = useChainsStore()
+
+const addEditChain = () => {
+  console.log('Add Edit Chain')
+}
+
 </script>
 <template>
   <div class="flex items-center justify-between">
     <div v-if="chainsStore.activeChain" class="flex items-center gap-3">
+      <PencilIcon class="w-5 h-5 hover:cursor-pointer" @click="addEditChain"/>
       <h1 class="text-2xl font-extrabold text-gray-900 tracking-tight">
         {{ chainsStore.activeChain?.name }}
       </h1>

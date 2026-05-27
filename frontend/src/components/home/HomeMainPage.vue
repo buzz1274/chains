@@ -194,8 +194,6 @@ const milestones = [
 </script>
 
 <template>
-  <div class="bg-gray-50 p-4 font-sans">
-    <div class="max-w-5xl mx-auto space-y-5">
       <HomeHeader />
 
       <!-- Stat Cards -->
@@ -470,6 +468,4 @@ const milestones = [
           </div>
         </div>
       </div>
-    </div>
-  </div>
 </template>

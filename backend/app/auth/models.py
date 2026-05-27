@@ -16,3 +16,4 @@ class AuthUserInfo(BaseModel):
     email: str
     name: str
     email_verified: bool
+    image: str

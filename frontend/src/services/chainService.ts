@@ -1,5 +1,5 @@
 import type { IChainModel } from '@/types/ChainTypes'
-import { mapChainFromAPI } from '@/mappers/ChainMapper'
+import { mapChainFromAPI } from '@/Mappers/ChainMapper'
 
 export const chainService = {
   get() {

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-const props = defineProps<{
+defineProps<{
   label: string
 }>()
 </script>
@@ -14,6 +14,6 @@ const props = defineProps<{
     ]"
   >
     <slot name="icon-left" />
-    {{ props.label }}
+    {{ label }}
   </button>
 </template>

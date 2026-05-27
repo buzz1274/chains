@@ -530,6 +530,13 @@
     "@eslint/core" "^0.17.0"
     levn "^0.4.1"
 
+"@headlessui/vue@^1.7.23":
+  version "1.7.23"
+  resolved "https://registry.yarnpkg.com/@headlessui/vue/-/vue-1.7.23.tgz#7fe19dbeca35de9e6270c82c78c4864e6a6f7391"
+  integrity sha512-JzdCNqurrtuu0YW6QaDtR2PIYCKPUWq28csDyMvN4zmGccmE7lz40Is6hc3LA4HFeCI7sekZ/PQMTNmn9I/4Wg==
+  dependencies:
+    "@tanstack/vue-virtual" "^3.0.0-beta.60"
+
 "@humanfs/core@^0.19.2":
   version "0.19.2"
   resolved "https://registry.yarnpkg.com/@humanfs/core/-/core-0.19.2.tgz#a8272ca03b2acf492670222b2320b6c421bfde60"
@@ -955,27 +962,17 @@
     "@tailwindcss/oxide" "4.3.0"
     tailwindcss "4.3.0"
 
-"@tanstack/match-sorter-utils@^8.19.4":
-  version "8.19.4"
-  resolved "https://registry.yarnpkg.com/@tanstack/match-sorter-utils/-/match-sorter-utils-8.19.4.tgz#dacf772b5d94f4684f10dbeb2518cf72dccab8a5"
-  integrity sha512-Wo1iKt2b9OT7d+YGhvEPD3DXvPv2etTusIMhMUoG7fbhmxcXCtIjJDEygy91Y2JFlwGyjqiBPRozme7UD8hoqg==
-  dependencies:
-    remove-accents "0.5.0"
+"@tanstack/virtual-core@3.16.0":
+  version "3.16.0"
+  resolved "https://registry.yarnpkg.com/@tanstack/virtual-core/-/virtual-core-3.16.0.tgz#987bd975c1a486a38ff33eb0634f70436305570f"
+  integrity sha512-Er2N7q3WOiH6y2JLxsxNX+u2/sLqSsL0bxFgDjuiPiA7vKhZRm+IzcS17vRee3GNXr64UsesA5CAp9yTiIYw9A==
 
-"@tanstack/query-core@5.100.11":
-  version "5.100.11"
-  resolved "https://registry.yarnpkg.com/@tanstack/query-core/-/query-core-5.100.11.tgz#fdf273bec49277600311a4c552e2c2d95f4df73b"
-  integrity sha512-lmE0994apShXPj8CUxgx4ch5yUJhE9k/+tVwihBvPOyerACWdBocfFg24t8+0RhtlTd7tEgchDkhlCxNssvDxw==
-
-"@tanstack/vue-query@^5.100.11":
-  version "5.100.11"
-  resolved "https://registry.yarnpkg.com/@tanstack/vue-query/-/vue-query-5.100.11.tgz#bcf4793309d37322bc3197e92473f60ab1e2ec54"
-  integrity sha512-bU4uz7y/XorQzr7R008hR5+YI885rk5F8t5+UGIVfFEJL8eXeJUJLGZC+YOJR/SdoLjedxOMOPz6D6VH8Gh9Sg==
+"@tanstack/vue-virtual@^3.0.0-beta.60":
+  version "3.13.26"
+  resolved "https://registry.yarnpkg.com/@tanstack/vue-virtual/-/vue-virtual-3.13.26.tgz#387ae6160494de5b909de69ee160b8d7231fb321"
+  integrity sha512-4TmREKi8rKiQC8E2XVEMMgzWbrgHNYolkBgYTXVK1kqXmXRGz6xPWgBq20GUYWUDDhit94+g0ricUQKpZhWRmg==
   dependencies:
-    "@tanstack/match-sorter-utils" "^8.19.4"
-    "@tanstack/query-core" "5.100.11"
-    "@vue/devtools-api" "^6.6.3"
-    vue-demi "^0.14.10"
+    "@tanstack/virtual-core" "3.16.0"
 
 "@tsconfig/node22@^22.0.2":
   version "22.0.5"
@@ -1284,11 +1281,6 @@
   dependencies:
     "@vue/compiler-dom" "3.5.34"
     "@vue/shared" "3.5.34"
-
-"@vue/devtools-api@^6.6.3":
-  version "6.6.4"
-  resolved "https://registry.yarnpkg.com/@vue/devtools-api/-/devtools-api-6.6.4.tgz#cbe97fe0162b365edc1dba80e173f90492535343"
-  integrity sha512-sGhTPMuXqZ1rVOk32RylztWkfXTRhuS7vgAKv0zjqk8gbsHkJ7xfFf+jbySxt7tWObEJwyKaHMikV/WGDiQm8g==
 
 "@vue/devtools-api@^7.7.7":
   version "7.7.9"
@@ -3732,11 +3724,6 @@ regjsparser@^0.13.0:
   dependencies:
     jsesc "~3.1.0"
 
-remove-accents@0.5.0:
-  version "0.5.0"
-  resolved "https://registry.yarnpkg.com/remove-accents/-/remove-accents-0.5.0.tgz#77991f37ba212afba162e375b627631315bed687"
-  integrity sha512-8g3/Otx1eJaVD12e31UbJj1YzdtVvzH85HV7t+9MJYk/u3XmkOUJ5Ys9wQrf9PCPK8+xn4ymzqYCiZl6QWKn+A==
-
 require-relative@^0.8.7:
   version "0.8.7"
   resolved "https://registry.yarnpkg.com/require-relative/-/require-relative-0.8.7.tgz#7999539fc9e047a37928fa196f8e1563dabd36de"
@@ -4362,11 +4349,6 @@ vscode-uri@^3.0.8:
   version "3.1.0"
   resolved "https://registry.yarnpkg.com/vscode-uri/-/vscode-uri-3.1.0.tgz#dd09ec5a66a38b5c3fffc774015713496d14e09c"
   integrity sha512-/BpdSx+yCQGnCvecbyXdxHDkuk55/G3xwnC0GqY4gmQ3j+A+g8kzzgB4Nk/SINjqn6+waqw3EgbVF2QKExkRxQ==
-
-vue-demi@^0.14.10:
-  version "0.14.10"
-  resolved "https://registry.yarnpkg.com/vue-demi/-/vue-demi-0.14.10.tgz#afc78de3d6f9e11bf78c55e8510ee12814522f04"
-  integrity sha512-nMZBOwuzabUO0nLgIcc6rycZEebF6eeUfaiQx9+WSk8e29IbLvPU9feI6tqW4kTo3hvoYAJkMh8n8D0fuISphg==
 
 vue-eslint-parser@^10.4.0:
   version "10.4.0"

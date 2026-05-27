@@ -4,8 +4,9 @@ import { httpClient, HttpError } from '@/lib/HttpClient'
 import { useUserStore } from '@/stores/UserStore'
 import { useChainsStore } from '@/stores/ChainsStore'
 import { chainService } from '@/services/ChainService'
-import type { IAccessTokenResponse, IUserDataResponse } from '@/types/ApiTypes'
-import { UserModel } from '@/models/UserModel.ts'
+import { userService } from '@/services/userService'
+import type { IAccessTokenResponse } from '@/types/ApiTypes'
+import router from '@/router/router.ts'
 
 export function useAuth() {
   const loginFailure =
@@ -38,10 +39,7 @@ export function useAuth() {
     }
 
     try {
-      const userResponse =
-        await httpClient.get<IUserDataResponse>('api/users/me')
-
-      userStore.setUser(UserModel.fromAPI(userResponse))
+      userStore.setUser(await userService.get())
     } catch (error: unknown) {
       userStore.reset()
       chainsStore.reset()

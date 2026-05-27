@@ -4,7 +4,7 @@ import { useToast } from 'primevue/usetoast'
 
 import BaseButton from '@/components/base/BaseButton.vue'
 import { useGoogleAuth } from '@/composables/authentication/UseGoogleAuth'
-import { useAuth } from '@/composables/authentication/UseAuth'
+import { useAuth } from '@/composables/authentication/useAuth'
 
 const toast = useToast()
 const auth = useAuth()

@@ -28,6 +28,7 @@ class Google(ProviderInterface):
             email=self.user_info.get("email"),
             name=self.user_info.get("given_name"),
             email_verified=self.user_info.get("email_verified"),
+            image=self.user_info.get("picture"),
         )
 
     def _validate_user_info(self) -> bool:
@@ -36,6 +37,7 @@ class Google(ProviderInterface):
             and self.user_info.get("sub")
             and self.user_info.get("given_name")
             and self.user_info.get("email_verified")
+            and self.user_info.get("picture")
         )
 
     async def _check_code(self, code) -> dict:

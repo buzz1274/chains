@@ -4,12 +4,11 @@ import { createApp } from 'vue'
 import { createPinia, type Pinia } from 'pinia'
 import piniaPluginPersistedstate from 'pinia-plugin-persistedstate'
 import { definePreset } from '@primeuix/themes'
-import { VueQueryPlugin } from '@tanstack/vue-query'
 import PrimeVue from 'primevue/config'
 import ToastService from 'primevue/toastservice'
 import Material from '@primeuix/themes/material'
 
-import router from './router'
+import router from './router/router'
 import App from './App.vue'
 
 const app = createApp(App)
@@ -29,6 +28,5 @@ app.use(PrimeVue, {
 })
 app.use(ToastService)
 app.use(router)
-app.use(VueQueryPlugin)
 
 app.mount('#app')

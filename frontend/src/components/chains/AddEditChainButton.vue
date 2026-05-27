@@ -1,0 +1,19 @@
+<script setup lang="ts">
+import { Plus as PlusIcon } from '@lucide/vue'
+
+import router from '@/router/router'
+import BaseTransparentButton from '@/components/base/BaseTransparentButton.vue'
+
+</script>
+
+<template>
+  <BaseTransparentButton
+    label="Add New Chain"
+    @click="router.push('/add')"
+  >
+    <template #icon-left>
+      <PlusIcon class="w-5 h-5" />
+    </template>
+
+  </BaseTransparentButton>
+</template>
