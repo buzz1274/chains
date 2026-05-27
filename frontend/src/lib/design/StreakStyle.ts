@@ -1,17 +1,14 @@
 import type { ChainModel } from '@/models/ChainModel.ts'
 
-type StreakLevel = 'critical' | 'warning' | 'success'
+type TStreakLevel = 'critical' | 'warning' | 'success'
 
-function getStreakLevel(streak: number): StreakLevel {
+function getStreakLevel(streak: number): TStreakLevel {
   if (streak === 0) return 'critical'
   if (streak <= 14) return 'warning'
   return 'success'
 }
 
-const streakStyles: Record<
-  StreakLevel,
-  { text: string; bg: string }
-> = {
+const streakStyles: Record<TStreakLevel, { text: string; bg: string }> = {
   critical: {
     text: 'text-red-400',
     bg: 'bg-red-600',
@@ -26,4 +23,7 @@ const streakStyles: Record<
   },
 }
 
-export const getStreakStyles = (chain: ChainModel) => streakStyles[getStreakLevel(chain.currentStreak)]
+export const getStreakStyles = (chain: ChainModel) => {
+  const streakLevel: TStreakLevel = getStreakLevel(chain.currentStreak)
+  return streakStyles[streakLevel]
+}

@@ -1,7 +1,7 @@
 import { ChainModel } from '@/models/ChainModel'
 
 export const chainService = {
-  async get() {
+  get() {
     const chains: ChainModel[] = [] as ChainModel[]
     const chainApiResponse = [
       {
@@ -51,7 +51,7 @@ export const chainService = {
       },
     ]
 
-    await chainApiResponse.forEach((chain) => {
+    chainApiResponse.forEach((chain) => {
       chains.push(ChainModel.fromAPI(chain))
     })
 

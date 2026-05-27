@@ -163,6 +163,7 @@ export default defineConfigWithVueTs(
       'vue/max-len': ['error', {
         code: 80,
         template: 80,
+        ignorePattern: '^import\\s.+$',
         ignoreHTMLAttributeValues: true,
       }],
     },

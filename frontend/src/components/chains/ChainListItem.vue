@@ -2,7 +2,7 @@
 import type { ChainModel } from '@/models/ChainModel'
 import { getStreakStyles } from '@/lib/design/StreakStyle'
 
-const props = defineProps<{
+defineProps<{
   chain: ChainModel
   active: boolean
 }>()
@@ -50,7 +50,7 @@ const props = defineProps<{
     <div
       :class="[
         'w-2.5 h-2.5 rounded-full flex-shrink-0',
-        getStreakStyles(chain).bg
+        getStreakStyles(chain).bg,
       ]"
     />
   </div>

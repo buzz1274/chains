@@ -17,8 +17,8 @@ export function useAuth() {
   const getChainsFailure =
     'An error occurred while retrieving user chains. Please try again later.'
 
-  const UserStore = useUserStore()
-  const ChainsStore = useChainsStore()
+  const userStore = useUserStore()
+  const chainsStore = useChainsStore()
 
   async function login(code: string, provider: string): Promise<void> {
     try {
@@ -30,10 +30,10 @@ export function useAuth() {
         },
       )
 
-      UserStore.setToken(loginResponse.token)
+      userStore.setToken(loginResponse.token)
     } catch (error: unknown) {
-      UserStore.reset()
-      ChainsStore.reset()
+      userStore.reset()
+      chainsStore.reset()
       throw HttpError.fromError(error, StatusCodes.FORBIDDEN, loginFailure)
     }
 
@@ -41,26 +41,25 @@ export function useAuth() {
       const userResponse =
         await httpClient.get<IUserDataResponse>('api/users/me')
 
-      UserStore.setUser(UserModel.fromAPI(userResponse))
+      userStore.setUser(UserModel.fromAPI(userResponse))
     } catch (error: unknown) {
-      UserStore.reset()
-      ChainsStore.reset()
+      userStore.reset()
+      chainsStore.reset()
       throw HttpError.fromError(error, StatusCodes.FORBIDDEN, getProfileFailure)
     }
 
     try {
-      ChainsStore.setChains(await chainService.get())
+      ChainsStore.setChains(chainService.get())
     } catch (error: unknown) {
-      console.error(error)
-      UserStore.reset()
-      ChainsStore.reset()
+      userStore.reset()
+      chainsStore.reset()
       throw HttpError.fromError(error, StatusCodes.FORBIDDEN, getChainsFailure)
     }
   }
 
   function logout() {
-    UserStore.reset()
-    ChainsStore.reset()
+    userStore.reset()
+    chainsStore.reset()
   }
 
   return {

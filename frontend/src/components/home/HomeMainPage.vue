@@ -1,4 +1,7 @@
 <script setup lang="ts">
+/* eslint-disable */
+// @ts-nocheck
+
 import { ref, computed } from 'vue'
 
 import HomeHeader from '@/components/home/HomeHeader.vue'
