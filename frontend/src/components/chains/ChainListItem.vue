@@ -1,9 +1,9 @@
 <script setup lang="ts">
-import type { ChainModel } from '@/models/ChainModel'
+import type { IChainModel } from '@/types/ChainTypes'
 import { getStreakStyles } from '@/lib/design/StreakStyle'
 
 defineProps<{
-  chain: ChainModel
+  chain: IChainModel
   active: boolean
 }>()
 </script>

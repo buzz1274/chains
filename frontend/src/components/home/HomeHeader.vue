@@ -7,9 +7,9 @@ const chainsStore = useChainsStore()
 </script>
 <template>
   <div class="flex items-center justify-between">
-    <div class="flex items-center gap-3">
+    <div v-if="chainsStore.activeChain" class="flex items-center gap-3">
       <h1 class="text-2xl font-extrabold text-gray-900 tracking-tight">
-        {{ chainsStore.activeChain.name }}
+        {{ chainsStore.activeChain?.name }}
       </h1>
       <span
         :class="[
@@ -20,10 +20,8 @@ const chainsStore = useChainsStore()
       <span class="text-gray-500 text-sm">
         You're on a
         <span
-          :class="[
-            'font-bold',
-            getStreakStyles(chainsStore.activeChain).text
-          ]">
+          :class="['font-bold', getStreakStyles(chainsStore.activeChain).text]"
+        >
           {{ chainsStore.activeChain.currentStreak }}
           {{ chainsStore.activeChain.frequency }} streak!
         </span>

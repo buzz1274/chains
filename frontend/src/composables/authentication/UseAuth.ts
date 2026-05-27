@@ -49,7 +49,7 @@ export function useAuth() {
     }
 
     try {
-      ChainsStore.setChains(chainService.get())
+      chainsStore.setChains(chainService.get())
     } catch (error: unknown) {
       userStore.reset()
       chainsStore.reset()

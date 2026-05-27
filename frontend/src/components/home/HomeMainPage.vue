@@ -70,9 +70,9 @@ const statCards = [
     iconBg: 'bg-blue-50',
   },
   {
-    label: 'This Month',
-    value: '15 / 20',
-    sub: '75% completed',
+    label: 'Consistency',
+    value: '87%',
+    sub: 'Keep it up!',
     icon: '📈',
     iconBg: 'bg-purple-50',
   },

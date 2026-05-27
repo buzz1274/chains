@@ -21,7 +21,6 @@
     "@lucide/vue": "^1.16.0",
     "@primeuix/themes": "^2.0.3",
     "@tailwindcss/vite": "^4.3.0",
-    "@tanstack/vue-query": "^5.100.11",
     "http-status-codes": "^2.3.0",
     "install": "^0.13.0",
     "pinia": "^3.0.4",

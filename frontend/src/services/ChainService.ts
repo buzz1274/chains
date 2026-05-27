@@ -1,8 +1,9 @@
-import { ChainModel } from '@/models/ChainModel'
+import type { IChainModel } from '@/types/ChainTypes'
+import { mapChainFromAPI } from '@/mappers/ChainMapper'
 
 export const chainService = {
   get() {
-    const chains: ChainModel[] = [] as ChainModel[]
+    const chains: IChainModel[] = [] as IChainModel[]
     const chainApiResponse = [
       {
         id: 1,
@@ -52,7 +53,7 @@ export const chainService = {
     ]
 
     chainApiResponse.forEach((chain) => {
-      chains.push(ChainModel.fromAPI(chain))
+      chains.push(mapChainFromAPI(chain))
     })
 
     return chains

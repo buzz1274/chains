@@ -1,25 +1,30 @@
 import { defineStore } from 'pinia'
 
-import type { ChainModel } from '@/models/ChainModel'
+import type { IChainModel } from '@/types/ChainTypes'
 import { storage } from '@/lib/Storage'
 
 export const useChainsStore = defineStore('chains', {
   state: () => ({
-    chains: null as null | ChainModel[],
-    activeChain: null as null | ChainModel,
+    chains: [] as IChainModel[],
+    activeChainId: null as number | null,
   }),
 
   persist: true,
 
+  getters: {
+    activeChain: (state) =>
+      state.chains.find((c) => c.id === state.activeChainId),
+  },
+
   actions: {
-    setChains(chains: ChainModel[]): void {
+    setChains(chains: IChainModel[]): void {
       this.chains = chains
     },
-    setActiveChain(chain: ChainModel): void {
-      this.activeChain = chain
+    setActiveChainId(id: number): void {
+      this.activeChainId = id
     },
     reset() {
-      this.chains = null
+      this.chains = []
       storage.clear()
     },
   },

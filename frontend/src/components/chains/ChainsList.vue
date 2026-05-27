@@ -11,8 +11,8 @@ const chainsStore = useChainsStore()
         v-for="chain in chainsStore.chains"
         :key="chain.id"
         :chain="chain"
-        :active="chain.id === chainsStore.activeChain.id"
-        @click="chainsStore.setActiveChain(chain)"
+        :active="chain.id === chainsStore.activeChainId"
+        @click="chainsStore.setActiveChainId(chain.id)"
       />
     </div>
   </div>
