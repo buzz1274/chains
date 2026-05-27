@@ -53,11 +53,15 @@ export function useAuth() {
       chainsStore.reset()
       throw HttpError.fromError(error, StatusCodes.FORBIDDEN, getChainsFailure)
     }
+
+    await router.push({ name: 'home' })
   }
 
   function logout() {
     userStore.reset()
     chainsStore.reset()
+
+    void router.push({ name: 'landing' })
   }
 
   return {

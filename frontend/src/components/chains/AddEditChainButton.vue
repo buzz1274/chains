@@ -9,7 +9,7 @@ import BaseTransparentButton from '@/components/base/BaseTransparentButton.vue'
 <template>
   <BaseTransparentButton
     label="Add New Chain"
-    @click="router.push('/add')"
+    @click="router.push('/chains/add/')"
   >
     <template #icon-left>
       <PlusIcon class="w-5 h-5" />

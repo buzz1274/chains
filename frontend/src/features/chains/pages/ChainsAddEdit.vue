@@ -7,7 +7,7 @@ import {
   XIcon,
 } from '@lucide/vue'
 
-import HomeHeader from '@/components/home/HomeHeader.vue'
+import ChainsHeader from '@/features/chains/components/ChainsHeader.vue'
 
 interface Milestone {
   id: number
@@ -93,28 +93,9 @@ const saveChain = (): void => {
 </script>
 
 <template>
-  <HomeHeader />
-  <div class="flex-1 p-6">
-    <!-- Header -->
-    <div class="mb-8">
-      <div class="flex items-center gap-3 mb-2">
-        <button
-          class="w-10 h-10 rounded-xl border border-gray-200 flex items-center justify-center hover:bg-gray-50 transition"
-        >
-          ←
-        </button>
-
-        <div>
-          <h1 class="text-3xl font-bold text-gray-900">
-            Add New Chain
-          </h1>
-
-          <p class="text-gray-500 mt-1">
-            Create a new habit chain to track your progress.
-          </p>
-        </div>
-      </div>
-    </div>
+  <ChainsHeader
+    :title='$route.params.action === "add" ? "Add New Chain" : "Edit Chain"'
+  />
 
     <!-- Main Grid -->
     <div class="grid grid-cols-2 gap-6">
@@ -361,5 +342,4 @@ const saveChain = (): void => {
         Create Chain
       </button>
     </div>
-  </div>
 </template>

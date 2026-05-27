@@ -1,22 +1,35 @@
 import { createRouter, createWebHistory } from 'vue-router'
 
-import HomeMainPage from '@/components/home/HomeMainPage.vue'
-import AddEditChain from '@/components/chains/AddEditChain.vue'
+import ChainsMainPage from '@/features/chains/pages/ChainsMainPage.vue'
+import ChainsAddEdit from '@/features/chains/pages/ChainsAddEdit.vue'
+import ChainsConfirmOutstanding from '@/features/chains/pages/ChainsConfirmOutstanding.vue'
 import { useUserStore } from '@/stores/UserStore'
 
 const routes = [
     {
         path: '/',
+        name: 'landing',
+        component: ChainsMainPage,
+        meta: { requiresAuth: false }
+    },
+    {
+        path: '/chains',
         name: 'home',
-        component: HomeMainPage,
+        component: ChainsMainPage,
         meta: { requiresAuth: true }
     },
     {
-        path: '/add',
-        name: 'add chain',
-        component: AddEditChain,
+        path: '/chains/:action/:id?',
+        name: 'add_edit_chain',
+        component: ChainsAddEdit,
         meta: { requiresAuth: true }
-    }
+    },
+    {
+        path: '/chains/confirm-outstanding/:id?',
+        name: 'chain_confirm_outstanding',
+        component: ChainsConfirmOutstanding,
+        meta: { requiresAuth: true }
+    },
 ]
 
 const router = createRouter({

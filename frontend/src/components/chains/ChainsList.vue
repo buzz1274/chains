@@ -6,7 +6,7 @@ import router from '@/router/router'
 const chainsStore = useChainsStore()
 </script>
 <template>
-  <div class="flex justify-center items-start pt-10">
+  <div class="flex justify-center items-start">
     <div class="w-full max-w-sm bg-white rounded-3xl">
       <ChainListItem
         v-for="chain in chainsStore.chains"

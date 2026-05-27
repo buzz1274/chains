@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import HomeLeftNavigation from '@/components/home/HomeLeftNavigation.vue'
-import HomeHeader from '@/components/home/HomeHeader.vue'
 </script>
 <template>
   <HomeLeftNavigation />
