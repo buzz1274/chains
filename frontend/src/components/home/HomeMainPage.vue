@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ref, computed } from 'vue'
 
-import LogOut from '@/components/authentication/LogOut.vue'
+import HomeHeader from '@/components/home/HomeHeader.vue'
 
 // ── Config ──────────────────────────────────────────────────
 const cellSize = 18 // px per heatmap cell including gap
@@ -193,24 +193,7 @@ const milestones = [
 <template>
   <div class="bg-gray-50 p-4 font-sans">
     <div class="max-w-5xl mx-auto space-y-5">
-      <!-- Header -->
-      <div class="flex items-center justify-between">
-        <div class="flex items-center gap-3">
-          <h1 class="text-2xl font-extrabold text-gray-900 tracking-tight">
-            Run
-          </h1>
-          <span
-            class="w-2.5 h-2.5 rounded-full bg-green-500 inline-block"
-          ></span>
-          <span class="text-gray-500 text-sm">
-            You're on a
-            <span class="text-green-600 font-bold"
-              >{{ currentStreak }} day streak!</span
-            >
-          </span>
-        </div>
-        <LogOut />
-      </div>
+      <HomeHeader />
 
       <!-- Stat Cards -->
       <div class="grid grid-cols-4 gap-4">

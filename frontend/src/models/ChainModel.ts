@@ -6,7 +6,6 @@ export class ChainModel {
   public icon: string | null = null
   public currentStreak: number | null = null
   public maxStreak: number | null = null
-  public active: boolean | null = null
   public frequency: string | null = null
 
   public static fromAPI(data: IChainDataResponse): ChainModel {
@@ -17,7 +16,6 @@ export class ChainModel {
     chain.icon = data.icon
     chain.currentStreak = data.current_streak
     chain.maxStreak = data.max_streak
-    chain.active = data.active
     chain.frequency = data.frequency
 
     return chain
