@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import { useChainsStore } from '@/stores/ChainsStore'
-import ChainListItem from './ChainListItem.vue'
-import router from '@/router/router'
+import { useChainsStore } from '@/stores/ChainsStore.ts'
+import ChainListItem from '@/features/chains/components/ChainListItem.vue'
+import router from '@/router/router.ts'
 
 const chainsStore = useChainsStore()
 </script>
@@ -13,7 +13,7 @@ const chainsStore = useChainsStore()
         :key="chain.id"
         :chain="chain"
         :active="chain.id === chainsStore.activeChainId"
-        @click="chainsStore.setActiveChainId(chain.id); router.push('/')"
+        @click="chainsStore.setActiveChainId(chain.id); router.push('/chains')"
       />
     </div>
   </div>

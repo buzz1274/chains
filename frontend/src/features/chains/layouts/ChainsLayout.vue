@@ -2,7 +2,7 @@
 import DefaultLayout from '@/shared/ui/layouts/DefaultLayout.vue'
 import AddEditChainButton from '@/components/chains/AddEditChainButton.vue'
 import ConfirmOutstandingChainsButton from '@/components/chains/ConfirmOutstandingChainsButton.vue'
-import ChainsList from '@/components/chains/ChainsList.vue'
+import ChainsList from '@/features/chains/components/ChainsList.vue'
 </script>
 <template>
   <DefaultLayout>

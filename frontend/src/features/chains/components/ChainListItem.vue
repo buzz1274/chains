@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import type { IChainModel } from '@/types/ChainTypes'
-import { getStreakStyles } from '@/lib/design/StreakStyle'
+import { getStreakStyles } from '@/lib/design/StreakStyle.ts'
 
 defineProps<{
   chain: IChainModel
