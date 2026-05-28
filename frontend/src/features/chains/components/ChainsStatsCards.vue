@@ -35,7 +35,10 @@ const statCards = [
     <div
       v-for="card in statCards"
       :key="card.label"
-      class="[ 'bg-white rounded-2xl border border-gray-100 p-5' 'flex items-start gap-4 shadow-sm' ]"
+      :class="[
+        'bg-white rounded-2xl border border-gray-100 p-5',
+        'flex items-start gap-4 shadow-sm',
+      ]"
     >
       <div
         :class="[
