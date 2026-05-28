@@ -1,14 +1,17 @@
 <script setup lang="ts">
 import ProfileButton from '@/features/users/components/ProfileButton.vue'
 import ChainsHeaderDetail from '@/features/chains/components/ChainsHeaderDetail.vue'
-import HeaderTitle from '@/shared/ui/base/HeaderTitle.vue'
-withDefaults(defineProps<{
-  title?: string,
-  displayChainDetails?: boolean
-}>(), {
-  title: 'Chains',
-  displayChainDetails: false,
-})
+import HeaderTitle from '@/shared/ui/components/base/HeaderTitle.vue'
+withDefaults(
+  defineProps<{
+    title?: string
+    displayChainDetails?: boolean
+  }>(),
+  {
+    title: 'Chains',
+    displayChainDetails: false,
+  },
+)
 </script>
 <template>
   <div class="flex items-center justify-between">

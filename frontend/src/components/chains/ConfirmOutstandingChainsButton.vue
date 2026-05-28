@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { ClipboardCheck as ClipboardCheckIcon } from '@lucide/vue'
+
 import BaseTransparentButton from '@/components/base/BaseTransparentButton.vue'
 import router from '@/router/router.ts'
 </script>

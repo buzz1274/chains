@@ -1,10 +1,9 @@
 <script setup lang="ts">
 import { getStreakStyles } from '@/lib/design/StreakStyle.ts'
 import { useChainsStore } from '@/stores/ChainsStore.ts'
-import HeaderTitle from '@/shared/ui/base/HeaderTitle.vue'
+import HeaderTitle from '@/shared/ui/components/base/HeaderTitle.vue'
 
 const chainsStore = useChainsStore()
-
 </script>
 
 <template>
@@ -19,13 +18,14 @@ const chainsStore = useChainsStore()
       ]"
     />
     <span class="text-gray-500 text-sm">
-        You're on a
-        <span
-          :class="['font-bold', getStreakStyles(chainsStore.activeChain).text]"
-        >
-          {{ chainsStore.activeChain.currentStreak }}
-          {{ chainsStore.activeChain.frequency }} streak!
-        </span>
+      You're on a
+      <span
+        :class="['font-bold', getStreakStyles(chainsStore.activeChain).text]"
+      >
+        {{ chainsStore.activeChain.currentStreak }}
+        {{ chainsStore.activeChain.frequency }} streak!
       </span>
+    </span>
   </div>
-</template>>
+</template>
+>

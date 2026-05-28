@@ -7,6 +7,7 @@ import {
   FlameIcon,
   TrendingUpIcon,
 } from '@lucide/vue'
+
 import ChainsHeader from '@/features/chains/components/ChainsHeader.vue'
 
 interface ActivityDay {
@@ -73,7 +74,7 @@ const denyCompletion = (): void => {
 </script>
 
 <template>
-  <ChainsHeader :displayChainDetails="true" />
+  <ChainsHeader :display-chain-details="true" />
 
       <!-- Hero -->
       <div class="flex flex-col items-center text-center">

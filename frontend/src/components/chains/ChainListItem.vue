@@ -14,7 +14,7 @@ defineProps<{
       'transition-all duration-200 cursor-pointer hover:scale-[1.01]',
       active
         ? 'bg-green-50 border border-green-200 hover:bg-green-100'
-        : 'bg-white border border-transparent hover:bg-gray-100',
+        : 'bg-white border border-gray-300 hover:bg-gray-100',
     ]"
   >
     <div
