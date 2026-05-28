@@ -3,7 +3,7 @@ import { StatusCodes } from 'http-status-codes'
 import { httpClient, HttpError } from '@/lib/HttpClient'
 import { useUserStore } from '@/stores/UserStore'
 import { useChainsStore } from '@/stores/ChainsStore'
-import { chainService } from '@/services/ChainService'
+import { chainService } from '@/services/chainService'
 import { userService } from '@/services/userService'
 import type { IAccessTokenResponse } from '@/types/ApiTypes'
 import router from '@/router/router.ts'
@@ -53,19 +53,23 @@ export function useAuth() {
       chainsStore.reset()
       throw HttpError.fromError(error, StatusCodes.FORBIDDEN, getChainsFailure)
     }
-
-    router.push({ name: 'chains' })
   }
 
   function logout() {
     userStore.reset()
     chainsStore.reset()
+  }
 
-    router.push({ name: 'landing' }).catch(() => {})
+  function redirectTo(path: string) {
+    router.push(path).catch(() => {
+      userStore.reset()
+      chainsStore.reset()
+    })
   }
 
   return {
     login,
     logout,
+    redirectTo,
   }
 }

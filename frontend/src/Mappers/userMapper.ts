@@ -1,4 +1,4 @@
-import type { IUserModel, IUserDTO } from '@/types/UserTypes'
+import type { IUserModel, IUserDTO } from '@/types/userTypes'
 
 export const mapUserFromAPI = (dto: IUserDTO): IUserModel => ({
   name: dto.name,

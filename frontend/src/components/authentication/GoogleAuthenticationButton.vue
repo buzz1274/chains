@@ -13,14 +13,19 @@ const { initGoogleAuth, authenticateWithGoogle } = useGoogleAuth()
 
 onMounted(() => {
   initGoogleAuth((code, provider) => {
-    auth.login(code, provider).catch((error) => {
-      toast.add({
-        severity: 'error',
-        summary: `Authentication[${error.status}]`,
-        detail: error.message,
-        life: 3000,
+    auth
+      .login(code, provider)
+      .then(() => {
+        auth.redirectTo('/chains')
       })
-    })
+      .catch((error) => {
+        toast.add({
+          severity: 'error',
+          summary: `Authentication[${error.status}]`,
+          detail: error.message,
+          life: 3000,
+        })
+      })
   })
 })
 </script>

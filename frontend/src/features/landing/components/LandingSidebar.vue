@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import BaseLeftNavigation from '@/components/base/BaseLeftNavigation.vue'
 import GreenFire from '@/assets/images/green_fire.png'
 import GreenGraphArrow from '@/assets/images/green_graph_arrow.png'
 import YellowCup from '@/assets/images/yellow_cup.png'

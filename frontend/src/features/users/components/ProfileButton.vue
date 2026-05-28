@@ -1,4 +1,4 @@
-<script setup lang="ts" xmlns="http://www.w3.org/1999/html">
+<script setup lang="ts">
 import { useToast } from 'primevue/usetoast'
 import { LogOut as LogOutIcon } from '@lucide/vue'
 
@@ -7,10 +7,12 @@ import { useAuth } from '@/composables/authentication/useAuth.ts'
 import { useUserStore } from '@/stores/UserStore.ts'
 
 const userStore = useUserStore()
-const { logout } = useAuth()
+const { logout, redirectTo } = useAuth()
 const toast = useToast()
 const processLogout = () => {
   logout()
+  redirectTo('/')
+
   toast.add({
     severity: 'success',
     summary: 'Signed Out',

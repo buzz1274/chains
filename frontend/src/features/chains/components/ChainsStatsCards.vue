@@ -35,10 +35,14 @@ const statCards = [
     <div
       v-for="card in statCards"
       :key="card.label"
-      class="bg-white rounded-2xl border border-gray-100 p-5 flex items-start gap-4 shadow-sm"
+      class="[ 'bg-white rounded-2xl border border-gray-100 p-5' 'flex items-start gap-4 shadow-sm' ]"
     >
       <div
-        :class="`w-12 h-12 rounded-2xl flex items-center justify-center flex-shrink-0 ${card.iconBg}`"
+        :class="[
+          'w-12 h-12 rounded-2xl flex items-center justify-center',
+          'flex-shrink-0',
+          card.iconBg,
+        ]"
       >
         <span class="text-xl">{{ card.icon }}</span>
       </div>
