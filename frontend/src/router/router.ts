@@ -1,6 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router'
 
 import LandingPage from '@/features/landing/pages/LandingPage.vue'
+import ChainsLayout from '@/features/chains/layouts/ChainsLayout.vue'
 import ChainsMainPage from '@/features/chains/pages/ChainsMainPage.vue'
 import ChainsAddEdit from '@/features/chains/pages/ChainsAddEdit.vue'
 import ChainsConfirmOutstanding from '@/features/chains/pages/ChainsConfirmOutstanding.vue'
@@ -14,11 +15,15 @@ const routes = [
         meta: { guestOnly: true }
     },
     {
-        path: '/chains',
-        name: 'home',
-        component: ChainsMainPage,
+        path: '/chains/',
+        component: ChainsLayout,
         meta: { requiresAuth: true },
         children: [
+            {
+                path: '',
+                name: 'chains',
+                component: ChainsMainPage,
+            },
             {
                 path: ':action/:id?',
                 name: 'add_edit_chain',

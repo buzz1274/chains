@@ -147,7 +147,6 @@ const milestones = [
 </script>
 
 <template>
-  <ChainsLayout>
     <ChainsHeader :displayChainDetails="true" />
     <ChainsStatsCards />
 
@@ -400,5 +399,4 @@ const milestones = [
       </div>
     </div>
   </div>
-  </ChainsLayout>
 </template>

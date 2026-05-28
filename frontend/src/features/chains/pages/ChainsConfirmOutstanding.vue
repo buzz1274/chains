@@ -9,6 +9,7 @@ import {
 } from '@lucide/vue'
 
 import ChainsHeader from '@/features/chains/components/ChainsHeader.vue'
+import ChainsLayout from '@/features/chains/layouts/ChainsLayout.vue'
 
 interface ActivityDay {
   id: number
@@ -74,7 +75,7 @@ const denyCompletion = (): void => {
 </script>
 
 <template>
-  <ChainsHeader :display-chain-details="true" />
+    <ChainsHeader :display-chain-details="true" />
 
       <!-- Hero -->
       <div class="flex flex-col items-center text-center">

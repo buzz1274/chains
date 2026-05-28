@@ -12,7 +12,7 @@ import ChainsList from '@/components/chains/ChainsList.vue'
       <AddEditChainButton />
     </template>
     <template #main>
-      <slot />
+      <router-view />
     </template>
   </DefaultLayout>
 </template>
