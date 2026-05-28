@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { Plus as PlusIcon } from '@lucide/vue'
 
-import router from '@/router/router'
+import router from '@/router/router.ts'
 import BaseTransparentButton from '@/components/base/BaseTransparentButton.vue'
 
 </script>

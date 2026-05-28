@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<script setup lang="ts" xmlns="http://www.w3.org/1999/html">
 import GreenRoadToFlag from '@/assets/images/green_road_to_flag.png'
 import GoogleAuthenticationButton from '@/components/authentication/GoogleAuthenticationButton.vue'
 import DefaultLayout from '@/shared/ui/layouts/DefaultLayout.vue'
@@ -10,16 +10,16 @@ const infoHowItWorks: {
 }[] = [
   {
     title: 'Create a Chain',
-    description: 'Track daily progress and build unbreakable habits.',
+    description: 'Track daily progress and build unbreakable habits.'
   },
   {
     title: 'Track Daily',
-    description: 'Mark your progress every day.',
+    description: 'Mark your progress every day.'
   },
   {
     title: 'Build Momentum',
-    description: 'Watch your streak grow and achieve greatness.',
-  },
+    description: 'Watch your streak grow and achieve greatness.'
+  }
 ]
 </script>
 
@@ -29,6 +29,7 @@ const infoHowItWorks: {
       <LandingSidebar />
     </template>
     <template #main>
+      <div class="flex flex-col items-center pt-8">
       <img :src="GreenRoadToFlag" alt="icon" class="w-auto h-80" />
 
       <h1 class="text-4xl font-bold text-center mt-8">Welcome to Chains</h1>
@@ -91,6 +92,7 @@ const infoHowItWorks: {
         <p class="text-black text-xs mt-3 font-medium text-right">
           — Samuel Johnson
         </p>
+      </div>
       </div>
     </template>
   </DefaultLayout>

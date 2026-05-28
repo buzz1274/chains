@@ -52,6 +52,13 @@ router.beforeEach((to, from) => {
             query: { redirect: to.fullPath },
         }
     }
+
+    if (to.meta.guestOnly && userStore.isAuthenticated) {
+        return {
+            path: '/chains',
+        }
+    }
+
 })
 
 export default router

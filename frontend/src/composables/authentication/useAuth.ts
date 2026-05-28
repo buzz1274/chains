@@ -54,14 +54,14 @@ export function useAuth() {
       throw HttpError.fromError(error, StatusCodes.FORBIDDEN, getChainsFailure)
     }
 
-    await router.push({ name: 'home' })
+    router.push({ name: 'chains' })
   }
 
   function logout() {
     userStore.reset()
     chainsStore.reset()
 
-    void router.push({ name: 'landing' })
+    router.push({ name: 'landing' }).catch(() => {})
   }
 
   return {
