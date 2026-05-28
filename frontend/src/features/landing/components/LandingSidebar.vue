@@ -35,28 +35,24 @@ const infoCallout: {
 </script>
 
 <template>
-  <BaseLeftNavigation>
-    <template #lhs_content>
-      <div class="pt-23" />
-      <div
-        v-for="(value, key) in infoCallout"
-        :key="key"
-        class="info-callout mt-10 flex items-start gap-5"
-      >
-        <img :src="value.image" alt="icon" class="w-16 h-16" />
-        <div class="leading-snug">
-          <strong class="text-m block text-gray-700">
-            {{ value.title }}
-          </strong>
+  <div class="pt-23" />
+  <div
+    v-for="(value, key) in infoCallout"
+    :key="key"
+    class="info-callout mt-10 flex items-start gap-5"
+  >
+    <img :src="value.image" alt="icon" class="w-16 h-16" />
+    <div class="leading-snug">
+      <strong class="text-m block text-gray-700">
+        {{ value.title }}
+      </strong>
 
-          <span class="text-sm text-gray-500">
-            {{ value.description }}
-          </span>
-        </div>
-      </div>
-      <div class="flex justify-center pt-5">
-        <GoogleAuthenticationButton label="Sign In" />
-      </div>
-    </template>
-  </BaseLeftNavigation>
+      <span class="text-sm text-gray-500">
+        {{ value.description }}
+      </span>
+    </div>
+  </div>
+  <div class="flex justify-center pt-5">
+    <GoogleAuthenticationButton label="Sign In" />
+  </div>
 </template>

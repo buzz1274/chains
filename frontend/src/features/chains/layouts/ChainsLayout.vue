@@ -1,16 +1,18 @@
 <script setup lang="ts">
-import BaseLeftNavigation from '@/components/base/BaseLeftNavigation.vue'
+import DefaultLayout from '@/shared/ui/layouts/DefaultLayout.vue'
 import AddEditChainButton from '@/components/chains/AddEditChainButton.vue'
-import ChainsList from '@/components/chains/ChainsList.vue'
 import ConfirmOutstandingChainsButton from '@/components/chains/ConfirmOutstandingChainsButton.vue'
+import ChainsList from '@/components/chains/ChainsList.vue'
 </script>
-
 <template>
-  <BaseLeftNavigation>
-    <template #lhs_content>
+  <DefaultLayout>
+    <template #sidebar>
       <ChainsList />
       <ConfirmOutstandingChainsButton />
       <AddEditChainButton />
     </template>
-  </BaseLeftNavigation>
+    <template #main>
+      <slot />
+    </template>
+  </DefaultLayout>
 </template>

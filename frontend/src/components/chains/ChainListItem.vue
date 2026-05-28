@@ -10,17 +10,17 @@ defineProps<{
 <template>
   <div
     :class="[
-      'flex items-center gap-4 px-4 py-4 rounded-2xl mb-2',
+      'flex items-center gap-4 px-4 py-4 rounded-2xl mb-2 shadow-sm',
       'transition-all duration-200 cursor-pointer hover:scale-[1.01]',
       active
         ? 'bg-green-50 border border-green-200 hover:bg-green-100'
-        : 'bg-white border border-gray-300 hover:bg-gray-100',
+        : 'bg-white border border-gray-100 hover:bg-gray-100',
     ]"
   >
     <div
       :class="[
         'w-12 h-12 rounded-2xl flex items-center justify-center',
-        'text-2xl flex-shrink-0',
+        'text-2xl flex-shrink-0 ',
         active ? 'bg-green-100' : 'bg-gray-100',
       ]"
     >

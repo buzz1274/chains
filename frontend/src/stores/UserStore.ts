@@ -1,12 +1,12 @@
 import { defineStore } from 'pinia'
 
-import type { UserModel } from '@/models/UserModel'
 import { keys, storage } from '@/lib/Storage'
+import type { IUserModel } from '@/types/userTypes.ts'
 
 export const useUserStore = defineStore('user', {
   state: () => ({
     token: null as string | null,
-    user: null as null | UserModel,
+    user: null as null | IUserModel,
   }),
 
   persist: true,
@@ -21,7 +21,7 @@ export const useUserStore = defineStore('user', {
       storage.set(keys.BearerToken, this.token)
     },
 
-    setUser(user: UserModel) {
+    setUser(user: IUserModel) {
       this.user = user
     },
 

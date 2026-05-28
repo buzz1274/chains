@@ -1,7 +1,8 @@
 <script setup lang="ts">
-import MainPage from '@/shared/ui/components/base/MainPage.vue'
 import GreenRoadToFlag from '@/assets/images/green_road_to_flag.png'
 import GoogleAuthenticationButton from '@/components/authentication/GoogleAuthenticationButton.vue'
+import DefaultLayout from '@/shared/ui/layouts/DefaultLayout.vue'
+import LandingSidebar from '@/features/landing/components/LandingSidebar.vue'
 
 const infoHowItWorks: {
   title: string
@@ -23,8 +24,11 @@ const infoHowItWorks: {
 </script>
 
 <template>
-  <MainPage>
-    <div class="flex flex-col items-center pt-8">
+  <DefaultLayout>
+    <template #sidebar>
+      <LandingSidebar />
+    </template>
+    <template #main>
       <img :src="GreenRoadToFlag" alt="icon" class="w-auto h-80" />
 
       <h1 class="text-4xl font-bold text-center mt-8">Welcome to Chains</h1>
@@ -88,6 +92,6 @@ const infoHowItWorks: {
           — Samuel Johnson
         </p>
       </div>
-    </div>
-  </MainPage>
+    </template>
+  </DefaultLayout>
 </template>
