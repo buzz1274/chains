@@ -3,9 +3,6 @@ import { Plus as PlusIcon } from '@lucide/vue'
 
 import router from '@/router/router.ts'
 import BaseTransparentButton from '@/shared/ui/components/base/BaseTransparentButton.vue'
-import { useSession } from '@/shared/composables/useSession'
-
-void useSession().create()
 </script>
 
 <template>

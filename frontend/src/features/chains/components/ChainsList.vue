@@ -4,6 +4,11 @@ import ChainListItem from '@/features/chains/components/ChainsListItem.vue'
 import router from '@/router/router.ts'
 
 const chainsStore = useChainsStore()
+
+const handleSelectChain = (id: number) => {
+  chainsStore.setActiveChainId(id)
+  router.push('/chains')
+}
 </script>
 <template>
   <div class="flex justify-center items-start">
@@ -13,10 +18,7 @@ const chainsStore = useChainsStore()
         :key="chain.id"
         :chain="chain"
         :active="chain.id === chainsStore.activeChainId"
-        @click="
-          chainsStore.setActiveChainId(chain.id)
-          router.push('/chains')
-        "
+        @click="handleSelectChain(chain.id)"
       />
     </div>
   </div>
