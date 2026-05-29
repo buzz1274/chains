@@ -2,8 +2,10 @@
 import { Plus as PlusIcon } from '@lucide/vue'
 
 import router from '@/router/router.ts'
-import BaseTransparentButton from '@/components/base/BaseTransparentButton.vue'
+import BaseTransparentButton from '@/shared/ui/components/base/BaseTransparentButton.vue'
+import { useSession } from '@/shared/composables/useSession'
 
+void useSession().create()
 </script>
 
 <template>
@@ -14,6 +16,5 @@ import BaseTransparentButton from '@/components/base/BaseTransparentButton.vue'
     <template #icon-left>
       <PlusIcon class="w-5 h-5" />
     </template>
-
   </BaseTransparentButton>
 </template>

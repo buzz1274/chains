@@ -1,6 +1,7 @@
-import type { IChainModel } from '@/types/ChainTypes'
-
-type TStreakLevel = 'critical' | 'warning' | 'success'
+import type {
+  IChainModel,
+  TStreakLevel,
+} from '@/features/chains/types/chainsTypes'
 
 function getStreakLevel(streak: number): TStreakLevel {
   if (streak === 0) return 'critical'
@@ -24,6 +25,6 @@ const streakStyles: Record<TStreakLevel, { text: string; bg: string }> = {
 }
 
 export const getStreakStyles = (chain: IChainModel) => {
-  const streakLevel: TStreakLevel = getStreakLevel(chain.currentStreak)
+  const streakLevel: TStreakLevel = getStreakLevel(chain.currentStreak.streak)
   return streakStyles[streakLevel]
 }

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { IChainModel } from '@/types/ChainTypes'
+import type { IChainModel } from '@/features/chains/types/chainsTypes'
 import { getStreakStyles } from '@/lib/design/StreakStyle.ts'
 
 defineProps<{
@@ -35,13 +35,13 @@ defineProps<{
         <div>
           <p class="text-xs text-gray-400">Current streak</p>
           <p :class="['text-xs font-bold', getStreakStyles(chain).text]">
-            {{ chain.currentStreak }} {{ chain.frequency }}
+            {{ chain.currentStreak.streak }} {{ chain.frequency }}
           </p>
         </div>
         <div>
           <p class="text-xs text-gray-400">Max streak</p>
           <p class="text-xs font-bold text-gray-800">
-            {{ chain.maxStreak }} {{ chain.frequency }}
+            {{ chain.maxStreak.streak }} {{ chain.frequency }}
           </p>
         </div>
       </div>

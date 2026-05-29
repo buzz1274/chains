@@ -2,7 +2,7 @@
 import { onMounted } from 'vue'
 import { useToast } from 'primevue/usetoast'
 
-import BaseButton from '@/components/base/BaseButton.vue'
+import BaseButton from '@/shared/ui/components/base/BaseButton.vue'
 import { useGoogleAuth } from '@/composables/authentication/UseGoogleAuth'
 import { useAuth } from '@/composables/authentication/useAuth'
 

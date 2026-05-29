@@ -2,9 +2,7 @@ import { StatusCodes } from 'http-status-codes'
 
 import { httpClient, HttpError } from '@/lib/HttpClient'
 import { useUserStore } from '@/stores/UserStore'
-import { useChainsStore } from '@/stores/ChainsStore'
-import { chainService } from '@/services/chainService'
-import { userService } from '@/services/userService'
+import { useSession } from '@/shared/composables/useSession.ts'
 import type { IAccessTokenResponse } from '@/types/ApiTypes'
 import router from '@/router/router.ts'
 
@@ -12,14 +10,8 @@ export function useAuth() {
   const loginFailure =
     'An error occurred while logging in. Please try again later.'
 
-  const getProfileFailure =
-    'An error occurred while retrieving user profile. Please try again later.'
-
-  const getChainsFailure =
-    'An error occurred while retrieving user chains. Please try again later.'
-
+  const session = useSession()
   const userStore = useUserStore()
-  const chainsStore = useChainsStore()
 
   async function login(code: string, provider: string): Promise<void> {
     try {
@@ -32,38 +24,21 @@ export function useAuth() {
       )
 
       userStore.setToken(loginResponse.token)
+      void session.create()
     } catch (error: unknown) {
-      userStore.reset()
-      chainsStore.reset()
+      console.error('Login error:', error)
+      session.destroy()
       throw HttpError.fromError(error, StatusCodes.FORBIDDEN, loginFailure)
-    }
-
-    try {
-      userStore.setUser(await userService.get())
-    } catch (error: unknown) {
-      userStore.reset()
-      chainsStore.reset()
-      throw HttpError.fromError(error, StatusCodes.FORBIDDEN, getProfileFailure)
-    }
-
-    try {
-      chainsStore.setChains(chainService.get())
-    } catch (error: unknown) {
-      userStore.reset()
-      chainsStore.reset()
-      throw HttpError.fromError(error, StatusCodes.FORBIDDEN, getChainsFailure)
     }
   }
 
   function logout() {
-    userStore.reset()
-    chainsStore.reset()
+    session.destroy()
   }
 
   function redirectTo(path: string) {
     router.push(path).catch(() => {
-      userStore.reset()
-      chainsStore.reset()
+      session.destroy()
     })
   }
 

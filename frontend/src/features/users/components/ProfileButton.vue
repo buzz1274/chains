@@ -2,7 +2,7 @@
 import { useToast } from 'primevue/usetoast'
 import { LogOut as LogOutIcon } from '@lucide/vue'
 
-import DropDownMenu from '@/shared/ui/components/base/DropDownMenu.vue'
+import BaseDropDownMenu from '@/shared/ui/components/base/BaseDropDownMenu.vue'
 import { useAuth } from '@/composables/authentication/useAuth.ts'
 import { useUserStore } from '@/stores/UserStore.ts'
 
@@ -34,12 +34,12 @@ const items = [
     <span class="mr-3 text-sm font-semibold text-gray-700">
       Welcome Back, {{ userStore.user?.name }}
     </span>
-    <DropDownMenu v-if="userStore.user" :items="items">
+    <BaseDropDownMenu v-if="userStore.user" :items="items">
       <img
         :src="userStore.user.image"
         alt="user image"
         class="w-10 h-10 rounded-full object-cover"
       />
-    </DropDownMenu>
+    </BaseDropDownMenu>
   </div>
 </template>

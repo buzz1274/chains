@@ -1,6 +1,6 @@
 import { defineStore } from 'pinia'
 
-import type { IChainModel } from '@/types/ChainTypes'
+import type { IChainModel } from '@/features/chains/types/chainsTypes'
 import { storage } from '@/lib/Storage'
 
 export const useChainsStore = defineStore('chains', {

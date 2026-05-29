@@ -1,16 +1,16 @@
 <script setup lang="ts">
 import { getStreakStyles } from '@/lib/design/StreakStyle.ts'
 import { useChainsStore } from '@/stores/ChainsStore.ts'
-import HeaderTitle from '@/shared/ui/components/base/HeaderTitle.vue'
+import BaseHeaderTitle from '@/shared/ui/components/base/BaseHeaderTitle.vue'
 
 const chainsStore = useChainsStore()
 </script>
 
 <template>
   <div v-if="chainsStore.activeChain" class="flex items-center gap-3">
-    <HeaderTitle>
+    <BaseHeaderTitle>
       {{ chainsStore.activeChain?.name }}
-    </HeaderTitle>
+    </BaseHeaderTitle>
     <span
       :class="[
         'w-2.5 h-2.5 rounded-full inline-block mt-1',
@@ -22,7 +22,7 @@ const chainsStore = useChainsStore()
       <span
         :class="['font-bold', getStreakStyles(chainsStore.activeChain).text]"
       >
-        {{ chainsStore.activeChain.currentStreak }}
+        {{ chainsStore.activeChain.currentStreak.streak }}
         {{ chainsStore.activeChain.frequency }} streak!
       </span>
     </span>
