@@ -8,6 +8,7 @@ from starlette.responses import Response, JSONResponse
 
 
 class RequestIdMiddleware(BaseHTTPMiddleware):
+    UUID_V4_LENGTH: int = 36
     PATH_WHITELIST: list[str] = [
         "/api/auth/login",
     ]
@@ -19,7 +20,7 @@ class RequestIdMiddleware(BaseHTTPMiddleware):
     ):
         request_id: str = request.headers.get("X-Request-ID")
 
-        if not request_id:
+        if not request_id or len(request_id) != self.UUID_V4_LENGTH:
             if request.url.path not in self.PATH_WHITELIST:
                 return JSONResponse(
                     status_code=400,

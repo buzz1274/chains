@@ -21,7 +21,7 @@ export function useAuth() {
         },
       )
 
-      userStore.setRequestId(loginResponse.token)
+      userStore.setRequestId(loginResponse.request_id)
       userStore.setToken(loginResponse.token)
 
       await session.create()
