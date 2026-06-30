@@ -20,6 +20,12 @@ export const useChainsStore = defineStore('chains', {
   actions: {
     setChains(chains: IChainModel[]): void {
       this.chains = chains
+
+      const [firstChain] = this.chains
+
+      if (firstChain) {
+        this.setActiveChainId(firstChain.id)
+      }
     },
     setActiveChainId(id: number): void {
       this.activeChainId = id
