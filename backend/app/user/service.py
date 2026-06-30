@@ -15,10 +15,12 @@ class UserService:
 
     async def get_or_create(self, user_info: AuthUserInfo) -> User:
         """get or create a new user"""
-        if user := await self.user_repository.get_user(
-            provider_id=user_info.provider_id,
-            provider=user_info.provider,
+        if user := (
+            await self.user_repository.get_user(
+                provider_id=user_info.provider_id,
+                provider=user_info.provider,
+            )
         ):
             return user
 
-        return self.user_repository.create_user(user_info)
+        return await self.user_repository.create_user(user_info)

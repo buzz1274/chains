@@ -9,9 +9,9 @@ from sqlmodel import select
 class UserRepository(Repository):
     INVALID_USER_QUERY: str = "invalid user query"
 
-    def create_user(self, user_info: AuthUserInfo):
+    async def create_user(self, user_info: AuthUserInfo):
         """create a new user"""
-        return self.add(
+        return await self.add(
             User(
                 email=user_info.email,
                 name=user_info.name,
