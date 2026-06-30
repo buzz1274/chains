@@ -43,17 +43,6 @@ export default defineConfigWithVueTs(
       import: importPlugin, unicorn
     },
     rules: {
-      'unicorn/filename-case': [
-        'error',
-        {
-          case: 'pascalCase',
-          ignore: [
-            '^env\\.d\\.ts$',
-            '^eslint\\.config\\.js$',
-            '^vite\\.config\\.ts$',
-          ],
-        },
-      ],
       '@typescript-eslint/naming-convention': [
         'error',
         {
@@ -66,7 +55,7 @@ export default defineConfigWithVueTs(
         },
         {
           selector: 'class',
-          format: ['PascalCase'],
+          format: ['camelCase'],
         },
         {
           selector: 'typeAlias',
@@ -163,6 +152,7 @@ export default defineConfigWithVueTs(
       'vue/max-len': ['error', {
         code: 80,
         template: 80,
+        ignorePattern: '^import\\s.+$',
         ignoreHTMLAttributeValues: true,
       }],
     },

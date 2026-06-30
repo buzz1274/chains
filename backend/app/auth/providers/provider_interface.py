@@ -8,11 +8,9 @@ class ProviderInterface(metaclass=ABCMeta):
     INVALID_CREDENTIAL_ERROR: str = "Invalid credentials"
     COMMUNICATION_ERROR: Template = Template("Communication error $provider")
 
-    user_info: dict = {}
-
     def __init__(self, provider: str):
         self.provider = provider
-        self.user_info = {}
+        self.user_info: dict = {}
 
     @abstractmethod
     async def get_user_info(self, code: str) -> AuthUserInfo:

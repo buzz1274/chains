@@ -17,10 +17,11 @@ class UserRepository(Repository):
                 name=user_info.name,
                 provider=user_info.provider,
                 provider_id=user_info.provider_id,
+                image=user_info.image,
             )
         )
 
-    def get_user(
+    async def get_user(
         self,
         *,
         user_id: Optional[int] = None,
@@ -45,4 +46,4 @@ class UserRepository(Repository):
         if email:
             query = query.where(User.email == email)
 
-        return self.execute_query(query).one_or_none()
+        return (await self.execute_query(query)).scalar_one_or_none()

@@ -17,11 +17,13 @@
     "format": "prettier --write src/"
   },
   "dependencies": {
+    "@headlessui/vue": "^1.7.23",
     "@js-temporal/polyfill": "^0.5.1",
     "@lucide/vue": "^1.16.0",
     "@primeuix/themes": "^2.0.3",
     "@tailwindcss/vite": "^4.3.0",
-    "@tanstack/vue-query": "^5.100.11",
+    "date-fns": "^4.4.0",
+    "eslint-plugin-unicorn": "^64.0.0",
     "http-status-codes": "^2.3.0",
     "install": "^0.13.0",
     "pinia": "^3.0.4",
@@ -45,7 +47,6 @@
     "eslint": "^9",
     "eslint-plugin": "^1.0.1",
     "eslint-plugin-import": "^2.32.0",
-    "eslint-plugin-unicorn": "^64.0.0",
     "eslint-plugin-unused-imports": "^4.4.1",
     "eslint-plugin-vue": "^10.9.0",
     "jiti": "^2.5.1",

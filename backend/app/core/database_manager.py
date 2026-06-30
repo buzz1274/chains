@@ -1,18 +1,26 @@
-from contextlib import contextmanager
-from typing import Generator
+from contextlib import asynccontextmanager
+from typing import AsyncGenerator
 
 from app.core.config.config import settings
-from sqlmodel import create_engine, Session
-from sqlalchemy.engine import Engine
+from sqlalchemy.ext.asyncio import (
+    AsyncSession,
+    AsyncEngine,
+    create_async_engine,
+    async_sessionmaker,
+)
 
 
 class DatabaseManager:
     def __init__(self) -> None:
-        self.engine: Engine | None = None
+        self.engine: AsyncEngine | None = None
+        self.session_factory: async_sessionmaker[AsyncSession] | None = None
 
     def startup(self) -> None:
         """Initialize the database engine"""
-        self.engine = create_engine(
+        if self.engine:
+            return
+
+        self.engine = create_async_engine(
             str(settings.SQLALCHEMY_DATABASE_URI),
             pool_size=10,
             max_overflow=5,
@@ -21,30 +29,37 @@ class DatabaseManager:
             echo=settings.SQL_ALCHEMY_ECHO,
         )
 
-    def shutdown(self) -> None:
+        self.session_factory = async_sessionmaker(
+            self.engine,
+            class_=AsyncSession,
+            expire_on_commit=False,
+        )
+
+    async def shutdown(self) -> None:
         """Shutdown the database engine"""
         if self.engine:
-            self.engine.dispose()
+            await self.engine.dispose()
 
-    def get_engine(self) -> Engine:
-        """get database engine"""
-        if not self.engine:
+    async def get_session(self) -> AsyncGenerator[AsyncSession, None]:
+        """get database session"""
+        if not self.engine or not self.session_factory:
             raise RuntimeError("Database engine not initialized")
 
-        return self.engine
-
-    def get_session(self) -> Generator[Session, None, None]:
-        """get database session"""
-        session: Session = Session(self.get_engine())
-
-        try:
+        async with self.session_factory() as session:
             yield session
-        finally:
-            session.close()
 
-    @contextmanager
-    def get_session_context(self) -> Generator[Session, None, None]:
-        return self.get_session()
+    @asynccontextmanager
+    async def get_session_context(self) -> AsyncGenerator[AsyncSession, None]:
+        if not self.engine or not self.session_factory:
+            raise RuntimeError("Database engine not initialized")
+
+        async with self.session_factory() as session:
+            try:
+                yield session
+                await session.commit()
+            except Exception:
+                await session.rollback()
+                raise
 
 
 database_manager = DatabaseManager()

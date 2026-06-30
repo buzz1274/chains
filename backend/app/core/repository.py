@@ -1,5 +1,6 @@
+from typing import TypeVar
 from sqlalchemy import Select, Delete, Update
-from sqlmodel import Session
+from sqlalchemy.ext.asyncio import AsyncSession
 
 from typing import Annotated
 
@@ -7,32 +8,44 @@ from fastapi import Depends
 
 from app.core.database_manager import database_manager
 
+T = TypeVar("T")
+
 
 class Repository:
     def __init__(
-        self, session: Annotated[Session, Depends(database_manager.get_session)]
+        self,
+        session: Annotated[AsyncSession, Depends(database_manager.get_session)],
     ):
-        self.session: Session = session
+        self.session: AsyncSession = session
 
-    def execute_query(self, query: Select | Delete | Update):
-        return self.session.exec(query)  # ty: ignore[no-matching-overload]
+    async def execute_query(self, query: Select | Delete | Update):
+        """execute a query"""
+        return await self.session.execute(
+            query
+        )  # ty: ignore[no-matching-overload]
 
-    def delete(self, model: object, commit: bool = True) -> None:
+    async def delete(self, model: object, commit: bool = True) -> None:
         """delete a model instance"""
-        self.session.delete(model)
+        await self.session.delete(model)
 
         if commit:
-            self.commit()
+            await self.commit()
 
-    def add(self, model: object, commit: bool = True) -> object:
+    async def add(self, model: T, commit: bool = True) -> T:
         """insert/update a model instance"""
         self.session.add(model)
 
         if commit:
-            self.commit()
+            await self.commit()
+            await self.session.refresh(model)
 
         return model
 
-    def commit(self):
+    async def commit(self):
         """commit session"""
-        self.session.commit()
+        try:
+            await self.session.flush()
+            await self.session.commit()
+        except Exception:
+            await self.session.rollback()
+            raise

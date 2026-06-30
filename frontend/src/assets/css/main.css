@@ -4,3 +4,7 @@ body {
   font-family: ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji',
     'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
 }
+
+.p-menu .p-menuitem .p-menuitem-link .p-menuitem-text {
+  font-size: 0.75rem !important;
+}

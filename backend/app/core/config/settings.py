@@ -13,6 +13,7 @@ class Settings(BaseSettings):
     POSTGRES_USER: str = os.environ.get("DB_USERNAME", "")
     POSTGRES_PASSWORD: str = os.environ.get("DB_PASSWORD", "")
     POSTGRES_DB: str = os.environ.get("DB_NAME", "")
+    DEBUG: bool = False
 
     #AWS_SECRET_ACCESS_KEY: str = os.environ.get("AWS_SECRET_ACCESS_KEY", "")
     #AWS_ACCESS_KEY_ID: str = os.environ.get("AWS_ACCESS_KEY_ID", "")
@@ -43,7 +44,7 @@ class Settings(BaseSettings):
     @property
     def SQLALCHEMY_DATABASE_URI(self) -> PostgresDsn:
         return PostgresDsn.build(
-            scheme="postgresql+psycopg",
+            scheme="postgresql+asyncpg",
             username=self.POSTGRES_USER,
             password=self.POSTGRES_PASSWORD,
             host=self.POSTGRES_SERVER,
