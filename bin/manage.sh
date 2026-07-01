@@ -10,4 +10,8 @@ elif [ "$ACTION" == "alembic-upgrade" ]; then
   docker exec -it chains-backend bash -c "uv run alembic upgrade head"
 elif [ "$ACTION" == "alembic-autogenerate" ]; then
   docker exec -it chains-backend bash -c "uv run alembic revision --autogenerate"
+elif [ "$ACTION" == "ty" ]; then
+  docker exec -it chains-backend bash -c "./bin/ty.sh"
+elif [ "$ACTION" == "eslint" ]; then
+  docker exec -it chains-frontend sh -c "./bin/eslint.sh"
 fi

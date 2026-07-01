@@ -14,7 +14,7 @@ class Google(ProviderInterface):
 
     async def get_user_info(self, code: str) -> AuthUserInfo:
         """get user info from google id token"""
-        code = await self._check_code(code)
+        code: [str, str] = await self._check_code(code)
 
         self._set_user_info(code.get("id_token"))
 
@@ -52,7 +52,7 @@ class Google(ProviderInterface):
             and self.user_info.get("picture")
         )
 
-    async def _check_code(self, code) -> dict:
+    async def _check_code(self, code: str) -> dict:
         """check token validity with google"""
         try:
             async with httpx.AsyncClient() as client:
@@ -71,7 +71,7 @@ class Google(ProviderInterface):
 
             return response.json()
         except (ValueError, HTTPStatusError, RequestError) as e:
-            raise AuthException(detail=str(e))
+            raise AuthException from e
         except ConnectTimeout:
             raise AuthException(
                 detail=self.COMMUNICATION_ERROR.substitute(

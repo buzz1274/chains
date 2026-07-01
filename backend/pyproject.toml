@@ -20,4 +20,15 @@ dependencies = [
     "typing-inspect>=0.9.0",
     "uvicorn>=0.47.0",
     "structlog>=26.1.0",
+    "typer>=0.26.8",
+    "ty>=0.0.55",
+    "botocore>=1.43.38",
+    "boto3>=1.43.38",
 ]
+[dependency-groups]
+dev = [
+    "mypy-boto3-s3>=1.43.31",
+]
+
+[tool.ty.src]
+exclude = ["alembic/"]

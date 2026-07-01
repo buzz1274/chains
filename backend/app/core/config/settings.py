@@ -15,14 +15,14 @@ class Settings(BaseSettings):
     POSTGRES_DB: str = os.environ.get("DB_NAME", "")
     DEBUG: bool = False
 
-    #AWS_SECRET_ACCESS_KEY: str = os.environ.get("AWS_SECRET_ACCESS_KEY", "")
-    #AWS_ACCESS_KEY_ID: str = os.environ.get("AWS_ACCESS_KEY_ID", "")
-    #AWS_S3_BUCKET_NAME: str = os.environ.get(
-    #    "TREADMILL_TRACKER_S3_BUCKET", ""
-    #).strip()
-    #AWS_S3_BACKUP_PATH: str = "backups/treadmilltracker/"
+    AWS_SECRET_ACCESS_KEY: str = os.environ.get("AWS_SECRET_ACCESS_KEY", "")
+    AWS_ACCESS_KEY_ID: str = os.environ.get("AWS_ACCESS_KEY_ID", "")
+    AWS_S3_BUCKET_NAME: str = os.environ.get(
+        "CHAINS_S3_BUCKET", ""
+    ).strip()
+    AWS_S3_BACKUP_PATH: str = "backups/chains/"
 
-    #DAYS_BACKUPS_TO_KEEP: int = 7
+    DAYS_BACKUPS_TO_KEEP: int = 7
 
     CORS_ORIGINS: list[str] = ["https://chains.zz50.co.uk"]
     SESSION_SECRET: str = os.environ.get("FAST_API_SECRET_KEY", "")
