@@ -5,21 +5,21 @@ from app.core.middleware.request_id_middleware import RequestIdMiddleware
 from app.core.middleware.logging_middleware import (
     LoggingMiddleware,
 )
-from app.core.config.config import settings
+from app.core.config import settings
 
 """Middleware runs in LIFO order — last added executes first."""
 
 
 def register_middleware(app: FastAPI):
     # noinspection PyTypeChecker
-    app.add_middleware(LoggingMiddleware)  # ty: ignore[invalid-argument-type]
+    app.add_middleware(LoggingMiddleware)
 
     # noinspection PyTypeChecker
-    app.add_middleware(RequestIdMiddleware)  # ty: ignore[invalid-argument-type]
+    app.add_middleware(RequestIdMiddleware)
 
     # noinspection PyTypeChecker
     app.add_middleware(
-        CORSMiddleware,  # ty: ignore[invalid-argument-type]
+        CORSMiddleware,
         allow_origins=settings.CORS_ORIGINS,
         allow_credentials=True,
         allow_methods=["*"],

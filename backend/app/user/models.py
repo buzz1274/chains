@@ -1,3 +1,5 @@
+from typing import Optional
+
 from pydantic import EmailStr, field_validator
 from sqlmodel import Field, SQLModel
 from pydantic import BaseModel, ConfigDict
@@ -5,12 +7,12 @@ from datetime import date
 
 
 class User(SQLModel, table=True):
-    id: int = Field(primary_key=True, index=True)
+    id: Optional[int] = Field(primary_key=True, index=True)
     provider_id: str = Field(nullable=False, index=True)
     provider: str = Field(nullable=False)
     email: str = Field(unique=True, index=True)
-    name: str = Field(default=None, max_length=255)
-    registered_date: date = Field(default=date.today(), nullable=True)
+    name: str = Field(max_length=255)
+    registered_date: date = Field(default_factory=date.today, nullable=True)
     image: str = Field(nullable=False)
 
     @field_validator("email")

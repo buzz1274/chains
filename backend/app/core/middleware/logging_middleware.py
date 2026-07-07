@@ -6,7 +6,7 @@ from starlette.responses import JSONResponse, Response
 from starlette.middleware.base import BaseHTTPMiddleware
 
 from app.core.app_exception import AppException
-from app.core.config.config import settings
+from app.core.config import settings
 from fastapi import status
 
 from structlog.contextvars import clear_contextvars

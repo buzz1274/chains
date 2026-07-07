@@ -10,7 +10,7 @@ from app.auth.models import AuthUserInfo
 from app.user.repository import UserRepository
 from app.user.models import User
 from app.user.service import UserService
-from app.core.config.config import settings
+from app.core.config import settings
 from app.auth.auth_exception import AuthException
 from app.auth.providers.provider_factory import ProviderFactory
 
@@ -41,6 +41,9 @@ class AuthService:
             raise AuthException(detail=str(e))
 
         user = await self.user_service.get_or_create(user_info)
+
+        if user.id is None:
+            raise RuntimeError("user was not created")
 
         return self._create_access_token(user.id)
 

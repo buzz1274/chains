@@ -1,6 +1,6 @@
 from app.core.lifespan import lifespan
 from app.routes import router
-from app.core.config.config import settings
+from app.core.config import settings
 from fastapi import FastAPI
 from app.core.middleware.register_middleware import register_middleware
 

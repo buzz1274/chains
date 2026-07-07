@@ -18,7 +18,7 @@ class RequestIdMiddleware(BaseHTTPMiddleware):
         request: Request,
         call_next: Callable[[Request], Awaitable[Response]],
     ):
-        request_id: str = request.headers.get("X-Request-ID")
+        request_id: str = request.headers.get("X-Request-ID", "")
 
         if not request_id or len(request_id) != self.UUID_V4_LENGTH:
             if request.url.path not in self.PATH_WHITELIST:

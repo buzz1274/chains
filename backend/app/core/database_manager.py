@@ -1,7 +1,7 @@
 from contextlib import asynccontextmanager
 from typing import AsyncGenerator
 
-from app.core.config.config import settings
+from app.core.config import settings
 from sqlalchemy.ext.asyncio import (
     AsyncSession,
     AsyncEngine,

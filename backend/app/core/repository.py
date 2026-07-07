@@ -20,9 +20,7 @@ class Repository:
 
     async def execute_query(self, query: Select | Delete | Update):
         """execute a query"""
-        return await self.session.execute(
-            query
-        )  # ty: ignore[no-matching-overload]
+        return await self.session.execute(query)
 
     async def delete(self, model: object, commit: bool = True) -> None:
         """delete a model instance"""

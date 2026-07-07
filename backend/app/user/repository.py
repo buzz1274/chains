@@ -13,6 +13,7 @@ class UserRepository(Repository):
         """create a new user"""
         return await self.add(
             User(
+                id=None,
                 email=user_info.email,
                 name=user_info.name,
                 provider=user_info.provider,

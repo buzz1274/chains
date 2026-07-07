@@ -2,7 +2,7 @@ from contextlib import asynccontextmanager
 from fastapi import FastAPI
 from app.core.database_manager import database_manager
 from app.core.logging import configure_logging
-from app.core.config.config import settings
+from app.core.config import settings
 
 
 @asynccontextmanager
