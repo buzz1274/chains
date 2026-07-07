@@ -53,7 +53,7 @@ class S3FileStorage(FileStorage):
         except ClientError as e:
             raise RuntimeError(f"Failed to upload file: {str(e)}") from e
 
-    def delete_old_backups(self, days_to_keep: int):
+    def delete_old_backups(self, days_to_keep: int) -> bool:
         """delete old backups from S3"""
         try:
             for file in self._get_all_files()[days_to_keep:]:
@@ -61,6 +61,7 @@ class S3FileStorage(FileStorage):
                     Bucket=self.aws_bucket_name,
                     Key=file["Key"],
                 )
+            return True
         except ClientError as e:
             raise RuntimeError(self.FAILED_TO_DELETE_ERROR) from e
 

@@ -11,7 +11,7 @@ def bound_logger_provider() -> BoundLogger:
 
 
 @container.provider(scope="transient")
-def file_storage_provider(s3_settings: Settings) -> FileStorage:
+def file_storage_provider(settings: Settings) -> FileStorage:
     return S3FileStorage(
-        s3_settings.AWS_S3_BUCKET_NAME, s3_settings.AWS_S3_BACKUP_PATH
+        settings.AWS_S3_BUCKET_NAME, settings.AWS_S3_BACKUP_PATH
     )

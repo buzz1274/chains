@@ -23,11 +23,12 @@ if config.config_file_name is not None:
 # target_metadata = mymodel.Base.metadata
 
 from app.user.models import SQLModel as UserSQLModel
+from app.chain.models import SQLModel as ChainSQLModel
 from app.core.config.settings import Settings
 
 merged_metadata = MetaData()
 
-for model in [UserSQLModel]:
+for model in [UserSQLModel, ChainSQLModel]:
     for table in model.metadata.tables.values():
         table.to_metadata(merged_metadata)
 

@@ -11,6 +11,7 @@ class RequestIdMiddleware(BaseHTTPMiddleware):
     UUID_V4_LENGTH: int = 36
     PATH_WHITELIST: list[str] = [
         "/api/auth/login",
+        "/api/openapi.json",
     ]
 
     async def dispatch(
@@ -19,6 +20,8 @@ class RequestIdMiddleware(BaseHTTPMiddleware):
         call_next: Callable[[Request], Awaitable[Response]],
     ):
         request_id: str = request.headers.get("X-Request-ID", "")
+
+        print(request.url.path)
 
         if not request_id or len(request_id) != self.UUID_V4_LENGTH:
             if request.url.path not in self.PATH_WHITELIST:

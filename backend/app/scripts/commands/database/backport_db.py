@@ -30,19 +30,18 @@ class BackportDB:
         try:
             bind_contextvars(
                 script=__name__,
+                file_storage=self.file_storage.__class__.__name__,
             )
 
             self.logger.info("Starting database backport")
-            self.logger.info(
-                f"Downloading latest backup"
-                f"from {self.file_storage.__class__.__name__}"
-            )
+            self.logger.info("Downloading latest backup")
 
             with (
                 tempfile.TemporaryDirectory() as tmp_dir,
                 open(
                     self.file_storage.get_latest_backup_file(tmp_dir),
                     "r",
+                    encoding="utf-8",
                 ) as backport_file,
             ):
                 bind_contextvars(
@@ -76,16 +75,20 @@ class BackportDB:
                         level = "error" if "ERROR" in line else "info"
                         getattr(self.logger, level)("psql", message=line)
 
-                return_code: int = process.wait()
+                return_code: int = process.wait(timeout=300)
+
+                bind_contextvars(
+                    psql_exit_code=return_code,
+                )
 
                 if return_code != 0:
-                    raise RuntimeError(f"psql exited with code {return_code}")
+                    raise RuntimeError("psql import exited with code")
 
             self.logger.info("Completed database backport")
 
-        except RuntimeError as e:
+        except (OSError, RuntimeError) as e:
             self.logger.error(
-                f"Failed database backport: {str(e)}", exc_info=True
+                "Failed database backport", error=str(e), exc_info=True
             )
             raise
         finally:
