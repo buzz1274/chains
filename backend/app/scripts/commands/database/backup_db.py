@@ -2,7 +2,7 @@ from datetime import datetime, UTC
 import os
 import subprocess  # nosec
 import tempfile
-from anydi import singleton
+from anydi import transient
 
 from app.core.config.settings import Settings
 from structlog import BoundLogger
@@ -11,7 +11,7 @@ from structlog.contextvars import clear_contextvars, bind_contextvars
 from app.scripts.utilities.file_storage import FileStorage
 
 
-@singleton()
+@transient()
 class BackupDB:
     NO_DUMP_CREATED_ERROR: str = "Failed to generate DB dump"
     FAILED_TO_RETRIEVE_ERROR: str = "Failed to retrieve old backups"

@@ -6,10 +6,10 @@ from structlog.contextvars import clear_contextvars, bind_contextvars
 
 from app.core.config.settings import Settings
 from app.scripts.utilities.file_storage import FileStorage
-from anydi import singleton
+from anydi import transient
 
 
-@singleton()
+@transient()
 class BackportDB:
     BACKPORTS_DISABLED_ERROR: str = "Backports are disabled in production mode"
 
