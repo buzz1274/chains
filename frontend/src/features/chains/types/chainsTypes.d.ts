@@ -28,7 +28,7 @@ export interface IChainDTO {
   frequency: TFrequency
   description: string
   consistency: number
-  required_this_week: number
+  frequency_per_week: number
   completed_this_week: number
   streak_history: IStreakHistoryDTO[]
 }

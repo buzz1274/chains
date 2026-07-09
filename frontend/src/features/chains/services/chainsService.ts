@@ -3,6 +3,9 @@ import type {
   IChainDTO,
 } from '@/features/chains/types/chainsTypes'
 import { chainsMapFromAPI } from '@/features/chains/mappers/chainsMapFromAPI'
+import { httpClient } from '@/shared/lib/httpClient.ts'
+import type { IUserDTO } from '@/features/users/types/userTypes.ts'
+import { mapUserFromAPI } from '@/features/users/mappers/userMapper.ts'
 
 export const chainsService = {
   async get() {
@@ -25,9 +28,9 @@ export const chainsService = {
           end_date: '2023-11-13',
         },
         frequency: 'weeks',
-        consistency: 87,
-        required_this_week: 7,
+        frequency_per_week: 7,
         completed_this_week: 5,
+        consistency: 87,
         streak_history: [
           { date: '2024-05-20', success: true },
           { date: '2024-05-21', success: true },
@@ -252,6 +255,10 @@ export const chainsService = {
 
     //replace with actual call to API
     await new Promise((resolve) => setTimeout(resolve, 100))
+
+    const chainResponse = await httpClient.get<IChainDTO[]>('api/chains/', true)
+
+    console.log(chainResponse['data'])
 
     chainApiResponse.forEach((chain) => {
       try {

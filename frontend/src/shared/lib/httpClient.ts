@@ -8,13 +8,16 @@ class client {
     this.baseUrl = baseUrl
   }
 
-  public async get<T>(url: string): Promise<T> {
+  public async get<T>(
+    url: string,
+    ignore_not_found: boolean = false
+  ): Promise<T> {
     const response: Response = await fetch(this.url(url), {
       method: 'GET',
       headers: this.setHeaders(),
     })
 
-    return this.handleResponse<T>(response)
+    return this.handleResponse<T>(response, ignore_not_found)
   }
 
   public async post<T>(url: string, body?: unknown): Promise<T> {
@@ -31,8 +34,14 @@ class client {
     }
   }
 
-  private async handleResponse<T>(response: Response): Promise<T> {
-    if (!response.ok) {
+  private async handleResponse<T>(
+    response: Response,
+    ignore_not_found: boolean = false,
+  ): Promise<T> {
+    if (
+      (!response.ok && response.status !== 404) ||
+      (response.status === 404 && !ignore_not_found)
+    ) {
       throw new httpError(response.status, await response.json())
     }
 

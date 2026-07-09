@@ -2,11 +2,15 @@
 import { useChainsStore } from '@/features/chains/store/useChainsStore'
 import ChainListItem from '@/features/chains/components/ChainsListItem.vue'
 import router from '@/shared/routes/router.ts'
+import { chainsService } from '@/features/chains/services/chainsService.ts'
 
 const chainsStore = useChainsStore()
 
 const handleSelectChain = (id: number) => {
   chainsStore.setActiveChainId(id)
+
+  chainsService.get()
+
   void router.push('/chains')
 }
 </script>
