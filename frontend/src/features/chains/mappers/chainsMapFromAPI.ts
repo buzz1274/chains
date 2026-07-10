@@ -3,7 +3,7 @@ import { Temporal } from '@js-temporal/polyfill'
 import type {
   IChainModel,
   IChainDTO,
-  IStreakHistoryDTO,
+  IChainCompletionHistoryDTO,
   IStreakDTO,
   IStreakModel,
   IStreakHistoryModel,
@@ -18,11 +18,11 @@ const mapStreak = (streak: IStreakDTO): IStreakModel => ({
   endDate: mapDate(streak.end_date),
 })
 
-const mapStreakHistory = (
-  streakHistory: IStreakHistoryDTO,
+const mapChainCompletionHistory = (
+  streakHistory: IChainCompletionHistoryDTO,
 ): IStreakHistoryModel => ({
-  date: Temporal.PlainDate.from(streakHistory.date),
-  success: streakHistory.success,
+  completionDate: Temporal.PlainDate.from(streakHistory.completion_date),
+  status: streakHistory.success,
 })
 
 export const chainsMapFromAPI = (dto: IChainDTO): IChainModel => ({
@@ -36,8 +36,10 @@ export const chainsMapFromAPI = (dto: IChainDTO): IChainModel => ({
   description: dto.description,
   frequency: dto.frequency,
   consistency: dto.consistency,
-  requiredThisWeek: dto.required_this_week,
+  frequencyPerWeek: dto.frequency_per_week,
   completedThisWeek: dto.completed_this_week,
 
-  streakHistory: dto.streak_history.map(mapStreakHistory),
+  chainCompletionHistory: dto.chain_completion_history.map(
+    mapChainCompletionHistory
+  ),
 })

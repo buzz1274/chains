@@ -14,9 +14,9 @@ export interface IStreakDTO {
   end_date: string | null
 }
 
-export interface IStreakHistoryDTO {
-  date: string
-  success: boolean
+export interface IChainCompletionHistoryDTO {
+  completion_date: string
+  status: boolean
 }
 
 export interface IChainDTO {
@@ -30,7 +30,7 @@ export interface IChainDTO {
   consistency: number
   frequency_per_week: number
   completed_this_week: number
-  streak_history: IStreakHistoryDTO[]
+  chain_completion_history: IChainCompletionHistoryDTO[]
 }
 
 export interface IChainOutstandingDTO {
@@ -46,8 +46,8 @@ export interface IStreakModel {
 }
 
 export interface IStreakHistoryModel {
-  date: Temporal.PlainDate
-  success: boolean
+  completionDate: Temporal.PlainDate
+  status: string
 }
 
 export interface IChainModel {
@@ -59,7 +59,7 @@ export interface IChainModel {
   frequency: string
   consistency: number
   description: string
-  requiredThisWeek: number
+  frequencyPerWeek: number
   completedThisWeek: number
   streakHistory: IStreakHistoryModel[]
 }

@@ -35,7 +35,6 @@ class client {
 
       return this.handleResponse<T>(response)
     } catch (error) {
-      console.error(error)
       throw httpError.fromError(error)
     }
   }
@@ -46,6 +45,7 @@ class client {
   ): Promise<T> {
     if (response.status === StatusCodes.UNAUTHORIZED) {
       this.handleUnauthorized()
+      throw new httpError(response.status, 'You have been logged out.')
     } else if (
       (!response.ok && response.status !== StatusCodes.NOT_FOUND) ||
       (response.status === StatusCodes.NOT_FOUND && !ignore_not_found)

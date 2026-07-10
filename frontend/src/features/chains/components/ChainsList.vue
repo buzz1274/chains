@@ -6,10 +6,16 @@ import { chainsService } from '@/features/chains/services/chainsService.ts'
 
 const chainsStore = useChainsStore()
 
-const handleSelectChain = (id: number) => {
-  chainsStore.setActiveChainId(id)
+chainsService.get().then(() => {
+  chainsStore.setActiveChainId(2)
+}).catch((error) => {
+  console.log(error)
+})
 
-  chainsService.get()
+const handleSelectChain = (id: number) => {
+  chainsService.get().then(() => {
+    chainsStore.setActiveChainId(id)
+  })
 
   void router.push('/chains')
 }
@@ -17,13 +23,23 @@ const handleSelectChain = (id: number) => {
 <template>
   <div class="flex justify-center items-start">
     <div class="w-full max-w-sm bg-white rounded-3xl">
-      <ChainListItem
-        v-for="chain in chainsStore.chains"
-        :key="chain.id"
-        :chain="chain"
-        :active="chain.id === chainsStore.activeChainId"
-        @click="handleSelectChain(chain.id)"
-      />
+      <div v-if="chainsStore.chains.length">
+        <ChainListItem
+          v-for="chain in chainsStore.chains"
+          v-if="chainsStore.chains"
+          :key="chain.id"
+          :chain="chain"
+          :active="chain.id === chainsStore.activeChainId"
+          @click="handleSelectChain(chain.id)"
+        />
+      </div>
+      <div v-else class="flex justify-center items-center h-full pt-10 pb-20">
+        <div class="text-gray-500">
+          You have no chains yet.
+          <a class="text-black underline" href="/chains/add">Create</a>
+          one to get started.
+        </div>
+      </div>
     </div>
   </div>
 </template>

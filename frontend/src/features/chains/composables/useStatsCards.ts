@@ -59,10 +59,10 @@ export function useStatsCards() {
       {
         label: 'This Week',
         value: `${chain.completedThisWeek} /
-           ${chain.requiredThisWeek}`,
+           ${chain.frequencyPerWeek}`,
         sub: `${calculateCompletionPercentage(
           chain.completedThisWeek,
-          chain.requiredThisWeek,
+          chain.frequencyPerWeek,
         )}% completed`,
         icon: '🎯',
         iconBg: 'bg-blue-50',
