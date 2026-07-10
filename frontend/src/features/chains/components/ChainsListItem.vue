@@ -3,6 +3,7 @@ import { PencilIcon, Trash2Icon } from '@lucide/vue'
 
 import type { IChainModel } from '@/features/chains/types/chainsTypes'
 import { streakStyle } from '@/features/chains/lib/streakStyle'
+import { chainFrequency } from '@/features/chains/types/constants.ts'
 
 defineProps<{
   chain: IChainModel
@@ -70,7 +71,7 @@ const emit = defineEmits<{
 
             <p :class="['text-xs font-bold', streakStyle(chain).text]">
               {{ chain.currentStreak.streak }}
-              {{ chain.frequency }}
+              {{ chainFrequency[chain.frequency] + (chain.currentStreak.streak !== 1 ? 's' : '') }}
             </p>
           </div>
 
@@ -79,7 +80,7 @@ const emit = defineEmits<{
 
             <p class="text-xs font-bold text-gray-800">
               {{ chain.maxStreak.streak }}
-              {{ chain.frequency }}
+              {{ chainFrequency[chain.frequency] + (chain.maxStreak.streak !== 1 ? 's' : '') }}
             </p>
           </div>
         </div>

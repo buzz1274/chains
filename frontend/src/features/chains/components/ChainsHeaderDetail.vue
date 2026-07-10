@@ -2,6 +2,7 @@
 import { streakStyle } from '@/features/chains/lib/streakStyle'
 import { useChainsStore } from '@/features/chains/store/useChainsStore'
 import BaseHeaderTitle from '@/shared/components/base/BaseHeaderTitle.vue'
+import { chainFrequency } from '@/features/chains/types/constants.ts'
 
 const chainsStore = useChainsStore()
 </script>
@@ -21,7 +22,8 @@ const chainsStore = useChainsStore()
       You're on a
       <span :class="['font-bold', streakStyle(chainsStore.activeChain).text]">
         {{ chainsStore.activeChain.currentStreak.streak }}
-        {{ chainsStore.activeChain.frequency }} streak!
+        {{ chainFrequency[chainsStore.activeChain.frequency] }}
+        streak!
       </span>
     </span>
   </div>

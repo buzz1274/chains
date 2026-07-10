@@ -1,6 +1,7 @@
 import { computed } from 'vue'
 import type { Temporal } from '@js-temporal/polyfill'
 import { format } from 'date-fns'
+import { chainFrequency } from '@/features/chains/types/constants.ts'
 
 import { useChainsStore } from '@/features/chains/store/useChainsStore'
 
@@ -35,7 +36,7 @@ export function useStatsCards() {
       {
         label: 'Current Streak',
         value: `${chain.currentStreak.streak}
-           ${chain.frequency}`,
+          ${chainFrequency[chain.frequency] + (chain.currentStreak.streak !== 1 ? 's' : '')}`,
         sub: `${
           formatDates(
             chain.currentStreak.startDate,
@@ -48,7 +49,7 @@ export function useStatsCards() {
       {
         label: 'Max Streak',
         value: `${chain.maxStreak.streak}
-           ${chain.frequency}`,
+           ${chainFrequency[chain.frequency] + (chain.maxStreak.streak !== 1 ? 's' : '')}`,
         sub: `${
           formatDates(chain.maxStreak.startDate, chain.maxStreak.endDate) ??
           noStreakMessage
