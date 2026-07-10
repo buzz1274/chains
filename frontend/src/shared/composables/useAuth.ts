@@ -33,6 +33,7 @@ export function useAuth() {
 
   function logout() {
     session.destroy()
+    redirectTo('/')
   }
 
   function redirectTo(path: string) {

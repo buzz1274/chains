@@ -10,6 +10,8 @@ import Material from '@primeuix/themes/material'
 
 import router from '@/shared/routes/router.ts'
 import App from './App.vue'
+import { httpClient } from '@/shared/lib/httpClient.ts'
+import { useAuth } from '@/shared/composables/useAuth'
 
 const app = createApp(App)
 const pinia: Pinia = createPinia()
@@ -28,5 +30,12 @@ app.use(PrimeVue, {
 })
 app.use(ToastService)
 app.use(router)
+
+httpClient.setUnauthorizedHandler(() => {
+  app.runWithContext(() => {
+    const { logout } = useAuth()
+    logout()
+  })
+})
 
 app.mount('#app')

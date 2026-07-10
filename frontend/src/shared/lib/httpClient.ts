@@ -1,17 +1,22 @@
+import { StatusCodes } from 'http-status-codes'
+
 import { keys, storage } from '@/shared/lib/storage'
 import { httpError } from '@/shared/lib/httpError'
 
 class client {
   private readonly baseUrl: string
+  private onUnauthorizedHandler: (() => void) | null = null
+  private isLoggingOut = false
 
   constructor(baseUrl: string) {
     this.baseUrl = baseUrl
   }
 
-  public async get<T>(
-    url: string,
-    ignore_not_found: boolean = false
-  ): Promise<T> {
+  public setUnauthorizedHandler(handler: () => void): void {
+    this.onUnauthorizedHandler = handler
+  }
+
+  public async get<T>(url: string, ignore_not_found = false): Promise<T> {
     const response: Response = await fetch(this.url(url), {
       method: 'GET',
       headers: this.setHeaders(),
@@ -30,17 +35,20 @@ class client {
 
       return this.handleResponse<T>(response)
     } catch (error) {
+      console.error(error)
       throw httpError.fromError(error)
     }
   }
 
   private async handleResponse<T>(
     response: Response,
-    ignore_not_found: boolean = false,
+    ignore_not_found = false,
   ): Promise<T> {
-    if (
-      (!response.ok && response.status !== 404) ||
-      (response.status === 404 && !ignore_not_found)
+    if (response.status === StatusCodes.UNAUTHORIZED) {
+      this.handleUnauthorized()
+    } else if (
+      (!response.ok && response.status !== StatusCodes.NOT_FOUND) ||
+      (response.status === StatusCodes.NOT_FOUND && !ignore_not_found)
     ) {
       throw new httpError(response.status, await response.json())
     }
@@ -63,6 +71,15 @@ class client {
       ...(requestId ? { 'X-Request-Id': requestId } : {}),
       ...(token ? { Authorization: `Bearer ${token}` } : {}),
     }
+  }
+
+  private handleUnauthorized(): void {
+    if (this.isLoggingOut) {
+      return
+    }
+
+    this.isLoggingOut = true
+    this.onUnauthorizedHandler?.()
   }
 }
 
