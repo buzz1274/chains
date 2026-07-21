@@ -13,16 +13,21 @@ from sqlmodel import select, col
 class ChainRepository(Repository):
     async def get_chains(
         self,
-        user: User,
+        user: Optional[User] = None,
         chain_id: Optional[int] = None,
+        with_history: bool = True,
     ) -> Sequence[Chain]:
         """get all chains for supplied user"""
-        query: Select = (select(Chain).where(Chain.user_id == user.id)).options(
-            selectinload(Chain.chain_completion_history)
-        )
+        query: Select = select(Chain).where(col(Chain.deleted) == False)
+
+        if user:
+            query = query.where(col(Chain.user_id) == user.id)
 
         if chain_id:
             query = query.where(col(Chain.id) == chain_id)
+
+        if with_history:
+            query = query.options(selectinload(Chain.chain_completion_history))
 
         chains: Sequence[Chain] = (
             (await self.execute_query(query)).scalars().all()

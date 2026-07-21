@@ -1,6 +1,13 @@
 from typing import Optional, List
 
-from sqlalchemy import Column, Integer, CheckConstraint, Boolean, false
+from sqlalchemy import (
+    Column,
+    Integer,
+    CheckConstraint,
+    Boolean,
+    false,
+    UniqueConstraint,
+)
 from sqlalchemy.orm import Mapped
 from sqlmodel import Field, Relationship, SQLModel
 from datetime import date
@@ -63,7 +70,10 @@ class Chain(ChainBase, table=True):
     )
     chain_completion_history: Mapped[
         list["ChainCompletionHistory"]
-    ] = Relationship(back_populates="chain")
+    ] = Relationship(
+        back_populates="chain",
+        sa_relationship_kwargs={"lazy": "raise"},
+    )
 
 
 class ChainCompletionHistoryBase(SQLModel):
@@ -73,6 +83,11 @@ class ChainCompletionHistoryBase(SQLModel):
 
 class ChainCompletionHistory(ChainCompletionHistoryBase, table=True):
     __tablename__ = "chain_completion_history"
+    __table_args__ = (
+        UniqueConstraint(
+            "chain_id", "completion_date", name="uq_chain_completion_date"
+        ),
+    )
 
     id: Optional[int] = Field(primary_key=True, index=True)
     chain: "Chain" = Relationship(back_populates="chain_completion_history")
