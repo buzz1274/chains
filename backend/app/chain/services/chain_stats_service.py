@@ -3,7 +3,6 @@ from typing import Optional, List
 
 from app.chain.models import (
     Chain,
-    ChainCompletionHistory,
     CurrentStreak,
     MaxStreak,
     ChainCompletionStatus,
@@ -13,7 +12,6 @@ from app.chain.models import (
 class ChainStatsService:
     def __init__(self):
         self.chain: Optional[Chain] = None
-        self.history: Optional[ChainCompletionHistory] = None
 
     def compute(self, chain: Chain):
         self.chain = chain

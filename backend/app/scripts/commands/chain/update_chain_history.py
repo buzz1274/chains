@@ -29,11 +29,19 @@ class UpdateChainHistory:
 
         self.logger.info("Starting chain history completion daily update")
 
+        daily = True
+
         for chain in chains.data:
             try:
-                await self.chain_history_service.add_chain_history(
-                    chain.id, today
-                )
+                if daily is True:
+                    await self.chain_history_service.add_chain_history(
+                        chain.id, today
+                    )
+                else:
+                    """
+                    bulk import from chain start data 
+                    """
+                    pass
             except (
                 DuplicateChainHistoryError,
                 InvalidChainHistoryDataError
