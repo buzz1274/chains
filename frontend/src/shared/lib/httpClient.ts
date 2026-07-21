@@ -17,12 +17,15 @@ class client {
   }
 
   public async get<T>(url: string, ignore_not_found = false): Promise<T> {
-    const response: Response = await fetch(this.url(url), {
-      method: 'GET',
-      headers: this.setHeaders(),
-    })
-
-    return this.handleResponse<T>(response, ignore_not_found)
+    try {
+      const response: Response = await fetch(this.url(url), {
+        method: 'GET',
+        headers: this.setHeaders(),
+      })
+      return this.handleResponse<T>(response, ignore_not_found)
+    } catch (error) {
+      this.handleUnauthorized()
+    }
   }
 
   public async post<T>(url: string, body?: unknown): Promise<T> {

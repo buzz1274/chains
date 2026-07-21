@@ -5,7 +5,7 @@ ACTION=$1
 if [ "$ACTION" == "connect-frontend" ]; then
   docker exec -it chains-frontend sh
 elif [ "$ACTION" == "connect-database" ]; then
-  docker exec -it postgres sh
+  docker exec -it postgres sh -c "psql -Uchains"
 elif [ "$ACTION" == "alembic-upgrade" ]; then
   docker exec -it chains-backend bash -c "uv run alembic upgrade head"
 elif [ "$ACTION" == "alembic-autogenerate" ]; then

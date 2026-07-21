@@ -8,3 +8,6 @@ export const chainFrequency = {
   DAILY: 'Day',
   WEEKLY: 'Week',
 } as const
+
+export type TChainFrequency = keyof typeof chainFrequency
+export type TChainCompletionStatus = keyof typeof chainCompletionStatus

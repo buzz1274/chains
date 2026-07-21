@@ -1,8 +1,8 @@
 import { computed } from 'vue'
 import type { Temporal } from '@js-temporal/polyfill'
 import { format } from 'date-fns'
-import { chainFrequency } from '@/features/chains/types/constants.ts'
 
+import { chainFrequency } from '@/features/chains/types/constants.ts'
 import { useChainsStore } from '@/features/chains/store/useChainsStore'
 
 export function useStatsCards() {

@@ -22,7 +22,7 @@ const mapChainCompletionHistory = (
   streakHistory: IChainCompletionHistoryDTO,
 ): IStreakHistoryModel => ({
   completionDate: Temporal.PlainDate.from(streakHistory.completion_date),
-  status: streakHistory.success,
+  status: streakHistory.status,
 })
 
 export const chainsMapFromAPI = (dto: IChainDTO): IChainModel => ({
@@ -40,6 +40,6 @@ export const chainsMapFromAPI = (dto: IChainDTO): IChainModel => ({
   completedThisWeek: dto.completed_this_week,
 
   chainCompletionHistory: dto.chain_completion_history.map(
-    mapChainCompletionHistory
+    mapChainCompletionHistory,
   ),
 })

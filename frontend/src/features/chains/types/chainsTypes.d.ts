@@ -1,11 +1,10 @@
 import type { Temporal } from '@js-temporal/polyfill'
 
-import type { chainCompletionStatus } from '@/features/chains/types/constants.ts'
+import type {
+  TChainCompletionStatus,
+  TChainFrequency,
+} from '@/features/chains/types/constants.ts'
 
-export type TChainCompletionStatus =
-  (typeof chainCompletionStatus)[keyof typeof chainCompletionStatus]
-
-type TFrequency = 'days' | 'weeks'
 type TStreakLevel = 'critical' | 'warning' | 'success'
 
 export interface IStreakDTO {
@@ -25,7 +24,7 @@ export interface IChainDTO {
   icon: string
   current_streak: IStreakDTO
   max_streak: IStreakDTO
-  frequency: TFrequency
+  frequency: TChainFrequency
   description: string
   consistency: number
   frequency_per_week: number
@@ -47,7 +46,7 @@ export interface IStreakModel {
 
 export interface IStreakHistoryModel {
   completionDate: Temporal.PlainDate
-  status: string
+  status: TChainCompletionStatus
 }
 
 export interface IChainModel {

@@ -12,20 +12,22 @@ export const chainsService = {
     const errors: string[] = []
     const chainsStore = useChainsStore()
 
-    const chainResponse =
-      await httpClient.get<IChainDTO[]>('api/chains/', true)
+    const chainResponse = await httpClient
+      .get<IChainDTO[]>('api/chains/', true)
+      .catch((error) => {
+        errors.push(error)
+      })
 
-    chainResponse['data'].forEach((chain) => {
-      try {
-        chains.push(chainsMapFromAPI(chain))
-      } catch (error) {
-        errors.push(`Error mapping chain: ${chain.name}\n${String(error)}`)
-        console.log(
-          `Error mapping chain: ${chain.name}\n${String(error)}`,)
-      }
-    })
-
-    chainsStore.setChains(chains)
+    if (chainResponse) {
+      chainResponse['data'].forEach((chain) => {
+        try {
+          chains.push(chainsMapFromAPI(chain))
+        } catch (error) {
+          errors.push(`Error mapping chain: ${chain.name}\n${String(error)}`)
+        }
+      })
+      chainsStore.setChains(chains)
+    }
 
     return [chains, errors]
   },

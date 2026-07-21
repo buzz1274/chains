@@ -1,23 +1,21 @@
 from typing import Optional
 
-from pydantic import EmailStr, field_validator
+from pydantic import EmailStr
 from sqlmodel import Field, SQLModel
 from pydantic import BaseModel, ConfigDict
 from datetime import date
+
+from app.auth.models import AuthProvider
 
 
 class User(SQLModel, table=True):
     id: Optional[int] = Field(primary_key=True, index=True)
     provider_id: str = Field(nullable=False, index=True)
-    provider: str = Field(nullable=False)
-    email: str = Field(unique=True, index=True)
+    provider: AuthProvider = Field(nullable=False)
+    email: EmailStr = Field(unique=True, index=True)
     name: str = Field(max_length=255)
-    registered_date: date = Field(default_factory=date.today, nullable=True)
-    image: str = Field(nullable=False)
-
-    @field_validator("email")
-    def validate_email(cls, value: str) -> str:
-        return EmailStr.validate(value)
+    registered_date: date = Field(default_factory=date.today, nullable=False)
+    image: Optional[str] = Field(default=None)
 
 
 class UserPublic(BaseModel):
