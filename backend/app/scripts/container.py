@@ -1,8 +1,10 @@
-from app.chain.repositories.chain_history_repository import (
-    ChainHistoryRepository,
+from app.chain.repositories.chain_completion_history_repository import (
+    ChainCompletionHistoryRepository,
 )
 from app.chain.repositories.chain_repository import ChainRepository
-from app.chain.services.chain_history_service import ChainHistoryService
+from app.chain.services.chain_completion_history_service import (
+    ChainCompletionHistoryService
+)
 from app.chain.services.chain_service import ChainService
 from app.chain.services.chain_stats_service import ChainStatsService
 from structlog import BoundLogger
@@ -54,8 +56,8 @@ def chain_repository_provider(session: AsyncSession) -> ChainRepository:
 @container.provider(scope="transient")
 def chain_history_repository_provider(
     session: AsyncSession,
-) -> ChainHistoryRepository:
-    return ChainHistoryRepository(session=session)
+) -> ChainCompletionHistoryRepository:
+    return ChainCompletionHistoryRepository(session=session)
 
 
 @container.provider(scope="transient")
@@ -68,8 +70,8 @@ def chain_service_provider(chain_repository: ChainRepository) -> ChainService:
 
 @container.provider(scope="transient")
 def chain_history_service_provider(
-    chain_history_repository: ChainHistoryRepository,
-) -> ChainHistoryService:
-    return ChainHistoryService(
+    chain_history_repository: ChainCompletionHistoryRepository,
+) -> ChainCompletionHistoryService:
+    return ChainCompletionHistoryService(
         chain_history_repository=chain_history_repository,
     )

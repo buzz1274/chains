@@ -7,7 +7,9 @@ from app.chain.exceptions import (
 )
 from app.chain.models.chain_models import ChainsPublic
 from datetime import date
-from app.chain.services.chain_history_service import ChainHistoryService
+from app.chain.services.chain_completion_history_service import (
+    ChainCompletionHistoryService
+)
 from app.chain.services.chain_service import ChainService
 
 
@@ -17,11 +19,13 @@ class UpdateChainHistory:
         self,
         logger: BoundLogger,
         chain_service: ChainService,
-        chain_history_service: ChainHistoryService,
+        chain_history_service: ChainCompletionHistoryService,
     ):
         self.logger: BoundLogger = logger
         self.chain_service: ChainService = chain_service
-        self.chain_history_service: ChainHistoryService = chain_history_service
+        self.chain_history_service: (
+            ChainCompletionHistoryService
+        ) = chain_history_service
 
     async def update_chain_history(self):
         """script to add new chain completion entry for day of execution"""
