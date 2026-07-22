@@ -12,6 +12,10 @@ class client {
     this.baseUrl = baseUrl
   }
 
+  public setIsLoggingOut(isLoggingOut: boolean): void {
+    this.isLoggingOut = isLoggingOut
+  }
+
   public setUnauthorizedHandler(handler: () => void): void {
     this.onUnauthorizedHandler = handler
   }
@@ -81,7 +85,7 @@ class client {
       return
     }
 
-    this.isLoggingOut = true
+    this.setIsLoggingOut(true)
     this.onUnauthorizedHandler?.()
   }
 }

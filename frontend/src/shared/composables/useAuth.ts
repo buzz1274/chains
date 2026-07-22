@@ -13,6 +13,7 @@ export function useAuth() {
 
   async function login(code: string, provider: string): Promise<void> {
     try {
+      httpClient.setIsLoggingOut(false)
       const loginResponse = await httpClient.post<IAccessTokenResponse>(
         'api/auth/login',
         {
