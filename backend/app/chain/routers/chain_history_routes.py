@@ -14,7 +14,7 @@ router = APIRouter(prefix="/chains", tags=["chains"])
 
 
 @cbv(router)
-class ChainRouter:
+class ChainHistoryRouter:
     ERROR_MESSAGE_404: str = "Chain not found"
 
     def __init__(

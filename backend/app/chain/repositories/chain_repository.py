@@ -4,7 +4,7 @@ from sqlalchemy import Sequence, Select
 from sqlalchemy.exc import NoResultFound
 from sqlalchemy.orm import selectinload
 
-from app.chain.models import Chain
+from app.chain.models.chain_models import Chain
 from app.core.repository import Repository
 from app.user.models import User
 from sqlmodel import select, col
@@ -18,7 +18,7 @@ class ChainRepository(Repository):
         with_history: bool = True,
     ) -> Sequence[Chain]:
         """get all chains for supplied user"""
-        query: Select = select(Chain).where(col(Chain.deleted) == False)
+        query: Select = select(Chain).where(col(Chain.deleted).is_(False))
 
         if user:
             query = query.where(col(Chain.user_id) == user.id)

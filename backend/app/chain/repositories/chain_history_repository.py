@@ -1,7 +1,12 @@
-from sqlalchemy.exc import IntegrityError, DataError, DBAPIError
+from sqlalchemy.exc import IntegrityError, DBAPIError
 
-from app.chain.exceptions import DuplicateChainHistoryError, InvalidChainHistoryDataError
-from app.chain.models import ChainCompletionHistory
+from app.chain.exceptions import (
+    DuplicateChainHistoryError,
+    InvalidChainHistoryDataError,
+)
+from app.chain.models.chain_completion_history_models import (
+    ChainCompletionHistory,
+)
 from app.core.repository import Repository
 
 

@@ -5,7 +5,7 @@ from fastapi_utils.cbv import cbv
 
 from app.user.models import UserPublic
 from app.user.models import User
-from app.core.authentication import get_current_user
+from app.auth.dependencies import get_current_user
 
 router = APIRouter(prefix="/users", tags=["user"])
 

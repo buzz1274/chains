@@ -1,8 +1,11 @@
 from anydi import transient
 from structlog import BoundLogger
 
-from app.chain.exceptions import DuplicateChainHistoryError, InvalidChainHistoryDataError
-from app.chain.models import ChainsPublic
+from app.chain.exceptions import (
+    DuplicateChainHistoryError,
+    InvalidChainHistoryDataError,
+)
+from app.chain.models.chain_models import ChainsPublic
 from datetime import date
 from app.chain.services.chain_history_service import ChainHistoryService
 from app.chain.services.chain_service import ChainService
@@ -29,22 +32,14 @@ class UpdateChainHistory:
 
         self.logger.info("Starting chain history completion daily update")
 
-        daily = True
-
         for chain in chains.data:
             try:
-                if daily is True:
-                    await self.chain_history_service.add_chain_history(
-                        chain.id, today
-                    )
-                else:
-                    """
-                    bulk import from chain start data 
-                    """
-                    pass
+                await self.chain_history_service.add_chain_history(
+                    chain.id, today
+                )
             except (
                 DuplicateChainHistoryError,
-                InvalidChainHistoryDataError
+                InvalidChainHistoryDataError,
             ) as e:
                 self.logger.error(
                     str(e),

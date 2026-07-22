@@ -5,14 +5,20 @@ from app.chain.repositories.chain_repository import ChainRepository
 from app.chain.services.chain_history_service import ChainHistoryService
 from app.chain.services.chain_service import ChainService
 from app.chain.services.chain_stats_service import ChainStatsService
-from app.core.container import container
-from app.core.config.settings import Settings
 from structlog import BoundLogger
 
 from app.core.database_manager import database_manager, DatabaseManager
 from app.scripts.utilities.file_storage import FileStorage, S3FileStorage
 from app.scripts import log
 from sqlalchemy.ext.asyncio import AsyncSession
+
+from app.core.config import get_settings
+from app.core.config.settings import Settings
+from anydi import Container
+
+container = Container()
+
+container.register(Settings, lambda: get_settings(), scope="singleton")
 
 
 @container.provider(scope="transient")

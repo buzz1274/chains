@@ -2,11 +2,13 @@ from typing import Annotated, List, Sequence, Optional
 
 from fastapi import Depends
 
-from app.chain.models import (
+from app.chain.models.chain_models import (
     Chain,
-    ChainCompletionHistoryPublic,
     ChainsPublic,
     ChainPublic,
+)
+from app.chain.models.chain_completion_history_models import (
+    ChainCompletionHistoryPublic,
 )
 from app.chain.repositories.chain_repository import ChainRepository
 from app.chain.services.chain_stats_service import ChainStatsService

@@ -1,12 +1,12 @@
 from datetime import date, timedelta
-from typing import Optional, List
+from typing import Optional
 
-from app.chain.models import (
+from app.chain.models.chain_models import (
     Chain,
     CurrentStreak,
     MaxStreak,
-    ChainCompletionStatus,
 )
+from app.chain.models.constants import ChainCompletionStatus
 
 
 class ChainStatsService:
@@ -41,7 +41,8 @@ class ChainStatsService:
 
         """
         completed_per_week = Counter(
-            (h.completion_date.isocalendar().year, h.completion_date.isocalendar().week)
+            (h.completion_date.isocalendar().year,
+            h.completion_date.isocalendar().week)
             for h in histories
             if h.status == ChainCompletionStatus.COMPLETED
         )
