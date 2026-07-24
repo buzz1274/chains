@@ -1,7 +1,7 @@
 from fastapi import APIRouter
 from app.auth import routes as auth_routes
 from app.user import routes as user_routes
-from app.chain.routes import router as chain_router
+from app.chain.routers import router as chain_router
 
 router = APIRouter()
 router.include_router(auth_routes.router)

@@ -71,15 +71,40 @@ class Chain(ChainBase, table=True):
     )
 
 
+class ChainInternal(ChainBase):
+    id: int
+    user_id: int
+    deleted: int
+
+
+class ChainsInternal(BaseModel):
+    data: List[ChainBase]
+
+
+class ChainStats(BaseModel):
+    current_streak: CurrentStreak
+    max_streak: MaxStreak
+    completed_this_week: int
+    consistency: int
+
+
+class ChainInternalWithStats(ChainInternal):
+    stats: ChainStats
+    chain_completion_history: list["ChainCompletionHistoryPublic"] = Field(
+        default_factory=list
+    )
+
+
+class ChainsInternalWithStats(BaseModel):
+    data: List[ChainInternalWithStats]
+
+
 class ChainPublic(ChainBase):
     id: int
     chain_completion_history: list["ChainCompletionHistoryPublic"] = Field(
         default_factory=list
     )
-    current_streak: CurrentStreak
-    max_streak: MaxStreak
-    completed_this_week: int
-    consistency: int
+    stats: ChainStats
 
 
 class ChainsPublic(SQLModel):

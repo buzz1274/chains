@@ -1,12 +1,12 @@
 from typing import Annotated
 
-from fastapi import APIRouter, Depends, HTTPException, status
+from fastapi import APIRouter, Depends
 from fastapi_utils.cbv import cbv
-from sqlalchemy.exc import NoResultFound
+from app.chain.exceptions.chains_exceptions import ChainNotFoundError
 
 from app.chain.services.chain_service import ChainService
 from app.user.models import User
-from app.chain.models.chain_models import ChainsPublic
+from app.chain.models.chain_models import ChainsPublic, ChainPublic
 from app.auth.dependencies import get_current_user
 
 
@@ -29,9 +29,9 @@ class ChainRouter:
     async def chains(self) -> ChainsPublic:
         """get all chains for authenticated user"""
         try:
-            return await self.chain_service.chains(self.user)
-        except NoResultFound:
-            raise HTTPException(
-                status_code=status.HTTP_404_NOT_FOUND,
-                detail=self.ERROR_MESSAGE_404,
+            chains = await self.chain_service.chains(self.user)
+            return ChainsPublic(
+                data=[ChainPublic(**c.model_dump()) for c in chains.data]
             )
+        except ChainNotFoundError:
+            return ChainsPublic(data=[])

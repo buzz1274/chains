@@ -1,9 +1,9 @@
-from typing import Optional
+from typing import Optional, List
 
 from sqlalchemy import Sequence, Select
-from sqlalchemy.exc import NoResultFound
 from sqlalchemy.orm import selectinload
 
+from app.chain.exceptions.chains_exceptions import ChainNotFoundError
 from app.chain.models.chain_models import Chain
 from app.core.repository import Repository
 from app.user.models import User
@@ -16,7 +16,7 @@ class ChainRepository(Repository):
         user: Optional[User] = None,
         chain_id: Optional[int] = None,
         with_history: bool = True,
-    ) -> Sequence[Chain]:
+    ) -> Sequence[Chain] | List:
         """get all chains for supplied user"""
         query: Select = select(Chain).where(col(Chain.deleted).is_(False))
 
@@ -33,7 +33,10 @@ class ChainRepository(Repository):
             (await self.execute_query(query)).scalars().all()
         )
 
-        if not chains:
-            raise NoResultFound
+        if not chains and chain_id:
+            if chain_id:
+                raise ChainNotFoundError
+            else:
+                return []
 
         return chains

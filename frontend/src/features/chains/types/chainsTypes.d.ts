@@ -18,17 +18,21 @@ export interface IChainCompletionHistoryDTO {
   status: boolean
 }
 
+export interface IStatsDTO {
+  current_streak: IStreakDTO
+  max_streak: IStreakDTO
+  consistency: number
+  completed_this_week: number
+}
+
 export interface IChainDTO {
   id: number
   name: string
   icon: string
-  current_streak: IStreakDTO
-  max_streak: IStreakDTO
   frequency: TChainFrequency
   description: string
-  consistency: number
   frequency_per_week: number
-  completed_this_week: number
+  stats: IStatsDTO
   chain_completion_history: IChainCompletionHistoryDTO[]
 }
 

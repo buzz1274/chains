@@ -1,14 +1,17 @@
 from anydi import transient
 from structlog import BoundLogger
 
-from app.chain.exceptions import (
+from app.chain.exceptions.chain_completion_history_exceptions import (
     DuplicateChainHistoryError,
     InvalidChainHistoryDataError,
 )
-from app.chain.models.chain_models import ChainsPublic
+from app.chain.models.chain_models import (
+    ChainsInternal,
+    ChainsInternalWithStats,
+)
 from datetime import date
 from app.chain.services.chain_completion_history_service import (
-    ChainCompletionHistoryService
+    ChainCompletionHistoryService,
 )
 from app.chain.services.chain_service import ChainService
 
@@ -29,8 +32,8 @@ class UpdateChainHistory:
 
     async def update_chain_history(self):
         """script to add new chain completion entry for day of execution"""
-        chains: ChainsPublic = await self.chain_service.chains(
-            with_history=True
+        chains: ChainsInternal | ChainsInternalWithStats = (
+            await self.chain_service.chains(with_history=False)
         )
         today: date = date.today()
 

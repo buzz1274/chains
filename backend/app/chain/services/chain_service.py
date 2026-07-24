@@ -2,10 +2,13 @@ from typing import Annotated, List, Sequence, Optional
 
 from fastapi import Depends
 
+from app.chain.exceptions.chains_exceptions import ChainNotFoundError
 from app.chain.models.chain_models import (
     Chain,
-    ChainsPublic,
-    ChainPublic,
+    ChainsInternal,
+    ChainsInternalWithStats,
+    ChainInternal,
+    ChainInternalWithStats,
 )
 from app.chain.models.chain_completion_history_models import (
     ChainCompletionHistoryPublic,
@@ -31,19 +34,23 @@ class ChainService:
         user: Optional[User] = None,
         chain_id: Optional[int] = None,
         with_history: bool = True,
-    ) -> ChainsPublic:
-        """get chains"""
-        data: List[ChainPublic] = []
+    ) -> ChainsInternal | ChainsInternalWithStats:
+        """returns API shaped ChainsPublic object"""
+        data: List[ChainInternalWithStats | ChainInternal] = []
         chains: Sequence[Chain] = await self.chain_repository.get_chains(
             user, chain_id, with_history
         )
 
+        if chain_id and not chains:
+            raise ChainNotFoundError
+
+        model = ChainInternalWithStats if with_history else ChainInternal
+
         for chain in chains:
             data.append(
-                ChainPublic(
+                model(
                     **chain.model_dump(
                         exclude={
-                            "user_id",
                             "chain_completion_history",
                         }
                     ),
@@ -52,16 +59,21 @@ class ChainService:
                         for h in chain.chain_completion_history
                     ]
                     if with_history
-                    else None,
-                    **self.chain_stats_service.compute(
-                        chain,
-                    )
+                    else [],
+                    stats={
+                        **self.chain_stats_service.compute(
+                            chain,
+                        )
+                    }
                     if with_history
                     else {}
                 )
             )
 
-        return ChainsPublic(data=data)
+        if with_history:
+            return ChainsInternalWithStats(data=data)
+
+        return ChainsInternal(data=data)
 
     async def update_chain(
         self,

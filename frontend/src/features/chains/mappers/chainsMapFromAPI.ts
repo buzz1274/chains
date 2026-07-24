@@ -30,14 +30,14 @@ export const chainsMapFromAPI = (dto: IChainDTO): IChainModel => ({
   name: dto.name,
   icon: dto.icon,
 
-  currentStreak: mapStreak(dto.current_streak),
-  maxStreak: mapStreak(dto.max_streak),
-
   description: dto.description,
   frequency: dto.frequency,
-  consistency: dto.consistency,
   frequencyPerWeek: dto.frequency_per_week,
-  completedThisWeek: dto.completed_this_week,
+
+  consistency: dto.stats.consistency,
+  currentStreak: mapStreak(dto.stats.current_streak),
+  maxStreak: mapStreak(dto.stats.max_streak),
+  completedThisWeek: dto.stats.completed_this_week,
 
   chainCompletionHistory: dto.chain_completion_history.map(
     mapChainCompletionHistory,
