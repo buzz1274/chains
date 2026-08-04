@@ -1,18 +1,16 @@
-from typing import Optional
+from abc import abstractmethod, ABC
 from fastapi import status
 
 
-class AppException(Exception):
-    STATUS_CODE: int = status.HTTP_500_INTERNAL_SERVER_ERROR
-    DETAIL: str = "An error occurred"
+class AppException(ABC, Exception):
+    @property
+    def status(self) -> int:
+        return self.status or status.HTTP_500_INTERNAL_SERVER_ERROR
 
-    def __init__(
-        self,
-        *,
-        detail: Optional[str] = None,
-        status_code: Optional[int] = None,
-    ):
-        self.detail = detail or self.DETAIL
-        self.status_code = status_code or self.STATUS_CODE
+    @property
+    @abstractmethod
+    def message(self) -> str:
+        pass
 
-        super().__init__(self.detail)
+    def __init__(self, message: str):
+        super().__init__(message)

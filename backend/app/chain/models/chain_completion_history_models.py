@@ -27,5 +27,11 @@ class ChainCompletionHistory(ChainCompletionHistoryBase, table=True):
     chain_id: int = Field(foreign_key="chain.id", nullable=False)
 
 
+class ChainCompletionHistoryInternal(ChainCompletionHistoryBase):
+    id: int
+    chain_id: int
+
+
 class ChainCompletionHistoryPublic(ChainCompletionHistoryBase):
-    pass
+    id: int
+    chain_id: int

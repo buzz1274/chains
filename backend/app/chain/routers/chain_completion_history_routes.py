@@ -3,6 +3,10 @@ from typing import Annotated
 from fastapi import APIRouter, Depends
 from fastapi_utils.cbv import cbv
 
+from app.chain.exceptions.chain_completion_history_exceptions import (
+    NoChainHistoryCompletionFound,
+)
+from app.chain.models import ChainCompletionHistoryPublic
 from app.chain.services.chain_service import ChainService
 from app.user.models import User
 from app.chain.models.chain_models import ChainsPublic
@@ -37,12 +41,14 @@ class AllChainCompletionHistoryRouter:
     async def history(self):
         """get all incomplete chain histories for authenticated user"""
         try:
-            return await self.chain_service.chains(self.user)
-        except NoResultFound:
-            raise HTTPException(
-                status_code=status.HTTP_404_NOT_FOUND,
-                detail=self.ERROR_MESSAGE_404,
+            history = (
+                await self.chain_completion_history_service.get_chain_history(
+                    self.user
+                )
             )
+            return ChainCompletionHistoryPublic(data=history)
+        except NoChainHistoryCompletionFound:
+            return ChainCompletionHistoryPublic(data=[])
 
 
 @cbv(chain_completion_history_router)

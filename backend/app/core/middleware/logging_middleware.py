@@ -66,6 +66,6 @@ class LoggingMiddleware(BaseHTTPMiddleware):
         return JSONResponse(
             status_code=status_code,
             content={
-                "detail": str(e) if settings.DEBUG else AppException.DETAIL
+                "detail": str(e) if settings.DEBUG else AppException.message
             },
         )

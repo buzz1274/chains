@@ -2,7 +2,7 @@ from typing import Annotated, List, Sequence, Optional
 
 from fastapi import Depends
 
-from app.chain.exceptions.chains_exceptions import ChainNotFoundError
+from app.chain.exceptions.chain_exceptions import ChainNotFoundError
 from app.chain.models.chain_models import (
     Chain,
     ChainsInternal,

@@ -2,7 +2,7 @@ from typing import Annotated
 
 from fastapi import APIRouter, Depends
 from fastapi_utils.cbv import cbv
-from app.chain.exceptions.chains_exceptions import ChainNotFoundError
+from app.chain.exceptions.chain_exceptions import ChainNotFoundError
 
 from app.chain.services.chain_service import ChainService
 from app.user.models import User
@@ -31,7 +31,7 @@ class ChainRouter:
         try:
             chains = await self.chain_service.chains(self.user)
             return ChainsPublic(
-                data=[ChainPublic(**c.model_dump()) for c in chains.data]
+                data=[ChainPublic.model_validate(c) for c in chains.data]
             )
         except ChainNotFoundError:
             return ChainsPublic(data=[])

@@ -3,11 +3,14 @@ from fastapi import Depends
 from app.chain.models.constants import ChainCompletionStatus
 from app.chain.models.chain_completion_history_models import (
     ChainCompletionHistory,
+    ChainCompletionHistoryInternal,
 )
 from app.chain.repositories.chain_completion_history_repository import (
     ChainCompletionHistoryRepository,
 )
 from datetime import date
+
+from app.user.models import User
 
 
 class ChainCompletionHistoryService:
@@ -22,7 +25,12 @@ class ChainCompletionHistoryService:
             ChainCompletionHistoryRepository
         ) = chain_history_repository
 
-    async def get_chain_history(self):
+    async def get_chain_history(
+        self,
+        user: Optional[User] = None,
+        status: Optional[ChainCompletionStatus] = None,
+    ):
+        """get chain history"""
         pass
 
     async def add_chain_history(
@@ -30,7 +38,7 @@ class ChainCompletionHistoryService:
         chain_id: int,
         completion_date: date,
         status: Optional[ChainCompletionStatus] = None,
-    ):
+    ) -> ChainCompletionHistoryInternal:
         """add a new chain history"""
         chain_history = ChainCompletionHistory(
             chain_id=chain_id,

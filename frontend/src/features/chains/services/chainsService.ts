@@ -19,8 +19,6 @@ export const chainsService = {
       })
 
     if (chainResponse) {
-      console.log(chainResponse['data'])
-
       chainResponse['data'].forEach((chain) => {
         try {
           chains.push(chainsMapFromAPI(chain))

@@ -1,16 +1,12 @@
-from abc import abstractmethod, ABC
+from abc import ABC
+from app.core.app_exception import AppException
 
 from app.chain.models.chain_completion_history_models import (
     ChainCompletionHistory,
 )
 
 
-class GenericChainHistoryError(Exception, ABC):
-    @property
-    @abstractmethod
-    def message(self) -> str:
-        pass
-
+class GenericChainCompletionHistoryError(AppException, ABC):
     def __init__(self, chain_completion_history: ChainCompletionHistory):
         super().__init__(
             f"{self.message} "
@@ -20,9 +16,13 @@ class GenericChainHistoryError(Exception, ABC):
         )
 
 
-class DuplicateChainHistoryError(GenericChainHistoryError):
+class DuplicateChainHistoryError(GenericChainCompletionHistoryError):
     message: str = "History already exists for"
 
 
-class InvalidChainHistoryDataError(GenericChainHistoryError):
+class InvalidChainHistoryDataError(GenericChainCompletionHistoryError):
     message: str = "Invalid chain completion history data sent to database"
+
+
+class NoChainHistoryCompletionFound(GenericChainCompletionHistoryError):
+    message: str = "No chain history chain completion found"
