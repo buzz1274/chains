@@ -21,16 +21,23 @@ export const useChainsOutstandingStore = defineStore('chainsOutstanding', {
       this.outstandingChains =
         await chainsOutstandingService.getChainsOutstanding()
     },
-    async markComplete(
-      chainId: number,
+    async markCurrentOutstandingComplete(
       status: TChainCompletionStatus,
     ): Promise<void> {
-      this.outstandingChains = this.outstandingChains.filter(
-        (chain) => chain.chainId !== chainId,
+      const currentOutstandingChain: IChainOutstandingModel =
+        this.currentOutstandingChain
+
+      if (!currentOutstandingChain) {
+        return
+      }
+
+      currentOutstandingChain.status = status
+
+      await chainsOutstandingService.markComplete(
+        this.currentOutstandingChain
       )
 
-      console.log(`MARK ${status}`)
-      await chainsOutstandingService.getChainsOutstanding()
+      this.outstandingChains.shift()
     },
     reset() {
       this.outstandingChains = []

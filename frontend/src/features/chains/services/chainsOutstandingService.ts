@@ -40,4 +40,8 @@ export const chainsOutstandingService = {
 
     return chainsOutstanding
   },
+  async markComplete(chainOutstanding: IChainOutstandingModel) {
+    console.log("mark complete")
+    console.log(chainOutstanding)
+  }
 }

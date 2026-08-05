@@ -11,4 +11,5 @@ export const chainsOutstandingMapFromAPI = (
   id: dto.id,
   chainId: dto.chain_id,
   date: Temporal.PlainDate.from(dto.completion_date),
+  status:  dto.status,
 })

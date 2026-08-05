@@ -12,7 +12,7 @@ import type { IAppResponseError } from '@/shared/types/apiTypes.d.ts'
 import type { TChainCompletionStatus } from '@/features/chains/types/constants.ts'
 import { useChainsOutstandingStore } from '@/features/chains/store/useChainsOutstandingStore'
 import { chainCompletionStatus } from '@/features/chains/types/constants.ts'
-import { httpError } from '@/shared/lib/httpError.ts'
+
 
 const toast = useToast()
 const chainsOutstandingStore = useChainsOutstandingStore()
@@ -28,14 +28,8 @@ const outstandingChainDetail = computed(() => {
 })
 
 const markComplete = async (status: TChainCompletionStatus) => {
-  const chainId = chainsOutstandingStore.currentOutstandingChain?.chainId
-
-  if (!chainId) return null
-
   try {
-    await chainsOutstandingStore.markComplete(chainId, status)
-
-    chainsStore.setActiveChainId(chainId)
+    await chainsOutstandingStore.markCurrentOutstandingComplete(status)
 
     toast.add({
       severity: 'success',

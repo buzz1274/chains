@@ -71,4 +71,5 @@ export interface IChainOutstandingModel {
   id: number
   chainId: number
   date: Temporal.PlainDate
+  status: ?TChainCompletionStatus
 }
