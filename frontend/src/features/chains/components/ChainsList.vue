@@ -3,22 +3,24 @@ import { useChainsStore } from '@/features/chains/store/useChainsStore'
 import ChainListItem from '@/features/chains/components/ChainsListItem.vue'
 import router from '@/shared/routes/router.ts'
 import { chainsService } from '@/features/chains/services/chainsService.ts'
+import { useRoute } from 'vue-router'
+import { computed } from 'vue'
 
+const route = useRoute()
+
+const path: string = '/chains'
 const chainsStore = useChainsStore()
-
-chainsService.get().then(() => {
-  chainsStore.setActiveChainId(2)
-}).catch((error) => {
-  console.log(error)
-})
 
 const handleSelectChain = (id: number) => {
   chainsService.get().then(() => {
     chainsStore.setActiveChainId(id)
   })
 
-  void router.push('/chains')
+  void router.push(path)
 }
+const active = computed(() => {
+  return route.path === path
+})
 </script>
 <template>
   <div class="flex justify-center items-start">
@@ -29,7 +31,7 @@ const handleSelectChain = (id: number) => {
           v-if="chainsStore.chains"
           :key="chain.id"
           :chain="chain"
-          :active="chain.id === chainsStore.activeChainId"
+          :active="chain.id === chainsStore.activeChainId && active"
           @click="handleSelectChain(chain.id)"
         />
       </div>

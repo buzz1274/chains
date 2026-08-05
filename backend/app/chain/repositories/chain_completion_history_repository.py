@@ -26,6 +26,7 @@ class ChainCompletionHistoryRepository(Repository):
         """get chain history for supplied user"""
         query: Select = (
             select(ChainCompletionHistory)
+            .join(Chain)
             .where(
                 col(Chain.deleted).is_(False),
             )
@@ -37,8 +38,6 @@ class ChainCompletionHistoryRepository(Repository):
 
         if incomplete_only:
             query = query.where(col(ChainCompletionHistory.status).is_(None))
-
-        print(query)
 
         chains: Sequence[ChainCompletionHistoryInternal] = (
             (await self.execute_query(query)).scalars().all()
