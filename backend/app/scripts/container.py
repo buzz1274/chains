@@ -1,9 +1,11 @@
+from types import AsyncGeneratorType
+
 from app.chain.repositories.chain_completion_history_repository import (
     ChainCompletionHistoryRepository,
 )
 from app.chain.repositories.chain_repository import ChainRepository
 from app.chain.services.chain_completion_history_service import (
-    ChainCompletionHistoryService
+    ChainCompletionHistoryService,
 )
 from app.chain.services.chain_service import ChainService
 from app.chain.services.chain_stats_service import ChainStatsService
@@ -36,14 +38,14 @@ def file_storage_provider(settings: Settings) -> FileStorage:
 
 
 @container.provider(scope="singleton")
-async def database_manager_provider() -> DatabaseManager:
+async def database_manager_provider() -> AsyncGeneratorType:
     database_manager.startup()
     yield database_manager
     await database_manager.shutdown()
 
 
 @container.provider(scope="request")
-async def session_provider(db: DatabaseManager) -> AsyncSession:
+async def session_provider(db: DatabaseManager) -> AsyncGeneratorType:
     async for session in db.get_session():
         yield session
 

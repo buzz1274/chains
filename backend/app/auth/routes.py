@@ -5,7 +5,7 @@ from fastapi_utils.cbv import cbv
 from starlette.requests import Request
 
 from app.auth.service import AuthService
-from app.auth.models import AuthRequest, AuthResponse
+from app.auth.models import AuthRequest, AuthResponse, AuthProvider
 
 router = APIRouter(prefix="/auth", tags=["auth"])
 
@@ -23,7 +23,7 @@ class AuthRouter:
         """authenticate credentials"""
         return AuthResponse(
             token=await self.auth_service.authenticate(
-                payload.code, payload.provider
+                payload.code, AuthProvider(payload.provider)
             ),
             request_id=request.state.request_id,
         )

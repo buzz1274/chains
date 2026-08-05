@@ -50,7 +50,9 @@ class LoggingMiddleware(BaseHTTPMiddleware):
         logger: structlog.BoundLogger,
         start: float,
     ) -> JSONResponse:
-        status_code: int = getattr(e, "STATUS_CODE", AppException.STATUS_CODE)
+        status_code: int = getattr(
+            e, "status_code", status.HTTP_500_INTERNAL_SERVER_ERROR
+        )
 
         log_message: dict[str, object] = {
             "message": str(e),
@@ -58,7 +60,12 @@ class LoggingMiddleware(BaseHTTPMiddleware):
             "status_code": status_code,
         }
 
-        if status_code >= status.HTTP_500_INTERNAL_SERVER_ERROR:
+        print(log_message)
+        print(status_code)
+
+        logger.error("request_failed", **log_message, exc_info=True)
+
+        if status_code >= 400:  # status.HTTP_500_INTERNAL_SERVER_ERROR:
             logger.error("request_failed", **log_message, exc_info=True)
         else:
             logger.warning("request_failed", **log_message)

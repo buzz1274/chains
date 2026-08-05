@@ -1,14 +1,17 @@
+from app.auth.models import AuthProvider
 from app.auth.providers.google import Google
 
 
 class ProviderFactory:
     PROVIDER_MAP = {
-        "GOOGLE": Google,
+        AuthProvider.GOOGLE: Google,
     }
 
-    def get_provider(self, provider: str):
+    def get_provider(self, provider: AuthProvider):
         """get appropriate provider class based on provider name"""
+        provider = AuthProvider(provider)
+
         try:
-            return self.PROVIDER_MAP[provider.upper()](provider)
+            return self.PROVIDER_MAP[provider](provider)
         except KeyError:
             raise ValueError(f"Invalid provider({provider})")

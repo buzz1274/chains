@@ -1,6 +1,8 @@
-from typing import Optional
+from typing import Optional, Sequence
 
+from sqlalchemy import Select, select
 from sqlalchemy.exc import IntegrityError, DBAPIError
+from sqlmodel import col
 
 from app.chain.exceptions.chain_completion_history_exceptions import (
     DuplicateChainHistoryError,
@@ -9,6 +11,7 @@ from app.chain.exceptions.chain_completion_history_exceptions import (
 from app.chain.models.chain_completion_history_models import (
     ChainCompletionHistory,
 )
+from app.chain.models.chain_models import Chain
 from app.core.repository import Repository
 from app.user.models import User
 
@@ -21,7 +24,25 @@ class ChainCompletionHistoryRepository(Repository):
         incomplete_only: Optional[bool] = False,
     ):
         """get chain history for supplied user"""
-        pass
+        query: Select = (
+            select(ChainCompletionHistory)
+            .where(
+                col(Chain.deleted).is_(False),
+            )
+            .where(col(Chain.user_id) == user.id)
+        )
+
+        if chain_id:
+            query = query.where(col(Chain.id) == chain_id)
+
+        if incomplete_only:
+            query = query.where(col(ChainCompletionHistory.status).is_(None))
+
+        chains: Sequence[ChainCompletionHistory] = (
+            (await self.execute_query(query)).scalars().all()
+        )
+
+        return chains
 
     async def add_chain_history(self, chain_history: ChainCompletionHistory):
         """add a new chain history"""

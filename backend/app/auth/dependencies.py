@@ -1,5 +1,6 @@
 from fastapi import Depends, HTTPException
 from fastapi.security import HTTPBearer
+from fastapi import status
 
 from app.user.models import User
 from app.auth.service import AuthService
@@ -14,4 +15,6 @@ async def get_current_user(
     try:
         return await authentication_service.get_authenticated_user(token)
     except RuntimeError as e:
-        raise HTTPException(status_code=401, detail=str(e))
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED, detail=str(e)
+        )

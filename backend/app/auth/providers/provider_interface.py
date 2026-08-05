@@ -1,14 +1,10 @@
 from abc import abstractmethod, ABCMeta
-from string import Template
 
-from app.auth.models import AuthUserInfo
+from app.auth.models import AuthUserInfo, AuthProvider
 
 
 class ProviderInterface(metaclass=ABCMeta):
-    INVALID_CREDENTIAL_ERROR: str = "Invalid credentials"
-    COMMUNICATION_ERROR: Template = Template("Communication error $provider")
-
-    def __init__(self, provider: str):
+    def __init__(self, provider: AuthProvider):
         self.provider = provider
         self.user_info: dict = {}
 

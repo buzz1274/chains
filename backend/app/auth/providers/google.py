@@ -4,7 +4,11 @@ from google.oauth2 import id_token
 from app.auth.models import AuthUserInfo, AuthProvider
 from app.auth.providers.provider_interface import ProviderInterface
 from app.core.config import settings
-from app.auth.auth_exception import AuthException
+from app.auth.exceptions.auth_exception import (
+    AuthException,
+    AuthInvalidUserException,
+    AuthConnectionTimeoutError,
+)
 import httpx
 from httpx import ConnectTimeout, HTTPStatusError, RequestError
 
@@ -38,9 +42,9 @@ class Google(ProviderInterface):
             )
 
             if not self._validate_user_info():
-                raise AuthException(detail=self.INVALID_CREDENTIAL_ERROR)
+                raise AuthInvalidUserException
         except InvalidValue as e:
-            raise AuthException(detail=str(e))
+            raise AuthException from e
 
     def _validate_user_info(self) -> bool:
         """validate all required user details are present in response"""
@@ -73,8 +77,4 @@ class Google(ProviderInterface):
         except (ValueError, HTTPStatusError, RequestError) as e:
             raise AuthException from e
         except ConnectTimeout:
-            raise AuthException(
-                detail=self.COMMUNICATION_ERROR.substitute(
-                    provider=self.provider
-                )
-            )
+            raise AuthConnectionTimeoutError(self.provider)
