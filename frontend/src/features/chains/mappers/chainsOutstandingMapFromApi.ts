@@ -9,6 +9,6 @@ export const chainsOutstandingMapFromAPI = (
   dto: IChainOutstandingDTO,
 ): IChainOutstandingModel => ({
   id: dto.id,
-  chainId: dto.id,
-  date: Temporal.PlainDate.from(dto.date),
+  chainId: dto.chain_id,
+  date: Temporal.PlainDate.from(dto.completion_date),
 })

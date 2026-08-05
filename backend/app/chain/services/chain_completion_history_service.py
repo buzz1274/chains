@@ -1,9 +1,9 @@
-from typing import Annotated, Optional
+from typing import Annotated, Optional, Sequence
 from fastapi import Depends
 from app.chain.models.constants import ChainCompletionStatus
 from app.chain.models.chain_completion_history_models import (
     ChainCompletionHistory,
-    ChainCompletionHistoryInternal,
+    ChainCompletionHistoryInternal, ChainsCompletionHistoryInternal,
 )
 from app.chain.repositories.chain_completion_history_repository import (
     ChainCompletionHistoryRepository,
@@ -25,13 +25,17 @@ class ChainCompletionHistoryService:
             ChainCompletionHistoryRepository
         ) = chain_history_repository
 
-    async def get_chain_history(
+    async def get_outstanding_chain_history(
         self,
         user: Optional[User] = None,
-        status: Optional[ChainCompletionStatus] = None,
-    ):
-        """get chain history"""
-        pass
+    ) -> ChainsCompletionHistoryInternal:
+        """get outstanding chain history"""
+        data: Sequence[ChainCompletionHistoryInternal] = \
+            (await self.chain_completion_history_repository.get_chain_history(
+                user=user, chain_id=None, incomplete_only=True
+            ))
+
+        return ChainsCompletionHistoryInternal(data=data)
 
     async def add_chain_history(
         self,

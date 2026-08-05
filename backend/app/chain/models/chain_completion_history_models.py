@@ -1,4 +1,4 @@
-from typing import Optional, TYPE_CHECKING
+from typing import Optional, TYPE_CHECKING, List
 
 from sqlalchemy import UniqueConstraint
 from sqlmodel import Field, Relationship, SQLModel
@@ -35,3 +35,9 @@ class ChainCompletionHistoryInternal(ChainCompletionHistoryBase):
 class ChainCompletionHistoryPublic(ChainCompletionHistoryBase):
     id: int
     chain_id: int
+
+class ChainsCompletionHistoryInternal(SQLModel):
+    data: List[ChainCompletionHistoryInternal]
+
+class ChainsCompletionHistoryPublic(SQLModel):
+    data: List[ChainCompletionHistoryPublic]

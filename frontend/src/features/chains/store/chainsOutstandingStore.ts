@@ -8,6 +8,7 @@ import { chainsOutstandingService } from '@/features/chains/services/chainsOutst
 export const useChainsOutstandingStore = defineStore('chainsOutstanding', {
   state: () => ({
     outstandingChains: [] as IChainOutstandingModel[],
+    errors: []
   }),
 
   persist: true,
@@ -18,7 +19,7 @@ export const useChainsOutstandingStore = defineStore('chainsOutstanding', {
 
   actions: {
     async fetchOutstandingChains(): Promise<void> {
-      this.outstandingChains =
+      [this.outstandingChains, this.errors] =
         await chainsOutstandingService.getChainsOutstanding()
     },
     async markComplete(

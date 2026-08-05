@@ -7,6 +7,7 @@ from app.chain.exceptions.chain_completion_history_exceptions import (
     NoChainHistoryCompletionFound,
 )
 from app.chain.models import ChainCompletionHistoryPublic
+from app.chain.models.chain_completion_history_models import ChainsCompletionHistoryPublic
 from app.chain.services.chain_service import ChainService
 from app.user.models import User
 from app.chain.models.chain_models import ChainsPublic
@@ -42,11 +43,13 @@ class AllChainCompletionHistoryRouter:
         """get all incomplete chain histories for authenticated user"""
         try:
             history = (
-                await self.chain_completion_history_service.get_chain_history(
-                    self.user
+                await self.chain_completion_history_service.
+                    get_outstanding_chain_history(
+                        self.user
                 )
             )
-            return ChainCompletionHistoryPublic(data=history)
+
+            return ChainsCompletionHistoryPublic(data=history.data)
         except NoChainHistoryCompletionFound:
             return ChainCompletionHistoryPublic(data=[])
 

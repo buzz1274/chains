@@ -9,7 +9,7 @@ from app.chain.exceptions.chain_completion_history_exceptions import (
     InvalidChainHistoryDataError,
 )
 from app.chain.models.chain_completion_history_models import (
-    ChainCompletionHistory,
+    ChainCompletionHistory, ChainCompletionHistoryPublic, ChainCompletionHistoryInternal,
 )
 from app.chain.models.chain_models import Chain
 from app.core.repository import Repository
@@ -22,7 +22,7 @@ class ChainCompletionHistoryRepository(Repository):
         user: User,
         chain_id: Optional[int] = None,
         incomplete_only: Optional[bool] = False,
-    ):
+    ) -> Sequence[ChainCompletionHistoryInternal]:
         """get chain history for supplied user"""
         query: Select = (
             select(ChainCompletionHistory)
@@ -38,7 +38,9 @@ class ChainCompletionHistoryRepository(Repository):
         if incomplete_only:
             query = query.where(col(ChainCompletionHistory.status).is_(None))
 
-        chains: Sequence[ChainCompletionHistory] = (
+        print(query)
+
+        chains: Sequence[ChainCompletionHistoryInternal] = (
             (await self.execute_query(query)).scalars().all()
         )
 
