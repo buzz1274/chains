@@ -60,12 +60,9 @@ class LoggingMiddleware(BaseHTTPMiddleware):
             "status_code": status_code,
         }
 
-        print(log_message)
-        print(status_code)
-
         logger.error("request_failed", **log_message, exc_info=True)
 
-        if status_code >= 400:  # status.HTTP_500_INTERNAL_SERVER_ERROR:
+        if status_code >= status.HTTP_500_INTERNAL_SERVER_ERROR:
             logger.error("request_failed", **log_message, exc_info=True)
         else:
             logger.warning("request_failed", **log_message)
