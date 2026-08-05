@@ -9,9 +9,10 @@ import ChainsHeader from '@/features/chains/components/ChainsHeader.vue'
 import ChainsStatsCards from '@/features/chains/components/ChainsStatsCards.vue'
 import { useChainsStore } from '@/features/chains/store/useChainsStore'
 import type { IAppResponseError } from '@/shared/types/apiTypes.d.ts'
-import type { TChainCompletionStatus } from '@/features/chains/types/chainsTypes.d.ts'
-import { useChainsOutstandingStore } from '@/features/chains/store/chainsOutstandingStore'
+import type { TChainCompletionStatus } from '@/features/chains/types/constants.ts'
+import { useChainsOutstandingStore } from '@/features/chains/store/useChainsOutstandingStore'
 import { chainCompletionStatus } from '@/features/chains/types/constants.ts'
+import { httpError } from '@/shared/lib/httpError.ts'
 
 const toast = useToast()
 const chainsOutstandingStore = useChainsOutstandingStore()
@@ -67,8 +68,8 @@ onMounted(async () => {
 
     toast.add({
       severity: 'error',
-      summary: 'An error occurred while fetching chains',
-      detail: e.detail,
+      summary: 'An error occurred while fetching outstanding chain history',
+      detail: e,
       life: 3000,
     })
   } finally {

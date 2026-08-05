@@ -8,7 +8,9 @@ export class httpError extends Error {
   public static networkErrorMessage = 'Network error - backend unreachable'
 
   constructor(statusCode: number, message: IAppResponseError | string) {
-    if (typeof message === 'string' || message['detail'] === undefined) {
+    if (typeof message === 'string') {
+      super(message)
+    } else if(message['detail'] === undefined) {
       super(httpError.defaultMessage)
     } else {
       super(message['detail'])

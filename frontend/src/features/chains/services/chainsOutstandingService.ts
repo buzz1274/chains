@@ -5,6 +5,7 @@ import type {
 import { chainsOutstandingMapFromAPI } from '@/features/chains/mappers/chainsOutstandingMapFromApi'
 import { httpError } from '@/shared/lib/httpError'
 import { httpClient } from '@/shared/lib/httpClient.ts'
+import { StatusCodes } from 'http-status-codes'
 
 export const chainsOutstandingService = {
   async getChainsOutstanding() {
@@ -30,6 +31,13 @@ export const chainsOutstandingService = {
       })
     }
 
-    return [chainsOutstanding, errors]
+    if (errors.length > 0) {
+      throw new httpError(
+        StatusCodes.INTERNAL_SERVER_ERROR,
+        {'detail': errors.join("\n")}
+      )
+    }
+
+    return chainsOutstanding
   },
 }
