@@ -1,19 +1,17 @@
 <script setup lang="ts">
 import { ClipboardCheck as ClipboardCheckIcon } from '@lucide/vue'
-import { useChainsStore } from '@/features/chains/store/useChainsStore'
-
-import BaseTransparentButton from '@/shared/components/base/BaseTransparentButton.vue'
-import router from '@/shared/routes/router.ts'
 import { useRoute } from 'vue-router'
 import { computed } from 'vue'
 
+import { useChainsStore } from '@/features/chains/store/useChainsStore'
+import BaseTransparentButton from '@/shared/components/base/BaseTransparentButton.vue'
+import router from '@/shared/routes/router.ts'
+
 const route = useRoute()
 const chainsStore = useChainsStore()
-const path: string = '/chains/confirm-outstanding'
+const path = '/chains/confirm-outstanding'
 
-const active = computed(() => {
-  return route.path === path
-})
+const active = computed(() => route.path === path)
 </script>
 
 <template>

@@ -2,6 +2,7 @@ import { StatusCodes } from 'http-status-codes'
 
 import { keys, storage } from '@/shared/lib/storage'
 import { httpError } from '@/shared/lib/httpError'
+import { type httpMethod } from '@/shared/types/constants.ts'
 
 class client {
   private readonly baseUrl: string
@@ -20,27 +21,32 @@ class client {
     this.onUnauthorizedHandler = handler
   }
 
-  public async get<T>(url: string, ignore_not_found = false): Promise<T> {
-    try {
-      const response: Response = await fetch(this.url(url), {
-        method: 'GET',
-        headers: this.setHeaders(),
-      })
-      return this.handleResponse<T>(response, ignore_not_found)
-    } catch (error) {
-      this.handleUnauthorized()
-    }
+  public async get<T>(url: string, ignoreNotFound = false): Promise<T> {
+    return this.request(url, 'GET', null, ignoreNotFound)
   }
 
   public async post<T>(url: string, body?: unknown): Promise<T> {
+    return this.request(url, 'POST', body)
+  }
+
+  public async patch<T>(url: string, body?: unknown): Promise<T> {
+    return this.request(url, 'PATCH', body)
+  }
+
+  private async request<T>(
+    url: string,
+    method: httpMethod,
+    body?: unknown = null,
+    ignoreNotFound = false,
+  ): Promise<T> {
     try {
       const response: Response = await fetch(this.url(url), {
-        method: 'POST',
-        body: JSON.stringify(body),
+        method,
+        body: body === null ? undefined : JSON.stringify(body),
         headers: this.setHeaders(),
       })
 
-      return this.handleResponse<T>(response)
+      return this.handleResponse<T>(response, ignoreNotFound)
     } catch (error) {
       throw httpError.fromError(error)
     }
@@ -48,14 +54,14 @@ class client {
 
   private async handleResponse<T>(
     response: Response,
-    ignore_not_found = false,
+    ignoreNotFound = false,
   ): Promise<T> {
     if (response.status === StatusCodes.UNAUTHORIZED) {
       this.handleUnauthorized()
       throw new httpError(response.status, 'You have been logged out.')
     } else if (
       (!response.ok && response.status !== StatusCodes.NOT_FOUND) ||
-      (response.status === StatusCodes.NOT_FOUND && !ignore_not_found)
+      (response.status === StatusCodes.NOT_FOUND && !ignoreNotFound)
     ) {
       throw new httpError(response.status, await response.json())
     }

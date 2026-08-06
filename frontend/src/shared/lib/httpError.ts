@@ -10,7 +10,7 @@ export class httpError extends Error {
   constructor(statusCode: number, message: IAppResponseError | string) {
     if (typeof message === 'string') {
       super(message)
-    } else if(message['detail'] === undefined) {
+    } else if (message['detail'] === undefined) {
       super(httpError.defaultMessage)
     } else {
       super(message['detail'])
@@ -28,6 +28,7 @@ export class httpError extends Error {
     }
 
     if (error instanceof TypeError) {
+      console.log(error)
       return new httpError(StatusCodes.SERVICE_UNAVAILABLE, {
         detail: httpError.networkErrorMessage,
       })
