@@ -5,7 +5,10 @@ import type {
   IChainOutstandingDTO,
   IChainDTO,
 } from '@/features/chains/types/chainsTypes'
-import { chainsOutstandingMapFromAPI } from '@/features/chains/mappers/chainsOutstandingMapFromApi'
+import {
+  chainsOutstandingMap,
+  chainsOutstandingMapToAPI,
+} from '@/features/chains/mappers/chainsOutstandingMap.ts'
 import { httpError } from '@/shared/lib/httpError'
 import { httpClient } from '@/shared/lib/httpClient.ts'
 
@@ -24,7 +27,7 @@ export const chainsOutstandingService = {
     if (chainsOutstandingApiResponse) {
       chainsOutstandingApiResponse['data'].forEach((outstandingChain) => {
         try {
-          chainsOutstanding.push(chainsOutstandingMapFromAPI(outstandingChain))
+          chainsOutstanding.push(chainsOutstandingMap(outstandingChain))
         } catch (error) {
           errors.push(
             `Error mapping chain history: ${
@@ -47,10 +50,17 @@ export const chainsOutstandingService = {
     console.log('mark complete')
     console.log(chainOutstanding)
 
+    //`${this.baseUrl}${url}`
+
+    console.log(chainsOutstandingMapToAPI(chainOutstanding))
+
     const chainsOutstandingResponse = await httpClient
-      .patch('/api/chain/{id}history/{id}/complete')
+      .patch(
+        `api/chains/${chainOutstanding.chainId}/history/${chainOutstanding.id}`,
+        chainsOutstandingMapToAPI(chainOutstanding),
+      )
       .catch((error) => {
-        console.error(error)
+        console.log(error)
       })
 
     //will need to re-fetch completed chain to get updated stats...

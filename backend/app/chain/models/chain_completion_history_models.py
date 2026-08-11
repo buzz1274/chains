@@ -36,8 +36,14 @@ class ChainCompletionHistoryPublic(ChainCompletionHistoryBase):
     id: int
     chain_id: int
 
+
 class ChainsCompletionHistoryInternal(SQLModel):
     data: List[ChainCompletionHistoryInternal]
 
+
 class ChainsCompletionHistoryPublic(SQLModel):
     data: List[ChainCompletionHistoryPublic]
+
+
+class ChainCompletionHistoryPatch(SQLModel):
+    status: Optional[ChainCompletionStatus]

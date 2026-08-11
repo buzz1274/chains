@@ -3,7 +3,9 @@ from fastapi import Depends
 from app.chain.models.constants import ChainCompletionStatus
 from app.chain.models.chain_completion_history_models import (
     ChainCompletionHistory,
-    ChainCompletionHistoryInternal, ChainsCompletionHistoryInternal,
+    ChainCompletionHistoryInternal,
+    ChainsCompletionHistoryInternal,
+    ChainCompletionHistoryPatch,
 )
 from app.chain.repositories.chain_completion_history_repository import (
     ChainCompletionHistoryRepository,
@@ -16,24 +18,25 @@ from app.user.models import User
 class ChainCompletionHistoryService:
     def __init__(
         self,
-        chain_history_repository: Annotated[
+        chain_completion_history_repository: Annotated[
             ChainCompletionHistoryRepository,
             Depends(ChainCompletionHistoryRepository),
         ],
     ):
         self.chain_completion_history_repository: (
             ChainCompletionHistoryRepository
-        ) = chain_history_repository
+        ) = chain_completion_history_repository
 
     async def get_outstanding_chain_history(
         self,
         user: Optional[User] = None,
     ) -> ChainsCompletionHistoryInternal:
         """get outstanding chain history"""
-        data: Sequence[ChainCompletionHistoryInternal] = \
-            (await self.chain_completion_history_repository.get_chain_history(
-                user=user, chain_id=None, incomplete_only=True
-            ))
+        data: Sequence[
+            ChainCompletionHistoryInternal
+        ] = await self.chain_completion_history_repository.get_chain_history(
+            user=user, chain_id=None, incomplete_only=True
+        )
 
         return ChainsCompletionHistoryInternal(data=data)
 
@@ -56,6 +59,17 @@ class ChainCompletionHistoryService:
 
     async def update_chain_history(
         self,
+        user: User,
+        chain_id: int,
+        chain_history_id: int,
+        chain_completion_history_patch: ChainCompletionHistoryPatch,
     ):
         """update chain"""
         pass
+        # get chain
+        #
+        chain = (
+            await self.chain_completion_history_repository.get_chain_history(
+                user=user, chain_id=chain_id
+            )
+        )
