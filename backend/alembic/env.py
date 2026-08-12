@@ -24,14 +24,14 @@ if config.config_file_name is not None:
 
 from app.user.models import SQLModel as UserSQLModel
 from app.chain.models.chain_models import SQLModel as ChainSQLModel
-from app.chain.models.chain_completion_history_models import (
-    SQLModel as ChainCompletionHistorySQLModel
+from app.chain.models.chain_history_models import (
+    SQLModel as ChainHistorySQLModel
 )
 from app.core.config.settings import Settings
 
 merged_metadata = MetaData()
 
-for model in [UserSQLModel, ChainSQLModel, ChainCompletionHistorySQLModel]:
+for model in [UserSQLModel, ChainSQLModel, ChainHistorySQLModel]:
     for table in model.metadata.tables.values():
         table.to_metadata(merged_metadata)
 
