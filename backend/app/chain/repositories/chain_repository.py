@@ -26,7 +26,7 @@ class ChainRepository(Repository):
             query = query.where(col(Chain.id) == chain_id)
 
         if with_history:
-            query = query.options(selectinload(Chain.chain_completion_history))
+            query = query.options(selectinload(Chain.chain_history))
 
         chains: Sequence[Chain] = (
             (await self.execute_query(query)).scalars().all()

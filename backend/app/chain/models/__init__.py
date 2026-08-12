@@ -4,14 +4,14 @@ from app.chain.models.chain_models import (
     ChainInternalWithStats,
     ChainsInternalWithStats,
 )
-from app.chain.models.chain_completion_history_models import (
-    ChainCompletionHistory,
-    ChainCompletionHistoryPublic,
+from app.chain.models.chain_history_models import (
+    ChainHistory,
+    ChainHistoryPublic,
 )
 
 ChainPublic.model_rebuild()
 ChainsPublic.model_rebuild()
 ChainInternalWithStats.model_rebuild()
 ChainsInternalWithStats.model_rebuild()
-ChainCompletionHistory.model_rebuild()
-ChainCompletionHistoryPublic.model_rebuild()
+ChainHistory.model_rebuild()
+ChainHistoryPublic.model_rebuild()

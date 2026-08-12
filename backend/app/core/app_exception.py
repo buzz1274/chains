@@ -14,3 +14,10 @@ class AppException(ABC, Exception):
 
     def __init__(self, message: Optional[str] = None):
         super().__init__(message or self.message)
+
+
+class DBConnectionError(AppException):
+    message: str = "A error occurred when attempting to connect to database"
+
+class DBGenericError(AppException):
+    message: str = "An unexpected error occurred"

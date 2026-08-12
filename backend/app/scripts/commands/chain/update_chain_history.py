@@ -1,7 +1,7 @@
 from anydi import transient
 from structlog import BoundLogger
 
-from app.chain.exceptions.chain_completion_history_exceptions import (
+from app.chain.exceptions.chain_history_exceptions import (
     DuplicateChainHistoryError,
     InvalidChainHistoryDataError,
 )
@@ -10,8 +10,8 @@ from app.chain.models.chain_models import (
     ChainsInternalWithStats,
 )
 from datetime import date
-from app.chain.services.chain_completion_history_service import (
-    ChainCompletionHistoryService,
+from app.chain.services.chain_history_service import (
+    ChainHistoryService,
 )
 from app.chain.services.chain_service import ChainService
 
@@ -22,12 +22,12 @@ class UpdateChainHistory:
         self,
         logger: BoundLogger,
         chain_service: ChainService,
-        chain_history_service: ChainCompletionHistoryService,
+        chain_history_service: ChainHistoryService,
     ):
         self.logger: BoundLogger = logger
         self.chain_service: ChainService = chain_service
         self.chain_history_service: (
-            ChainCompletionHistoryService
+            ChainHistoryService
         ) = chain_history_service
 
     async def update_chain_history(self):

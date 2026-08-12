@@ -13,11 +13,13 @@ from datetime import date
 from pydantic import BaseModel
 
 from app.chain.models.constants import ChainFrequency
+from app.chain.models.chain_history_models import ChainHistoryInternal
+
 
 if TYPE_CHECKING:
-    from app.chain.models.chain_completion_history_models import (
-        ChainCompletionHistoryPublic,
-        ChainCompletionHistory,
+    from app.chain.models.chain_history_models import (
+        ChainHistoryInternal,
+        ChainHistoryPublic, ChainHistory,
     )
 
 
@@ -63,8 +65,8 @@ class Chain(ChainBase, table=True):
         default=False,
         sa_column=Column(Boolean, nullable=False, server_default=false()),
     )
-    chain_completion_history: Mapped[
-        list["ChainCompletionHistory"]
+    chain_history: Mapped[
+        List["ChainHistory"]
     ] = Relationship(
         back_populates="chain",
         sa_relationship_kwargs={"lazy": "raise"},
@@ -90,7 +92,7 @@ class ChainStats(BaseModel):
 
 class ChainInternalWithStats(ChainInternal):
     stats: ChainStats
-    chain_completion_history: list["ChainCompletionHistoryPublic"] = Field(
+    chain_history: List["ChainHistoryInternal"] = Field(
         default_factory=list
     )
 
@@ -101,7 +103,7 @@ class ChainsInternalWithStats(BaseModel):
 
 class ChainPublic(ChainBase):
     id: int
-    chain_completion_history: list["ChainCompletionHistoryPublic"] = Field(
+    chain_history: list["ChainHistoryPublic"] = Field(
         default_factory=list
     )
     stats: ChainStats

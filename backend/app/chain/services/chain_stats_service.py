@@ -6,7 +6,7 @@ from app.chain.models.chain_models import (
     CurrentStreak,
     MaxStreak,
 )
-from app.chain.models.constants import ChainCompletionStatus
+from app.chain.models.constants import ChainHistoryStatus
 
 
 class ChainStatsService:
@@ -31,8 +31,8 @@ class ChainStatsService:
 
         return sum(
             1
-            for h in self.chain.chain_completion_history
-            if h.status == ChainCompletionStatus.SUCCESS
+            for h in self.chain.chain_history
+            if h.status == ChainHistoryStatus.SUCCESS
             and week_start <= h.completion_date <= week_end
         )
 

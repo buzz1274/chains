@@ -21,6 +21,7 @@ const active = computed(() => route.path === path)
       active ? 'bg-green-50 border border-green-200 hover:bg-green-100' : ''
     ]"
     @click="chainsStore.setActiveChainId(null); router.push(path);"
+    v-if="chainsStore.chains.length > 0"
   >
     <template #icon-left>
       <ClipboardCheckIcon class="w-5 h-5" />

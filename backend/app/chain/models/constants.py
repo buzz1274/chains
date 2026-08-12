@@ -1,7 +1,7 @@
 from enum import StrEnum
 
 
-class ChainCompletionStatus(StrEnum):
+class ChainHistoryStatus(StrEnum):
     HOLIDAY = "HOLIDAY"
     SUCCESS = "SUCCESS"
     FAILURE = "FAILURE"

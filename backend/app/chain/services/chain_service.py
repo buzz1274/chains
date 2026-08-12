@@ -10,8 +10,8 @@ from app.chain.models.chain_models import (
     ChainInternal,
     ChainInternalWithStats,
 )
-from app.chain.models.chain_completion_history_models import (
-    ChainCompletionHistoryPublic,
+from app.chain.models.chain_history_models import (
+    ChainHistoryPublic,
 )
 from app.chain.repositories.chain_repository import ChainRepository
 from app.chain.services.chain_stats_service import ChainStatsService
@@ -51,11 +51,11 @@ class ChainService:
                 model(
                     **chain.model_dump(
                         exclude={
-                            "chain_completion_history",
+                            "chain_history",
                         }
                     ),
-                    chain_completion_history=[
-                        ChainCompletionHistoryPublic(**h.model_dump())
+                    chain_history=[
+                        ChainHistoryPublic(**h.model_dump())
                         for h in chain.chain_completion_history
                     ]
                     if with_history
