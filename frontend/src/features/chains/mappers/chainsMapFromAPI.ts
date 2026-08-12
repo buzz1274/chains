@@ -39,7 +39,5 @@ export const chainsMapFromAPI = (dto: IChainDTO): IChainModel => ({
   maxStreak: mapStreak(dto.stats.max_streak),
   completedThisWeek: dto.stats.completed_this_week,
 
-  chainCompletionHistory: dto.chain_completion_history.map(
-    mapChainCompletionHistory,
-  ),
+  chainCompletionHistory: dto.chain_history.map(mapChainCompletionHistory),
 })

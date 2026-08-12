@@ -10,9 +10,9 @@ const chainsStore = useChainsStore()
 
 <template>
   <BaseTransparentButton
+    v-if="chainsStore.chains.length > 0"
     label="Add New Chain"
     @click="router.push('/chains/add/')"
-    v-if="chainsStore.chains.length > 0"
   >
     <template #icon-left>
       <PlusIcon class="w-5 h-5" />

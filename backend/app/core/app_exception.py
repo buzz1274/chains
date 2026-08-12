@@ -6,6 +6,7 @@ from fastapi import status
 
 class AppException(ABC, Exception):
     status_code: int = status.HTTP_500_INTERNAL_SERVER_ERROR
+    default_message: str = "An unknown error occurred"
 
     @property
     @abstractmethod
@@ -18,6 +19,7 @@ class AppException(ABC, Exception):
 
 class DBConnectionError(AppException):
     message: str = "A error occurred when attempting to connect to database"
+
 
 class DBGenericError(AppException):
     message: str = "An unexpected error occurred"

@@ -22,7 +22,7 @@ class ChainHistory(ChainHistoryBase, table=True):
         ),
     )
 
-    id: Optional[int] = Field(primary_key=True, index=True)
+    id: Optional[int] = Field(primary_key=True, index=True, default=None)
     chain: "Chain" = Relationship(back_populates="chain_history")
     chain_id: int = Field(foreign_key="chain.id", nullable=False)
 

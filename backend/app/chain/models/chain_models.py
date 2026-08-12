@@ -18,8 +18,8 @@ from app.chain.models.chain_history_models import ChainHistoryInternal
 
 if TYPE_CHECKING:
     from app.chain.models.chain_history_models import (
-        ChainHistoryInternal,
-        ChainHistoryPublic, ChainHistory,
+        ChainHistoryPublic,
+        ChainHistory,
     )
 
 
@@ -65,9 +65,7 @@ class Chain(ChainBase, table=True):
         default=False,
         sa_column=Column(Boolean, nullable=False, server_default=false()),
     )
-    chain_history: Mapped[
-        List["ChainHistory"]
-    ] = Relationship(
+    chain_history: Mapped[List["ChainHistory"]] = Relationship(
         back_populates="chain",
         sa_relationship_kwargs={"lazy": "raise"},
     )
@@ -80,7 +78,7 @@ class ChainInternal(ChainBase):
 
 
 class ChainsInternal(BaseModel):
-    data: List[ChainBase]
+    data: List[ChainInternal]
 
 
 class ChainStats(BaseModel):
@@ -92,9 +90,7 @@ class ChainStats(BaseModel):
 
 class ChainInternalWithStats(ChainInternal):
     stats: ChainStats
-    chain_history: List["ChainHistoryInternal"] = Field(
-        default_factory=list
-    )
+    chain_history: List["ChainHistoryInternal"] = Field(default_factory=list)
 
 
 class ChainsInternalWithStats(BaseModel):
@@ -103,9 +99,7 @@ class ChainsInternalWithStats(BaseModel):
 
 class ChainPublic(ChainBase):
     id: int
-    chain_history: list["ChainHistoryPublic"] = Field(
-        default_factory=list
-    )
+    chain_history: list["ChainHistoryPublic"] = Field(default_factory=list)
     stats: ChainStats
 
 

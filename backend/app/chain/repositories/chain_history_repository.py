@@ -2,7 +2,7 @@ from collections.abc import Callable
 from typing import Optional, Sequence, Awaitable
 
 from sqlalchemy import Select, select
-from sqlalchemy.exc import IntegrityError, DBAPIError, DataError
+from sqlalchemy.exc import IntegrityError, DataError
 from sqlmodel import col
 
 from app.chain.exceptions.chain_history_exceptions import (
@@ -11,7 +11,6 @@ from app.chain.exceptions.chain_history_exceptions import (
 )
 from app.chain.models.chain_history_models import (
     ChainHistory,
-    ChainHistoryInternal,
 )
 from app.chain.models.chain_models import Chain
 from app.core.repository import Repository
@@ -25,7 +24,7 @@ class ChainHistoryRepository(Repository):
         chain_id: Optional[int] = None,
         incomplete_only: Optional[bool] = False,
         chain_history_id: Optional[int] = None,
-    ) -> Sequence[ChainHistoryInternal]:
+    ) -> Sequence[ChainHistory]:
         """get chain history for supplied user"""
         query: Select = (
             select(ChainHistory)
@@ -33,8 +32,10 @@ class ChainHistoryRepository(Repository):
             .where(
                 col(Chain.deleted).is_(False),
             )
-            .where(col(Chain.user_id) == user.id)
         )
+
+        if user:
+            query = query.where(col(Chain.user_id) == user.id)
 
         if chain_id:
             query = query.where(col(Chain.id) == chain_id)
@@ -43,11 +44,9 @@ class ChainHistoryRepository(Repository):
             query = query.where(col(ChainHistory.status).is_(None))
 
         if chain_history_id:
-            query = query.where(
-                col(ChainHistory.id) == chain_history_id
-            )
+            query = query.where(col(ChainHistory.id) == chain_history_id)
 
-        chains: Sequence[ChainHistoryInternal] = (
+        chains: Sequence[ChainHistory] = (
             (await self.execute_query(query)).scalars().all()
         )
 
@@ -62,7 +61,7 @@ class ChainHistoryRepository(Repository):
 
     async def update_chain_history(
         self,
-        chain_history: ChainHistory | ChainHistoryInternal,
+        chain_history: ChainHistory,
     ):
         """update a chain history"""
         return await self._execute(self.update, chain_history)
@@ -70,7 +69,7 @@ class ChainHistoryRepository(Repository):
     async def _execute(
         self,
         operation: Callable[[ChainHistory], Awaitable[None]],
-        chain_history: ChainHistory | ChainHistoryInternal
+        chain_history: ChainHistory,
     ):
         try:
             await operation(chain_history)

@@ -4,7 +4,8 @@ from fastapi import APIRouter, Depends, status, HTTPException
 from fastapi_utils.cbv import cbv
 
 from app.chain.exceptions.chain_history_exceptions import (
-    NoChainHistoryFound,
+    ChainHistoryNotFound,
+    ChainHistoryNoOutstandingChains,
     ChainHistoryAlreadyUpdated,
 )
 from app.chain.models import ChainHistoryPublic
@@ -52,8 +53,10 @@ class AllChainHistoryRouter:
                 self.user
             )
 
-            return ChainsHistoryPublic(data=history.data)
-        except NoChainHistoryFound:
+            return ChainsHistoryPublic(
+                data=[ChainHistoryPublic.model_validate(h) for h in history]
+            )
+        except ChainHistoryNoOutstandingChains:
             return ChainsHistoryPublic(data=[])
 
 
@@ -90,10 +93,8 @@ class ChainHistoryRouter:
                 chain_completion_history_patch,
             )
 
-            return ChainHistoryPublic.model_validate(
-                chain_history
-            )
-        except NoChainHistoryFound as e:
+            return ChainHistoryPublic.model_validate(chain_history)
+        except ChainHistoryNotFound as e:
             raise HTTPException(
                 status_code=status.HTTP_404_NOT_FOUND, detail=e.message
             ) from None

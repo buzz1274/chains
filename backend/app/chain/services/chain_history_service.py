@@ -2,7 +2,8 @@ from typing import Annotated, Optional, Sequence
 from fastapi import Depends
 
 from app.chain.exceptions.chain_history_exceptions import (
-    NoChainHistoryFound,
+    ChainHistoryNoOutstandingChains,
+    ChainHistoryNotFound,
     ChainHistoryAlreadyUpdated,
 )
 from app.chain.models.constants import ChainHistoryStatus
@@ -37,20 +38,25 @@ class ChainHistoryService:
         user: Optional[User] = None,
     ) -> ChainsHistoryInternal:
         """get outstanding chain history"""
-        data: Sequence[
-            ChainHistoryInternal
+        chain_history: Sequence[
+            ChainHistory
         ] = await self.chain_history_repository.get_chain_history(
             user=user, chain_id=None, incomplete_only=True
         )
 
-        return ChainsHistoryInternal(data=data)
+        if not chain_history:
+            raise ChainHistoryNoOutstandingChains
+
+        return ChainsHistoryInternal(
+            data=[ChainHistoryInternal.model_validate(h) for h in chain_history]
+        )
 
     async def add_chain_history(
         self,
         chain_id: int,
         completion_date: date,
         status: Optional[ChainHistoryStatus] = None,
-    ) -> ChainHistory:
+    ) -> ChainHistoryInternal:
         """add a new chain history"""
         chain_history: ChainHistory = ChainHistory(
             chain_id=chain_id,
@@ -58,8 +64,8 @@ class ChainHistoryService:
             status=status,
         )
 
-        return await self.chain_history_repository.add_chain_history(
-            chain_history
+        return ChainHistoryInternal.model_validate(
+            await self.chain_history_repository.add_chain_history(chain_history)
         )
 
     async def update_chain_history(
@@ -71,7 +77,7 @@ class ChainHistoryService:
     ) -> ChainHistoryInternal:
         """update chain"""
         try:
-            chain_history: ChainHistoryInternal = (
+            chain_history: ChainHistory = (
                 await self.chain_history_repository.get_chain_history(
                     user=user,
                     chain_id=chain_id,
@@ -80,15 +86,17 @@ class ChainHistoryService:
             )[0]
 
             if not chain_history:
-                raise NoChainHistoryFound
+                raise ChainHistoryNotFound
         except IndexError:
-            raise NoChainHistoryFound
+            raise ChainHistoryNotFound
 
         if chain_history.status is not None:
             raise ChainHistoryAlreadyUpdated
 
         chain_history.status = chain_history_patch.status
 
-        return await self.chain_history_repository.update_chain_history(
-            chain_history
+        return ChainHistoryInternal.model_validate(
+            await self.chain_history_repository.update_chain_history(
+                chain_history
+            )
         )

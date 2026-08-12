@@ -11,7 +11,7 @@ from app.chain.models.chain_models import (
     ChainInternalWithStats,
 )
 from app.chain.models.chain_history_models import (
-    ChainHistoryPublic,
+    ChainHistoryInternal,
 )
 from app.chain.repositories.chain_repository import ChainRepository
 from app.chain.services.chain_stats_service import ChainStatsService
@@ -36,7 +36,6 @@ class ChainService:
         with_history: bool = True,
     ) -> ChainsInternal | ChainsInternalWithStats:
         """returns API shaped ChainsPublic object"""
-        data: List[ChainInternalWithStats | ChainInternal] = []
         chains: Sequence[Chain] = await self.chain_repository.get_chains(
             user, chain_id, with_history
         )
@@ -44,36 +43,51 @@ class ChainService:
         if chain_id and not chains:
             raise ChainNotFoundError
 
-        model = ChainInternalWithStats if with_history else ChainInternal
+        if with_history:
+            return self._generate_chain_with_history(chains)
+        else:
+            return self._generate_chain_without_history(chains)
+
+    def _generate_chain_without_history(self, chains: Sequence[Chain]):
+        """convert chains to ChainInternal model without history"""
+        data: List[ChainInternal] = []
 
         for chain in chains:
             data.append(
-                model(
+                ChainInternal(
+                    **chain.model_dump(
+                        exclude={
+                            "chain_history",
+                        }
+                    ),
+                )
+            )
+
+        return ChainsInternal(data=data)
+
+    def _generate_chain_with_history(self, chains: Sequence[Chain]):
+        """add chain history with stats to chain model"""
+        data: List[ChainInternalWithStats] = []
+
+        for chain in chains:
+            data.append(
+                ChainInternalWithStats(
                     **chain.model_dump(
                         exclude={
                             "chain_history",
                         }
                     ),
                     chain_history=[
-                        ChainHistoryPublic(**h.model_dump())
-                        for h in chain.chain_completion_history
-                    ]
-                    if with_history
-                    else [],
-                    stats={
-                        **self.chain_stats_service.compute(
-                            chain,
-                        )
-                    }
-                    if with_history
-                    else {}
+                        ChainHistoryInternal(**h.model_dump())
+                        for h in chain.chain_history
+                    ],
+                    stats=self.chain_stats_service.compute(
+                        chain,
+                    ),
                 )
             )
 
-        if with_history:
-            return ChainsInternalWithStats(data=data)
-
-        return ChainsInternal(data=data)
+        return ChainsInternalWithStats(data=data)
 
     async def update_chain(
         self,

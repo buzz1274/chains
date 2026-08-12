@@ -3,7 +3,8 @@ from abc import ABC
 from app.core.app_exception import AppException
 
 from app.chain.models.chain_history_models import (
-    ChainHistoryInternal, ChainHistory
+    ChainHistoryInternal,
+    ChainHistory,
 )
 
 
@@ -20,6 +21,13 @@ class GenericChainHistoryError(AppException, ABC):
         )
 
 
+class ChainHistoryNoOutstandingChains(AppException):
+    message: str = "No outstanding chains found"
+
+    def __init__(self):
+        super().__init__(self.message)
+
+
 class DuplicateChainHistoryError(GenericChainHistoryError):
     message: str = "History already exists for"
 
@@ -28,7 +36,7 @@ class InvalidChainHistoryDataError(GenericChainHistoryError):
     message: str = "Invalid chain completion history data sent to database"
 
 
-class NoChainHistoryFound(GenericChainHistoryError):
+class ChainHistoryNotFound(GenericChainHistoryError):
     message: str = "No chain history chain completion found"
 
 

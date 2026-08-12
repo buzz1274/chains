@@ -12,16 +12,20 @@ const chainsStore = useChainsStore()
 const path = '/chains/confirm-outstanding'
 
 const active = computed(() => route.path === path)
+const handleClick = function () {
+  chainsStore.setActiveChainId(null)
+  router.push(path)
+}
 </script>
 
 <template>
   <BaseTransparentButton
+    v-if="chainsStore.chains.length > 0"
     :label="'Confirm Outstanding Chains'"
     :class="[
-      active ? 'bg-green-50 border border-green-200 hover:bg-green-100' : ''
+      active ? 'bg-green-50 border border-green-200 hover:bg-green-100' : '',
     ]"
-    @click="chainsStore.setActiveChainId(null); router.push(path);"
-    v-if="chainsStore.chains.length > 0"
+    @click="handleClick"
   >
     <template #icon-left>
       <ClipboardCheckIcon class="w-5 h-5" />

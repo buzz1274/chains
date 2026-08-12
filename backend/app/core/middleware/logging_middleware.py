@@ -5,6 +5,7 @@ from fastapi import Request
 from starlette.responses import JSONResponse, Response
 from starlette.middleware.base import BaseHTTPMiddleware
 
+from app.core.app_exception import AppException
 from app.core.config import settings
 from fastapi import status
 
@@ -49,9 +50,7 @@ class LoggingMiddleware(BaseHTTPMiddleware):
         logger: structlog.BoundLogger,
         start: float,
     ) -> JSONResponse:
-        status_code: int = getattr(
-            e, "status_code", status.HTTP_500_INTERNAL_SERVER_ERROR
-        )
+        status_code: int = getattr(e, "status_code", AppException.status_code)
 
         log_message: dict[str, object] = {
             "message": str(e),
@@ -64,7 +63,13 @@ class LoggingMiddleware(BaseHTTPMiddleware):
         else:
             logger.warning("request_failed", **log_message)
 
+        detail = (
+            str(e)
+            if settings.DEBUG
+            else getattr(e, "message", AppException.default_message)
+        )
+
         return JSONResponse(
             status_code=status_code,
-            content={"detail": str(e) if settings.DEBUG else e.message},
+            content={"detail": detail},
         )
